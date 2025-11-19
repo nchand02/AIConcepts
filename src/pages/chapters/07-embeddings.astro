@@ -15,25 +15,466 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Embeddings transform text, images, and other data into dense vector representations that capture semantic meaning. This chapter explores embedding models, similarity search, and vector database technologies.</p>
     </div>
 
-    <div class="callout warning">
-      <div class="callout-title">🚧 Content In Progress</div>
-      <p>This chapter is currently being developed. Check back soon for comprehensive content on embeddings and vector databases.</p>
-    </div>
-
-    <h2>Topics to be Covered</h2>
+    <h2>What are Embeddings?</h2>
     
+    <p>Embeddings are dense vector representations that capture semantic meaning. Instead of sparse one-hot encodings, embeddings map items to continuous vector spaces where similar items are close together.</p>
+
+    <pre><code>Traditional One-Hot Encoding (sparse, no semantics):
+"cat"    → [1, 0, 0, 0, 0, ...] (vocab_size)
+"dog"    → [0, 1, 0, 0, 0, ...]
+"kitten" → [0, 0, 1, 0, 0, ...]
+
+Embedding (dense, semantic):
+"cat"    → [0.2, -0.4, 0.7, ...] (embedding_dim, e.g., 768)
+"dog"    → [0.3, -0.3, 0.6, ...] (close to "cat")
+"kitten" → [0.25, -0.35, 0.65, ...] (very close to "cat")
+</code></pre>
+
+    <h3>Key Properties</h3>
     <ul>
-      <li><strong>What are Embeddings?</strong> - Vector representations and semantic space</li>
-      <li><strong>Embedding Models</strong> - Word2Vec, GloVe, BERT embeddings, sentence transformers</li>
-      <li><strong>Similarity Metrics</strong> - Cosine similarity, dot product, Euclidean distance</li>
-      <li><strong>Vector Databases</strong> - Pinecone, Weaviate, Milvus, Qdrant</li>
-      <li><strong>Approximate Nearest Neighbor</strong> - HNSW, FAISS, and efficient search</li>
-      <li><strong>Semantic Search</strong> - Building search applications with embeddings</li>
-      <li><strong>Multimodal Embeddings</strong> - CLIP and cross-modal search</li>
+      <li><strong>Dense:</strong> Fixed-size vectors (typically 384-1536 dimensions)</li>
+      <li><strong>Semantic:</strong> Similar meanings → similar vectors</li>
+      <li><strong>Continuous:</strong> Enable mathematical operations (addition, distance)</li>
+      <li><strong>Learned:</strong> Trained on large datasets to capture relationships</li>
     </ul>
 
-    <h2>Coming Soon</h2>
-    <p>This chapter will include practical examples of building semantic search systems and working with vector databases.</p>
+    <h2>Evolution of Embedding Models</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Year</th>
+          <th>Dimension</th>
+          <th>Key Feature</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Word2Vec</strong></td>
+          <td>2013</td>
+          <td>300</td>
+          <td>Word-level, context windows</td>
+        </tr>
+        <tr>
+          <td><strong>GloVe</strong></td>
+          <td>2014</td>
+          <td>300</td>
+          <td>Global co-occurrence statistics</td>
+        </tr>
+        <tr>
+          <td><strong>FastText</strong></td>
+          <td>2016</td>
+          <td>300</td>
+          <td>Subword embeddings</td>
+        </tr>
+        <tr>
+          <td><strong>BERT</strong></td>
+          <td>2018</td>
+          <td>768/1024</td>
+          <td>Contextualized embeddings</td>
+        </tr>
+        <tr>
+          <td><strong>Sentence-BERT</strong></td>
+          <td>2019</td>
+          <td>384/768</td>
+          <td>Sentence-level similarity</td>
+        </tr>
+        <tr>
+          <td><strong>OpenAI Ada</strong></td>
+          <td>2022</td>
+          <td>1536</td>
+          <td>High-quality, general-purpose</td>
+        </tr>
+        <tr>
+          <td><strong>BGE/E5</strong></td>
+          <td>2023</td>
+          <td>768/1024</td>
+          <td>SOTA retrieval performance</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Word Embeddings</h2>
+
+    <h3>Word2Vec (CBOW & Skip-gram)</h3>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Context Words] --> B[Hidden Layer]
+    B --> C[Target Word]
+    
+    D[Center Word] --> E[Hidden Layer]
+    E --> F[Context Words]
+    
+    style B fill:#3b82f6
+    style E fill:#8b5cf6
+      `} />
+    </div>
+
+    <p><strong>CBOW:</strong> Predict target word from context</p>
+    <p><strong>Skip-gram:</strong> Predict context from target word</p>
+
+    <pre><code>Famous word analogy example:
+king - man + woman ≈ queen
+
+Vector arithmetic in embedding space!
+</code></pre>
+
+    <h3>GloVe (Global Vectors)</h3>
+    <p>Combines global matrix factorization with local context windows:</p>
+    <pre><code>Objective: Minimize
+  Σ f(X_ij) * (w_i^T * w_j + b_i + b_j - log(X_ij))²
+
+Where X_ij = co-occurrence count of words i and j
+</code></pre>
+
+    <h2>Contextualized Embeddings</h2>
+
+    <p>Static embeddings (Word2Vec, GloVe) have one vector per word. Contextualized embeddings change based on context:</p>
+
+    <pre><code>Static: "bank" always gets same vector
+
+Contextualized:
+"I went to the river bank" → vector₁ (riverside)
+"I went to the bank for money" → vector₂ (financial)
+</code></pre>
+
+    <h3>BERT Embeddings</h3>
+    <ul>
+      <li>Use [CLS] token embedding for sentence representation</li>
+      <li>Or average all token embeddings</li>
+      <li>Bidirectional context from masked language modeling</li>
+    </ul>
+
+    <h3>Sentence Transformers</h3>
+    <p>Fine-tuned BERT models for semantic similarity:</p>
+    <ul>
+      <li><strong>Siamese Architecture:</strong> Process two sentences, compare embeddings</li>
+      <li><strong>Contrastive Learning:</strong> Similar sentences → close vectors</li>
+      <li><strong>Efficient:</strong> Single forward pass for embedding</li>
+    </ul>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TD
+    A[Sentence A] --> B[BERT Encoder]
+    C[Sentence B] --> D[BERT Encoder]
+    B --> E[Pooling]
+    D --> F[Pooling]
+    E --> G[Embedding A]
+    F --> H[Embedding B]
+    G --> I[Similarity Score]
+    H --> I
+    
+    style B fill:#3b82f6
+    style D fill:#3b82f6
+      `} />
+    </div>
+
+    <h2>Similarity Metrics</h2>
+
+    <h3>Cosine Similarity</h3>
+    <pre><code>cos(θ) = (A · B) / (||A|| × ||B||)
+
+Range: [-1, 1]
+  1.0  = identical direction
+  0.0  = orthogonal
+ -1.0  = opposite direction
+
+Most common for text embeddings
+</code></pre>
+
+    <h3>Dot Product</h3>
+    <pre><code>A · B = Σ(a_i × b_i)
+
+Unnormalized version of cosine similarity
+Magnitude matters (longer vectors = higher scores)
+Faster to compute (no normalization)
+</code></pre>
+
+    <h3>Euclidean Distance</h3>
+    <pre><code>d(A, B) = √(Σ(a_i - b_i)²)
+
+Range: [0, ∞]
+  0 = identical
+  larger = more different
+
+Used in some embedding models (e.g., SentenceTransformers)
+</code></pre>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Best For</th>
+          <th>Normalized?</th>
+          <th>Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cosine</strong></td>
+          <td>Text, general</td>
+          <td>Yes</td>
+          <td>[-1, 1]</td>
+        </tr>
+        <tr>
+          <td><strong>Dot Product</strong></td>
+          <td>Pre-normalized vectors</td>
+          <td>No</td>
+          <td>[-∞, ∞]</td>
+        </tr>
+        <tr>
+          <td><strong>Euclidean</strong></td>
+          <td>Spatial data</td>
+          <td>No</td>
+          <td>[0, ∞]</td>
+        </tr>
+        <tr>
+          <td><strong>Manhattan</strong></td>
+          <td>High dimensions</td>
+          <td>No</td>
+          <td>[0, ∞]</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Vector Databases</h2>
+
+    <p>Specialized databases optimized for storing and searching high-dimensional vectors at scale.</p>
+
+    <h3>Why Not Regular Databases?</h3>
+    <ul>
+      <li><strong>Curse of Dimensionality:</strong> 768D space is sparse</li>
+      <li><strong>Similarity Search:</strong> Need nearest neighbor, not exact match</li>
+      <li><strong>Scale:</strong> Millions of vectors, sub-second queries</li>
+      <li><strong>Approximate Search:</strong> Trade precision for speed</li>
+    </ul>
+
+    <h3>Popular Vector Databases</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Database</th>
+          <th>Type</th>
+          <th>Key Features</th>
+          <th>Best For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Pinecone</strong></td>
+          <td>Managed</td>
+          <td>Fully managed, easy setup</td>
+          <td>Quick start, production</td>
+        </tr>
+        <tr>
+          <td><strong>Weaviate</strong></td>
+          <td>Open-source</td>
+          <td>GraphQL, hybrid search</td>
+          <td>Complex queries</td>
+        </tr>
+        <tr>
+          <td><strong>Milvus</strong></td>
+          <td>Open-source</td>
+          <td>Distributed, high performance</td>
+          <td>Large scale</td>
+        </tr>
+        <tr>
+          <td><strong>Qdrant</strong></td>
+          <td>Open-source</td>
+          <td>Rust, filtering, quantization</td>
+          <td>Performance, on-prem</td>
+        </tr>
+        <tr>
+          <td><strong>Chroma</strong></td>
+          <td>Open-source</td>
+          <td>Python-native, simple</td>
+          <td>Prototyping, local dev</td>
+        </tr>
+        <tr>
+          <td><strong>pgvector</strong></td>
+          <td>PostgreSQL ext</td>
+          <td>Leverage existing Postgres</td>
+          <td>Existing PG infrastructure</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Approximate Nearest Neighbor (ANN)</h2>
+
+    <p>Exact nearest neighbor search is O(n) - check every vector. ANN algorithms trade accuracy for speed.</p>
+
+    <h3>HNSW (Hierarchical Navigable Small World)</h3>
+    <ul>
+      <li>Graph-based algorithm</li>
+      <li>Multi-layer structure (like skip lists)</li>
+      <li>Navigate from top layer (coarse) to bottom (fine)</li>
+      <li>State-of-the-art accuracy/speed tradeoff</li>
+    </ul>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TD
+    A[Layer 2: Long jumps] --> B[Layer 1: Medium jumps]
+    B --> C[Layer 0: Fine-grained search]
+    A --> D[Query Vector]
+    D --> E[Nearest Neighbors]
+    
+    style A fill:#3b82f6
+    style B fill:#8b5cf6
+    style C fill:#ec4899
+      `} />
+    </div>
+
+    <h3>Other ANN Algorithms</h3>
+    <ul>
+      <li><strong>IVF (Inverted File Index):</strong> Cluster vectors, search within clusters</li>
+      <li><strong>LSH (Locality-Sensitive Hashing):</strong> Hash similar vectors to same buckets</li>
+      <li><strong>Product Quantization:</strong> Compress vectors for faster comparison</li>
+      <li><strong>FAISS:</strong> Meta's library combining multiple techniques</li>
+    </ul>
+
+    <h2>Semantic Search</h2>
+
+    <p>Search based on meaning, not just keywords:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[User Query] --> B[Embedding Model]
+    B --> C[Query Vector]
+    C --> D[Vector DB]
+    E[Document Corpus] --> F[Embedding Model]
+    F --> G[Document Vectors]
+    G --> D
+    D --> H[Top K Similar Docs]
+    
+    style B fill:#3b82f6
+    style D fill:#8b5cf6
+      `} />
+    </div>
+
+    <h3>Implementation Steps</h3>
+    <ol>
+      <li><strong>Index Documents:</strong> Embed all documents, store in vector DB</li>
+      <li><strong>Embed Query:</strong> Use same model to embed user query</li>
+      <li><strong>Search:</strong> Find K nearest neighbors in vector space</li>
+      <li><strong>Retrieve:</strong> Return original documents</li>
+    </ol>
+
+    <h3>Hybrid Search</h3>
+    <p>Combine semantic and keyword search:</p>
+    <ul>
+      <li><strong>Vector Search:</strong> Semantic similarity</li>
+      <li><strong>BM25/TF-IDF:</strong> Keyword matching</li>
+      <li><strong>Fusion:</strong> Combine scores (e.g., RRF - Reciprocal Rank Fusion)</li>
+    </ul>
+
+    <pre><code>Score = α × semantic_score + (1-α) × keyword_score
+Where α ∈ [0, 1] controls the balance
+</code></pre>
+
+    <h2>Multimodal Embeddings</h2>
+
+    <h3>CLIP (Contrastive Language-Image Pre-training)</h3>
+    <p>Learns joint embedding space for text and images:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Image] --> B[Image Encoder]
+    C[Text] --> D[Text Encoder]
+    B --> E[Image Embedding]
+    D --> F[Text Embedding]
+    E --> G[Shared Space]
+    F --> G
+    
+    style B fill:#3b82f6
+    style D fill:#8b5cf6
+    style G fill:#ec4899
+      `} />
+    </div>
+
+    <ul>
+      <li>Trained on 400M image-text pairs</li>
+      <li>Enables zero-shot image classification</li>
+      <li>Cross-modal search (text→image, image→text)</li>
+      <li>Foundation for Stable Diffusion, DALL-E</li>
+    </ul>
+
+    <h3>Applications</h3>
+    <ul>
+      <li><strong>Image Search:</strong> "Find images of mountain sunsets"</li>
+      <li><strong>Image Classification:</strong> Zero-shot with text labels</li>
+      <li><strong>Content Moderation:</strong> Find inappropriate content</li>
+      <li><strong>Recommendation:</strong> Similar products, content</li>
+    </ul>
+
+    <div class="callout best-practice">
+      <div class="callout-title">✅ Best Practices</div>
+      <ul>
+        <li><strong>Choose Right Model:</strong> Domain-specific vs general-purpose</li>
+        <li><strong>Batch Embeddings:</strong> Embed in batches for efficiency</li>
+        <li><strong>Normalize Vectors:</strong> For cosine similarity</li>
+        <li><strong>Monitor Drift:</strong> Re-embed if data distribution changes</li>
+        <li><strong>Cache Embeddings:</strong> Don't re-compute unnecessarily</li>
+      </ul>
+    </div>
+
+    <h2>Key Terminology</h2>
+    <ul>
+      <li><strong>Embedding Space:</strong> High-dimensional vector space where semantics are encoded</li>
+      <li><strong>Dense Retrieval:</strong> Semantic search using embeddings</li>
+      <li><strong>Sparse Retrieval:</strong> Traditional keyword-based search (BM25, TF-IDF)</li>
+      <li><strong>Quantization:</strong> Compress vectors for storage/speed</li>
+      <li><strong>Re-ranking:</strong> Refine initial results with more expensive model</li>
+    </ul>
+
+    <h2>Summary</h2>
+    <div class="callout info">
+      <ul>
+        <li>Embeddings map discrete items to continuous semantic vector spaces</li>
+        <li>Modern embeddings are contextualized (BERT) and sentence-level (Sentence-BERT)</li>
+        <li>Cosine similarity is standard for comparing text embeddings</li>
+        <li>Vector databases enable efficient similarity search at scale</li>
+        <li>HNSW provides excellent accuracy/speed tradeoff for ANN search</li>
+        <li>CLIP enables multimodal search across text and images</li>
+      </ul>
+    </div>
+
+    <h2>Review Questions</h2>
+    <ol>
+      <li>What advantages do embeddings have over one-hot encoding?</li>
+      <li>How do contextualized embeddings (BERT) differ from static embeddings (Word2Vec)?</li>
+      <li>When would you use cosine similarity vs Euclidean distance?</li>
+      <li>Why is approximate nearest neighbor search necessary for large-scale vector search?</li>
+      <li>Explain how CLIP enables cross-modal search between text and images.</li>
+      <li>What is hybrid search and why is it useful?</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+    <ol>
+      <li><strong>Generate Embeddings:</strong>
+        <ul>
+          <li>Use Sentence Transformers to embed a corpus of documents</li>
+          <li>Visualize embeddings in 2D using t-SNE or UMAP</li>
+          <li>Analyze clustering of similar documents</li>
+        </ul>
+      </li>
+      <li><strong>Build Semantic Search:</strong>
+        <ul>
+          <li>Index documents in Chroma or Qdrant</li>
+          <li>Implement query embedding and similarity search</li>
+          <li>Compare semantic vs keyword search results</li>
+        </ul>
+      </li>
+      <li><strong>CLIP Exploration:</strong>
+        <ul>
+          <li>Load CLIP model and embed images and text</li>
+          <li>Build image search with text queries</li>
+          <li>Implement zero-shot image classification</li>
+        </ul>
+      </li>
+    </ol>
 
   </article>
 </BaseLayout>

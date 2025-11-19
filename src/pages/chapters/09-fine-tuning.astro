@@ -15,25 +15,430 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Fine-tuning adapts pre-trained models to specific tasks or domains. This chapter covers full fine-tuning, parameter-efficient methods like LoRA, and instruction tuning techniques.</p>
     </div>
 
-    <div class="callout warning">
-      <div class="callout-title">🚧 Content In Progress</div>
-      <p>This chapter is currently being developed. Check back soon for comprehensive content on fine-tuning techniques.</p>
-    </div>
-
-    <h2>Topics to be Covered</h2>
+    <h2>Why Fine-Tune?</h2>
     
+    <p>Fine-tuning adapts pre-trained models to specific tasks, domains, or styles. When to fine-tune vs use RAG or prompting:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Approach</th>
+          <th>When to Use</th>
+          <th>Cost</th>
+          <th>Latency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Prompting</strong></td>
+          <td>Task is well-defined, few examples</td>
+          <td>Low</td>
+          <td>Low</td>
+        </tr>
+        <tr>
+          <td><strong>RAG</strong></td>
+          <td>Need external/updated knowledge</td>
+          <td>Medium</td>
+          <td>Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Fine-Tuning</strong></td>
+          <td>Consistent style, domain expertise, efficiency</td>
+          <td>High (training)</td>
+          <td>Low (inference)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Fine-Tuning Benefits</h3>
     <ul>
-      <li><strong>Full Fine-Tuning</strong> - Traditional approach and challenges</li>
-      <li><strong>Parameter-Efficient Fine-Tuning (PEFT)</strong> - Overview and benefits</li>
-      <li><strong>LoRA & QLoRA</strong> - Low-rank adaptation techniques</li>
-      <li><strong>Prefix Tuning & P-Tuning</strong> - Prompt-based fine-tuning</li>
-      <li><strong>Adapter Layers</strong> - Modular fine-tuning approach</li>
-      <li><strong>Instruction Tuning</strong> - Creating instruction-following models</li>
-      <li><strong>RLHF & DPO</strong> - Alignment and preference learning</li>
+      <li><strong>Domain Adaptation:</strong> Medical, legal, code-specific knowledge</li>
+      <li><strong>Style Consistency:</strong> Match specific tone, format, structure</li>
+      <li><strong>Efficiency:</strong> Shorter prompts, lower inference cost</li>
+      <li><strong>Performance:</strong> Can outperform prompting on specialized tasks</li>
+      <li><strong>Privacy:</strong> Internalize knowledge without external retrieval</li>
     </ul>
 
-    <h2>Coming Soon</h2>
-    <p>This chapter will include practical guides for fine-tuning models on custom datasets with various techniques.</p>
+    <h2>Full Fine-Tuning</h2>
+
+    <p>Traditional approach: update all model parameters with task-specific data.</p>
+
+    <pre><code>Process:
+1. Start with pre-trained model (e.g., Llama-2-7B)
+2. Prepare labeled dataset for target task
+3. Train on task data with lower learning rate
+4. All 7 billion parameters updated
+5. Save new model checkpoint
+
+Memory Required: ~28 GB (7B params × 4 bytes/param)
+Training Time: Hours to days on GPUs
+</code></pre>
+
+    <h3>Challenges</h3>
+    <ul>
+      <li><strong>Memory:</strong> Need to store gradients for all parameters</li>
+      <li><strong>Catastrophic Forgetting:</strong> Model loses general capabilities</li>
+      <li><strong>Compute Cost:</strong> Expensive GPU hours</li>
+      <li><strong>Storage:</strong> Full model copy for each task</li>
+    </ul>
+
+    <h2>Parameter-Efficient Fine-Tuning (PEFT)</h2>
+
+    <p>PEFT methods update only a small subset of parameters, dramatically reducing compute and memory requirements.</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[Pre-trained Model<br/>7B params] --> B[Full Fine-Tuning<br/>Update 7B params]
+    A --> C[PEFT<br/>Update 10M params]
+    B --> D[New Model<br/>~28 GB]
+    C --> E[Base + Adapter<br/>~0.04 GB]
+    
+    style A fill:#3b82f6
+    style C fill:#10b981
+    style E fill:#10b981
+      `} />
+    </div>
+
+    <h3>PEFT Advantages</h3>
+    <ul>
+      <li><strong>1-10% of parameters</strong> updated (vs 100%)</li>
+      <li><strong>Lower memory</strong> footprint</li>
+      <li><strong>Faster training</strong> (fewer gradients)</li>
+      <li><strong>Multiple adapters</strong> from one base model</li>
+      <li><strong>Less catastrophic forgetting</strong></li>
+    </ul>
+
+    <h2>LoRA (Low-Rank Adaptation)</h2>
+
+    <p>LoRA freezes base weights and adds trainable low-rank matrices to each layer.</p>
+
+    <h3>How LoRA Works</h3>
+    <pre><code>Original: h = W × x    (W is d × k, frozen)
+
+LoRA:     h = W × x + (B × A) × x
+          Where A is d × r, B is r × k
+          r &lt;&lt; d, k (e.g., r=8, d=4096)
+
+Only A and B are trained!
+
+Parameters: Full = d × k = 4096 × 4096 = 16.7M
+           LoRA = (d × r) + (r × k) = (4096 × 8) + (8 × 4096) = 65K
+           Reduction: 99.6%
+</code></pre>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Input x] --> B[Frozen Weight W]
+    A --> C[Matrix A]
+    C --> D[Matrix B]
+    B --> E[Output h]
+    D --> E
+    
+    style B fill:#6b7280
+    style C fill:#10b981
+    style D fill:#10b981
+      `} />
+    </div>
+
+    <h3>LoRA Hyperparameters</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Description</th>
+          <th>Typical Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>r (rank)</strong></td>
+          <td>Dimension of low-rank matrices</td>
+          <td>4, 8, 16, 32</td>
+        </tr>
+        <tr>
+          <td><strong>alpha</strong></td>
+          <td>Scaling factor (alpha/r)</td>
+          <td>16, 32</td>
+        </tr>
+        <tr>
+          <td><strong>target_modules</strong></td>
+          <td>Which layers to apply LoRA</td>
+          <td>q_proj, v_proj, k_proj, o_proj</td>
+        </tr>
+        <tr>
+          <td><strong>dropout</strong></td>
+          <td>Regularization</td>
+          <td>0.05, 0.1</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>QLoRA (Quantized LoRA)</h3>
+    <p>Combines LoRA with 4-bit quantization for even lower memory:</p>
+    <ul>
+      <li>Base model quantized to 4-bit (NF4 format)</li>
+      <li>LoRA adapters in full precision</li>
+      <li>Fine-tune 7B model on single consumer GPU!</li>
+      <li>Memory: ~5-6 GB (vs ~28 GB full fine-tuning)</li>
+    </ul>
+
+    <h2>Other PEFT Methods</h2>
+
+    <h3>Prefix Tuning</h3>
+    <p>Add trainable "prefix" tokens to input:</p>
+    <pre><code>[Trainable Prefix] + [User Input] → Model → Output
+
+Prefix is optimized during training
+Model weights stay frozen
+</code></pre>
+
+    <h3>P-Tuning v2</h3>
+    <p>Similar to prefix tuning but with prompts at every layer:</p>
+    <ul>
+      <li>Add trainable prompts to each transformer layer</li>
+      <li>More expressive than input-only prefixes</li>
+      <li>Comparable to fine-tuning on some tasks</li>
+    </ul>
+
+    <h3>Adapter Layers</h3>
+    <p>Insert small bottleneck layers between transformer blocks:</p>
+    <pre><code>Transformer Block
+  ↓
+[Adapter: Down-project → NonLinear → Up-project]
+  ↓
+Next Block
+
+Only adapter weights trained
+</code></pre>
+
+    <h3>Comparison</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Trainable Params</th>
+          <th>Memory</th>
+          <th>Flexibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LoRA</strong></td>
+          <td>0.1-1%</td>
+          <td>Medium</td>
+          <td>High</td>
+        </tr>
+        <tr>
+          <td><strong>QLoRA</strong></td>
+          <td>0.1-1%</td>
+          <td>Very Low</td>
+          <td>High</td>
+        </tr>
+        <tr>
+          <td><strong>Prefix Tuning</strong></td>
+          <td>0.01-0.1%</td>
+          <td>Low</td>
+          <td>Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Adapters</strong></td>
+          <td>1-3%</td>
+          <td>Medium</td>
+          <td>Medium</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Instruction Tuning</h2>
+
+    <p>Fine-tune models to follow instructions and engage in dialogue.</p>
+
+    <h3>Dataset Format</h3>
+    <pre><code>{`Instruction-Response Pairs:
+
+{
+  "instruction": "Explain what quantum computing is",
+  "input": "",
+  "output": "Quantum computing uses quantum bits..."
+}
+
+OR with context:
+
+{
+  "instruction": "Summarize this article",
+  "input": "[Article text...]",
+  "output": "The article discusses..."
+}`}</code></pre>
+
+    <h3>Popular Instruction Datasets</h3>
+    <ul>
+      <li><strong>Alpaca:</strong> 52K instruction-following examples</li>
+      <li><strong>Dolly:</strong> 15K human-generated instructions</li>
+      <li><strong>FLAN:</strong> Multi-task instruction tuning</li>
+      <li><strong>OpenOrca:</strong> GPT-4 reasoning traces</li>
+      <li><strong>WizardLM:</strong> Evol-Instruct augmented data</li>
+    </ul>
+
+    <h2>Alignment: RLHF & DPO</h2>
+
+    <h3>RLHF (Reinforcement Learning from Human Feedback)</h3>
+    <p>Align model outputs with human preferences:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[1. Supervised Fine-Tuning<br/>on high-quality data] --> B[Base Model]
+    B --> C[2. Collect Comparisons<br/>A vs B outputs]
+    C --> D[3. Train Reward Model<br/>predict preferences]
+    D --> E[4. RL Optimization<br/>PPO algorithm]
+    E --> F[Aligned Model]
+    
+    style A fill:#3b82f6
+    style D fill:#8b5cf6
+    style F fill:#10b981
+      `} />
+    </div>
+
+    <h3>DPO (Direct Preference Optimization)</h3>
+    <p>Simpler alternative to RLHF—no reward model needed:</p>
+    <pre><code>Given: (prompt, chosen_response, rejected_response) pairs
+
+Maximize: log(σ(β × log(π(chosen)/π_ref(chosen)) 
+              - β × log(π(rejected)/π_ref(rejected))))
+
+Where:
+  π = current policy
+  π_ref = reference policy
+  β = temperature parameter
+</code></pre>
+
+    <h3>RLHF vs DPO</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>RLHF</th>
+          <th>DPO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Complexity</strong></td>
+          <td>High (3 stages)</td>
+          <td>Low (single stage)</td>
+        </tr>
+        <tr>
+          <td><strong>Reward Model</strong></td>
+          <td>Required</td>
+          <td>Not needed</td>
+        </tr>
+        <tr>
+          <td><strong>Stability</strong></td>
+          <td>Can be unstable</td>
+          <td>More stable</td>
+        </tr>
+        <tr>
+          <td><strong>Performance</strong></td>
+          <td>Excellent</td>
+          <td>Comparable</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Practical Fine-Tuning</h2>
+
+    <h3>Data Preparation</h3>
+    <ol>
+      <li><strong>Collect Data:</strong> 1K-10K examples (more is better)</li>
+      <li><strong>Format Consistently:</strong> Match target use case</li>
+      <li><strong>Clean & Validate:</strong> Remove duplicates, errors</li>
+      <li><strong>Split:</strong> Train (80%), validation (10%), test (10%)</li>
+    </ol>
+
+    <h3>Training Configuration</h3>
+    <pre><code>Typical LoRA Setup:
+
+- Base Model: Llama-2-7B, Mistral-7B
+- Rank (r): 8 or 16
+- Alpha: 16 or 32
+- Learning Rate: 1e-4 to 3e-4
+- Batch Size: 4-16 (with gradient accumulation)
+- Epochs: 1-3
+- Warmup Steps: 100-500
+</code></pre>
+
+    <h3>Evaluation</h3>
+    <ul>
+      <li><strong>Loss Curves:</strong> Training and validation loss</li>
+      <li><strong>Qualitative:</strong> Sample outputs on test set</li>
+      <li><strong>Metrics:</strong> Task-specific (BLEU, ROUGE, accuracy)</li>
+      <li><strong>Human Eval:</strong> Manual review for quality</li>
+    </ul>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠️ Fine-Tuning Pitfalls</div>
+      <ul>
+        <li><strong>Overfitting:</strong> Too many epochs on small dataset</li>
+        <li><strong>Data Quality:</strong> Garbage in, garbage out</li>
+        <li><strong>Format Mismatch:</strong> Training format ≠ inference format</li>
+        <li><strong>Evaluation Bias:</strong> Test data leaking into training</li>
+      </ul>
+    </div>
+
+    <h2>Key Terminology</h2>
+    <ul>
+      <li><strong>Catastrophic Forgetting:</strong> Loss of general knowledge during fine-tuning</li>
+      <li><strong>Low-Rank Adaptation:</strong> Approximating weight updates with lower-dimensional matrices</li>
+      <li><strong>Supervised Fine-Tuning (SFT):</strong> Training on labeled examples</li>
+      <li><strong>Adapter:</strong> Small trainable module added to frozen model</li>
+      <li><strong>Preference Data:</strong> Comparisons between model outputs for alignment</li>
+    </ul>
+
+    <h2>Summary</h2>
+    <div class="callout info">
+      <ul>
+        <li>Fine-tuning adapts pre-trained models to specific tasks or domains</li>
+        <li>PEFT methods (LoRA, QLoRA) reduce compute/memory by 99%+</li>
+        <li>LoRA adds low-rank matrices to frozen weights—highly effective</li>
+        <li>Instruction tuning creates models that follow user instructions</li>
+        <li>RLHF and DPO align models with human preferences</li>
+        <li>Choose approach based on use case: prompting &lt; RAG &lt; fine-tuning</li>
+      </ul>
+    </div>
+
+    <h2>Review Questions</h2>
+    <ol>
+      <li>When should you fine-tune a model vs using RAG or prompting?</li>
+      <li>Explain how LoRA achieves 99%+ parameter reduction while maintaining performance.</li>
+      <li>What is the difference between QLoRA and standard LoRA?</li>
+      <li>Describe the RLHF process and its three main stages.</li>
+      <li>How does DPO simplify the alignment process compared to RLHF?</li>
+      <li>What are the risks of catastrophic forgetting and how can PEFT help?</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+    <ol>
+      <li><strong>LoRA Fine-Tuning:</strong>
+        <ul>
+          <li>Use Hugging Face PEFT library to fine-tune Llama-2-7B</li>
+          <li>Experiment with different rank values (4, 8, 16)</li>
+          <li>Measure training time and memory usage</li>
+        </ul>
+      </li>
+      <li><strong>Instruction Dataset:</strong>
+        <ul>
+          <li>Create instruction-response dataset for a specific domain</li>
+          <li>Fine-tune with instruction format</li>
+          <li>Compare zero-shot vs fine-tuned performance</li>
+        </ul>
+      </li>
+      <li><strong>DPO Alignment:</strong>
+        <ul>
+          <li>Collect preference data (chosen vs rejected responses)</li>
+          <li>Implement DPO training loop</li>
+          <li>Evaluate alignment improvements</li>
+        </ul>
+      </li>
+    </ol>
 
   </article>
 </BaseLayout>

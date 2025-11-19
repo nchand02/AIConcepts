@@ -15,25 +15,504 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>AI agents are autonomous systems that can reason, plan, and take actions to achieve goals. This chapter explores agent architectures, reasoning patterns, and the emerging Model Context Protocol.</p>
     </div>
 
-    <div class="callout warning">
-      <div class="callout-title">🚧 Content In Progress</div>
-      <p>This chapter is currently being developed. Check back soon for comprehensive content on AI agents.</p>
+    <h2>What are AI Agents?</h2>
+    
+    <p>AI agents are autonomous systems that perceive their environment, reason about goals, and take actions to achieve objectives.</p>
+
+    <pre><code>Traditional: User → LLM → Response (single turn)
+Agent:       Goal → Plan → Act → Observe → Replan → ... → Success
+
+Key Characteristics:
+✓ Autonomy: Acts without constant human intervention
+✓ Reasoning: Plans multi-step strategies
+✓ Tool Use: Interacts with external systems
+✓ Memory: Maintains context across interactions
+✓ Feedback: Learns from observations
+</code></pre>
+
+    <h3>Agent Loop</h3>
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[Goal] --> B[Perceive Environment]
+    B --> C[Reason & Plan]
+    C --> D[Select Action]
+    D --> E[Execute Action]
+    E --> F[Observe Result]
+    F --> G{Goal Achieved?}
+    G -->|No| B
+    G -->|Yes| H[Done]
+    
+    style C fill:#3b82f6
+    style D fill:#8b5cf6
+    style F fill:#ec4899
+      `} />
     </div>
 
-    <h2>Topics to be Covered</h2>
-    
+    <h2>ReAct: Reasoning + Acting</h2>
+
+    <p>ReAct interleaves reasoning traces with actions, allowing LLMs to solve complex tasks.</p>
+
+    <h3>ReAct Pattern</h3>
+    <pre><code>Task: "What is the capital of the country where the 2024 Olympics were held?"
+
+Thought 1: I need to find where the 2024 Olympics were held
+Action 1: Search["2024 Olympics location"]
+Observation 1: Paris, France
+
+Thought 2: Now I know it was Paris, France. The capital of France is Paris.
+Action 2: Finish["Paris"]
+
+Result: Paris ✓
+</code></pre>
+
+    <h3>Why ReAct Works</h3>
     <ul>
-      <li><strong>Agent Fundamentals</strong> - Perception, reasoning, action cycle</li>
-      <li><strong>ReAct Pattern</strong> - Reasoning and acting in language models</li>
-      <li><strong>Tool Use</strong> - Function calling and API integration</li>
-      <li><strong>Planning & Memory</strong> - Multi-step reasoning and context management</li>
-      <li><strong>AutoGPT & BabyAGI</strong> - Autonomous agent frameworks</li>
-      <li><strong>Model Context Protocol</strong> - Standardized context sharing</li>
-      <li><strong>Multi-Agent Systems</strong> - Agent collaboration and coordination</li>
+      <li><strong>Explicit Reasoning:</strong> Forces step-by-step thinking</li>
+      <li><strong>Error Recovery:</strong> Can correct based on observations</li>
+      <li><strong>Interpretability:</strong> Shows chain of thought</li>
+      <li><strong>Grounding:</strong> Actions provide real information</li>
     </ul>
 
-    <h2>Coming Soon</h2>
-    <p>This chapter will include practical examples of building autonomous AI agents and implementing MCP.</p>
+    <h3>ReAct Implementation</h3>
+    <pre><code>System Prompt:
+"You run in a loop of Thought, Action, Observation.
+Use Thought to understand the task and plan.
+Use Action to run commands: Search[query], Calculate[expr], Finish[answer]
+Observation will show results of actions.
+Continue until you can use Finish[answer]."
+
+User: What is 25 * 47?
+Thought: I need to calculate this multiplication
+Action: Calculate[25 * 47]
+Observation: 1175
+Thought: I have the answer
+Action: Finish[1175]
+</code></pre>
+
+    <h2>Tool Use & Function Calling</h2>
+
+    <p>Agents extend LLM capabilities by calling external tools and APIs.</p>
+
+    <h3>Function Calling Flow</h3>
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[User Query] --> B[LLM]
+    B --> C{Need Tool?}
+    C -->|Yes| D[Generate Function Call]
+    D --> E[Execute Function]
+    E --> F[Return Result]
+    F --> B
+    C -->|No| G[Final Answer]
+    
+    style B fill:#3b82f6
+    style E fill:#8b5cf6
+      `} />
+    </div>
+
+    <h3>Tool Definition</h3>
+    <pre><code>{`Function schema (JSON):
+
+{
+  "name": "get_weather",
+  "description": "Get current weather for a location",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "location": {"type": "string", "description": "City name"},
+      "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+    },
+    "required": ["location"]
+  }
+}
+
+LLM generates:
+{
+  "function": "get_weather",
+  "arguments": {"location": "San Francisco", "unit": "celsius"}
+}
+`}</code></pre>
+
+    <h3>Common Tools</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Tool Category</th>
+          <th>Examples</th>
+          <th>Use Cases</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Search</strong></td>
+          <td>Google, Bing, Wikipedia</td>
+          <td>Information retrieval</td>
+        </tr>
+        <tr>
+          <td><strong>Computation</strong></td>
+          <td>Calculator, Python REPL</td>
+          <td>Math, data analysis</td>
+        </tr>
+        <tr>
+          <td><strong>Databases</strong></td>
+          <td>SQL, vector DBs</td>
+          <td>Querying structured data</td>
+        </tr>
+        <tr>
+          <td><strong>APIs</strong></td>
+          <td>Weather, email, calendar</td>
+          <td>External services</td>
+        </tr>
+        <tr>
+          <td><strong>Code Execution</strong></td>
+          <td>Sandboxed Python</td>
+          <td>Data processing</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Agent Memory</h2>
+
+    <h3>Memory Types</h3>
+    <ul>
+      <li><strong>Short-term:</strong> Current conversation context window</li>
+      <li><strong>Long-term:</strong> Vector DB for semantic retrieval</li>
+      <li><strong>Working:</strong> Scratchpad for intermediate steps</li>
+      <li><strong>Episodic:</strong> History of past interactions</li>
+    </ul>
+
+    <h3>Memory Architecture</h3>
+    <pre><code>┌─────────────────────────┐
+│   Short-term Memory     │  ← Context window (4-128K tokens)
+│   (Conversation)        │
+└─────────────────────────┘
+           ↕
+┌─────────────────────────┐
+│   Working Memory        │  ← Scratchpad, intermediate results
+│   (Scratchpad)          │
+└─────────────────────────┘
+           ↕
+┌─────────────────────────┐
+│   Long-term Memory      │  ← Vector DB, knowledge base
+│   (Vector Store)        │
+└─────────────────────────┘
+</code></pre>
+
+    <h3>Memory Management</h3>
+    <ul>
+      <li><strong>Summarization:</strong> Compress old conversations</li>
+      <li><strong>Retrieval:</strong> Pull relevant past experiences</li>
+      <li><strong>Forgetting:</strong> Prune irrelevant information</li>
+      <li><strong>Reflection:</strong> Periodically analyze and synthesize memories</li>
+    </ul>
+
+    <h2>Planning Strategies</h2>
+
+    <h3>Plan-and-Execute</h3>
+    <pre><code>1. Decompose goal into sub-tasks
+2. Execute each sub-task
+3. Replan if needed
+
+Example: "Book a flight to Paris"
+Plan:
+  1. Search for flights to Paris
+  2. Compare prices and times
+  3. Select best option
+  4. Complete booking
+
+Then execute each step with tools
+</code></pre>
+
+    <h3>Hierarchical Planning</h3>
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TD
+    A[High-Level Goal] --> B[Sub-Goal 1]
+    A --> C[Sub-Goal 2]
+    A --> D[Sub-Goal 3]
+    B --> E[Task 1.1]
+    B --> F[Task 1.2]
+    C --> G[Task 2.1]
+    
+    style A fill:#3b82f6
+    style B fill:#8b5cf6
+    style C fill:#8b5cf6
+    style D fill:#8b5cf6
+      `} />
+    </div>
+
+    <h3>Tree of Thoughts</h3>
+    <pre><code>Explore multiple reasoning paths:
+
+Problem → Thought 1 → Evaluation
+      → Thought 2 → Evaluation  ← Select best
+      → Thought 3 → Evaluation
+
+More expensive but better for complex problems
+</code></pre>
+
+    <h2>Autonomous Agents</h2>
+
+    <h3>AutoGPT</h3>
+    <p>Fully autonomous agent that breaks down goals and executes tasks:</p>
+    <ul>
+      <li><strong>Goal Setting:</strong> User provides high-level objective</li>
+      <li><strong>Self-prompting:</strong> Generates own sub-tasks</li>
+      <li><strong>Memory:</strong> Stores results in vector DB</li>
+      <li><strong>Iteration:</strong> Continues until goal achieved or budget exhausted</li>
+    </ul>
+
+    <h3>BabyAGI</h3>
+    <pre><code>Task management system:
+
+1. Pull task from priority queue
+2. Execute task with LLM + tools
+3. Store result in memory
+4. Create new tasks based on result
+5. Reprioritize task queue
+6. Repeat
+
+Simpler than AutoGPT but effective
+</code></pre>
+
+    <h3>Challenges</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Challenge</th>
+          <th>Issue</th>
+          <th>Mitigation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Reliability</strong></td>
+          <td>Agents make mistakes</td>
+          <td>Human-in-the-loop, validation</td>
+        </tr>
+        <tr>
+          <td><strong>Cost</strong></td>
+          <td>Many LLM calls</td>
+          <td>Budgets, caching, smaller models</td>
+        </tr>
+        <tr>
+          <td><strong>Safety</strong></td>
+          <td>Unintended actions</td>
+          <td>Sandboxing, approval gates</td>
+        </tr>
+        <tr>
+          <td><strong>Infinite Loops</strong></td>
+          <td>Gets stuck repeating</td>
+          <td>Max iterations, loop detection</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Model Context Protocol (MCP)</h2>
+
+    <p>MCP is an open standard for connecting AI applications with data sources and tools, developed by Anthropic.</p>
+
+    <h3>MCP Architecture</h3>
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A["AI Application\n(Claude, ChatGPT)"] --> B[MCP Client]
+    B --> C[MCP Server: Database]
+    B --> D[MCP Server: Files]
+    B --> E[MCP Server: APIs]
+    C --> F[PostgreSQL]
+    D --> G[File System]
+    E --> H[External API]
+    
+    style A fill:#3b82f6
+    style B fill:#8b5cf6
+    style C fill:#ec4899
+    style D fill:#ec4899
+    style E fill:#ec4899
+      `} />
+    </div>
+
+    <h3>MCP Concepts</h3>
+    <ul>
+      <li><strong>Resources:</strong> Data sources (files, databases, APIs)</li>
+      <li><strong>Prompts:</strong> Reusable prompt templates</li>
+      <li><strong>Tools:</strong> Functions the AI can call</li>
+      <li><strong>Sampling:</strong> AI-generated completions</li>
+    </ul>
+
+    <h3>MCP Benefits</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Benefit</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Standardization</strong></td>
+          <td>One protocol for all integrations</td>
+        </tr>
+        <tr>
+          <td><strong>Reusability</strong></td>
+          <td>MCP servers work with any client</td>
+        </tr>
+        <tr>
+          <td><strong>Security</strong></td>
+          <td>Controlled access to resources</td>
+        </tr>
+        <tr>
+          <td><strong>Composability</strong></td>
+          <td>Combine multiple servers</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>MCP Example</h3>
+    <pre><code>{`MCP Server (Python):
+
+from mcp.server import Server
+from mcp.types import Tool
+
+app = Server("my-database")
+
+@app.list_tools()
+async def list_tools():
+    return [
+        Tool(
+            name="query_db",
+            description="Execute SQL query",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"}
+                }
+            }
+        )
+    ]
+
+@app.call_tool()
+async def call_tool(name: str, arguments: dict):
+    if name == "query_db":
+        # Execute query
+        return {"result": execute_sql(arguments["query"])}
+`}</code></pre>
+
+    <h2>Multi-Agent Systems</h2>
+
+    <h3>Agent Collaboration</h3>
+    <p>Multiple specialized agents working together:</p>
+    <ul>
+      <li><strong>Researcher:</strong> Gathers information</li>
+      <li><strong>Analyst:</strong> Processes and summarizes data</li>
+      <li><strong>Writer:</strong> Creates final output</li>
+      <li><strong>Critic:</strong> Reviews and provides feedback</li>
+    </ul>
+
+    <h3>Communication Patterns</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Pattern</th>
+          <th>How It Works</th>
+          <th>Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Sequential</strong></td>
+          <td>Agent A → Agent B → Agent C</td>
+          <td>Assembly line tasks</td>
+        </tr>
+        <tr>
+          <td><strong>Hierarchical</strong></td>
+          <td>Manager delegates to workers</td>
+          <td>Complex projects</td>
+        </tr>
+        <tr>
+          <td><strong>Debate</strong></td>
+          <td>Agents propose and critique</td>
+          <td>Decision making</td>
+        </tr>
+        <tr>
+          <td><strong>Cooperative</strong></td>
+          <td>Agents collaborate on shared goal</td>
+          <td>Problem solving</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Frameworks</h3>
+    <ul>
+      <li><strong>AutoGen:</strong> Microsoft's multi-agent framework</li>
+      <li><strong>CrewAI:</strong> Role-based agent teams</li>
+      <li><strong>MetaGPT:</strong> Software development agents</li>
+      <li><strong>ChatDev:</strong> Simulated software company</li>
+    </ul>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠️ Agent Safety Considerations</div>
+      <ul>
+        <li><strong>Sandboxing:</strong> Isolate agent execution environment</li>
+        <li><strong>Human Approval:</strong> Require confirmation for critical actions</li>
+        <li><strong>Budgets:</strong> Limit API calls and costs</li>
+        <li><strong>Monitoring:</strong> Log all actions for audit</li>
+        <li><strong>Rollback:</strong> Ability to undo agent actions</li>
+      </ul>
+    </div>
+
+    <h2>Key Terminology</h2>
+    <ul>
+      <li><strong>Agentic:</strong> Exhibiting goal-directed autonomous behavior</li>
+      <li><strong>Tool Augmentation:</strong> Extending LLM capabilities with external tools</li>
+      <li><strong>Scratchpad:</strong> Working memory for intermediate reasoning</li>
+      <li><strong>Reflection:</strong> Agent analyzing its own performance</li>
+      <li><strong>Orchestration:</strong> Coordinating multiple agents or tools</li>
+    </ul>
+
+    <h2>Summary</h2>
+    <div class="callout info">
+      <ul>
+        <li>AI agents autonomously perceive, reason, plan, and act to achieve goals</li>
+        <li>ReAct pattern interleaves reasoning and action for better results</li>
+        <li>Tool use/function calling extends LLM capabilities dramatically</li>
+        <li>Memory management critical: short-term, long-term, working memory</li>
+        <li>MCP provides standard protocol for connecting AI to resources</li>
+        <li>Multi-agent systems enable complex collaborative problem-solving</li>
+      </ul>
+    </div>
+
+    <h2>Review Questions</h2>
+    <ol>
+      <li>What are the key components of the agent loop?</li>
+      <li>How does ReAct improve upon standard prompting?</li>
+      <li>Explain the difference between short-term and long-term memory in agents.</li>
+      <li>What is the Model Context Protocol (MCP) and what problems does it solve?</li>
+      <li>Describe three communication patterns in multi-agent systems.</li>
+      <li>What are the main safety concerns with autonomous agents?</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+    <ol>
+      <li><strong>Build ReAct Agent:</strong>
+        <ul>
+          <li>Implement ReAct loop with search and calculator tools</li>
+          <li>Test on multi-step reasoning problems</li>
+          <li>Add error handling and retries</li>
+        </ul>
+      </li>
+      <li><strong>Function Calling:</strong>
+        <ul>
+          <li>Define tools for weather, calendar, email</li>
+          <li>Build agent that routes to appropriate tool</li>
+          <li>Implement parallel tool calling for efficiency</li>
+        </ul>
+      </li>
+      <li><strong>Multi-Agent System:</strong>
+        <ul>
+          <li>Create researcher, analyst, and writer agents</li>
+          <li>Implement communication protocol between agents</li>
+          <li>Build collaborative report generation pipeline</li>
+        </ul>
+      </li>
+    </ol>
 
   </article>
 </BaseLayout>

@@ -15,25 +15,510 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Running AI models in production requires specialized infrastructure. This chapter covers model serving, optimization techniques, distributed training, and deployment strategies.</p>
     </div>
 
-    <div class="callout warning">
-      <div class="callout-title">🚧 Content In Progress</div>
-      <p>This chapter is currently being developed. Check back soon for comprehensive content on AI infrastructure.</p>
+    <h2>AI Infrastructure Challenges</h2>
+    
+    <p>Running AI models in production requires specialized infrastructure to handle compute, memory, and latency requirements.</p>
+
+    <pre><code>{`Key Challenges:
+- Large models (7B-70B+ parameters)
+- High memory requirements (14GB-140GB+)
+- Expensive GPU compute ($1-5/hour)
+- Latency requirements (< 2 seconds)
+- Throughput demands (100s of requests/sec)
+- Cost optimization
+`}</code></pre>
+
+    <h2>Model Serving</h2>
+
+    <h3>Inference Servers</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Server</th>
+          <th>Key Features</th>
+          <th>Best For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>vLLM</strong></td>
+          <td>PagedAttention, continuous batching</td>
+          <td>High throughput</td>
+        </tr>
+        <tr>
+          <td><strong>TGI</strong></td>
+          <td>Hugging Face integration, streaming</td>
+          <td>HF models</td>
+        </tr>
+        <tr>
+          <td><strong>TensorRT-LLM</strong></td>
+          <td>NVIDIA optimization, FP8</td>
+          <td>Maximum performance</td>
+        </tr>
+        <tr>
+          <td><strong>Triton</strong></td>
+          <td>Multi-framework, model ensemble</td>
+          <td>Enterprise deployment</td>
+        </tr>
+        <tr>
+          <td><strong>Ollama</strong></td>
+          <td>Local deployment, easy setup</td>
+          <td>Development, edge</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>vLLM Architecture</h3>
+    <div class=\"diagram-container\">
+      <pre class=\"mermaid\">
+graph TB
+    A[Requests] --> B[Continuous Batching]
+    B --> C[PagedAttention]
+    C --> D[GPU Memory]
+    D --> E[KV Cache Blocks]
+    B --> F[Dynamic Scheduling]
+    F --> G[High Throughput]
+    
+    style C fill:#3b82f6
+    style E fill:#8b5cf6
+    style G fill:#10b981
+      </pre>
     </div>
 
-    <h2>Topics to be Covered</h2>
-    
+    <h3>PagedAttention</h3>
+    <pre><code>Problem: KV cache is large and fragmented
+Solution: Page KV cache like virtual memory
+
+Traditional:
+  - Allocate max sequence length upfront
+  - Wastes memory on short sequences
+  - Internal fragmentation
+
+PagedAttention:
+  - Allocate in small blocks (pages)
+  - Share blocks across sequences
+  - 2-4x higher throughput!
+</code></pre>
+
+    <h2>Quantization</h2>
+
+    <p>Reduce model size and memory by using lower precision:</p>
+
+    <h3>Quantization Methods</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Precision</th>
+          <th>Size Reduction</th>
+          <th>Quality</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FP32 (Baseline)</strong></td>
+          <td>32-bit float</td>
+          <td>1x</td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <td><strong>FP16</strong></td>
+          <td>16-bit float</td>
+          <td>2x</td>
+          <td>~100%</td>
+        </tr>
+        <tr>
+          <td><strong>INT8</strong></td>
+          <td>8-bit integer</td>
+          <td>4x</td>
+          <td>95-99%</td>
+        </tr>
+        <tr>
+          <td><strong>INT4</strong></td>
+          <td>4-bit integer</td>
+          <td>8x</td>
+          <td>90-95%</td>
+        </tr>
+        <tr>
+          <td><strong>NF4</strong></td>
+          <td>4-bit normalized float</td>
+          <td>8x</td>
+          <td>92-97%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Quantization Techniques</h3>
     <ul>
-      <li><strong>Model Serving</strong> - vLLM, TensorRT, TGI, and inference servers</li>
-      <li><strong>Quantization</strong> - GPTQ, AWQ, and reducing model size</li>
-      <li><strong>Batching & Caching</strong> - Optimizing throughput and latency</li>
-      <li><strong>GPU Management</strong> - CUDA, multi-GPU, and hardware considerations</li>
-      <li><strong>Distributed Training</strong> - Data parallelism, model parallelism, ZeRO</li>
-      <li><strong>Cloud Platforms</strong> - AWS, Azure, GCP for AI workloads</li>
-      <li><strong>Cost Optimization</strong> - Efficient resource utilization</li>
+      <li><strong>GPTQ:</strong> Post-training quantization (4-bit, 8-bit)</li>
+      <li><strong>AWQ:</strong> Activation-aware weight quantization</li>
+      <li><strong>GGUF:</strong> Format for CPU inference (llama.cpp)</li>
+      <li><strong>bitsandbytes:</strong> 8-bit and NF4 quantization</li>
     </ul>
 
-    <h2>Coming Soon</h2>
-    <p>This chapter will include practical guides for deploying and optimizing AI models in production.</p>
+    <h3>Memory Savings Example</h3>
+    <pre><code>Llama-2-7B Model Size:
+
+FP32:  7B params × 4 bytes = 28 GB
+FP16:  7B params × 2 bytes = 14 GB
+INT8:  7B params × 1 byte  = 7 GB
+INT4:  7B params × 0.5 byte = 3.5 GB
+
+Plus KV cache, activations, etc.
+</code></pre>
+
+    <h2>Batching Strategies</h2>
+
+    <h3>Static Batching</h3>
+    <pre><code>Wait for N requests, process together
+
+Pros: Simple, good GPU utilization
+Cons: Adds latency, head-of-line blocking
+</code></pre>
+
+    <h3>Continuous Batching</h3>
+    <pre><code>Add/remove requests dynamically
+
+Time    Batch
+0ms     [A, B, C]
+50ms    [A, B, D]    (C finished, D added)
+100ms   [A, D, E]    (B finished, E added)
+
+Benefits:
+- No waiting for batch to fill
+- Higher throughput
+- Lower latency
+</code></pre>
+
+    <h3>Speculative Decoding</h3>
+    <pre><code>Use small \"draft\" model to predict tokens:
+
+1. Draft model generates K tokens quickly
+2. Large model verifies in parallel
+3. Accept correct tokens, reject & retry incorrect
+
+Speedup: 2-3x for compatible models
+</code></pre>
+
+    <h2>Caching</h2>
+
+    <h3>KV Cache Sharing</h3>
+    <pre><code>Share cached key-value pairs across requests:
+
+Prompt: \"Translate to French: [text]\"
+        └─ Common prefix can be cached
+
+Benefits:
+- Reduced computation
+- Lower latency for repeated prompts
+- Memory efficient with PagedAttention
+</code></pre>
+
+    <h3>Semantic Caching</h3>
+    <pre><code>Cache responses for similar queries:
+
+\"What is AI?\" → [Embedding] → Check similarity
+If match found (>0.95), return cached response
+
+Tools: Redis, Momento, GPTCache
+</code></pre>
+
+    <h2>GPU Management</h2>
+
+    <h3>GPU Architecture</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>GPU</th>
+          <th>Memory</th>
+          <th>FP16 TFLOPS</th>
+          <th>Price Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>A100 (40GB)</strong></td>
+          <td>40 GB</td>
+          <td>312</td>
+          <td>$$$</td>
+        </tr>
+        <tr>
+          <td><strong>A100 (80GB)</strong></td>
+          <td>80 GB</td>
+          <td>312</td>
+          <td>$$$$</td>
+        </tr>
+        <tr>
+          <td><strong>H100</strong></td>
+          <td>80 GB</td>
+          <td>989</td>
+          <td>$$$$$</td>
+        </tr>
+        <tr>
+          <td><strong>RTX 4090</strong></td>
+          <td>24 GB</td>
+          <td>165</td>
+          <td>$$</td>
+        </tr>
+        <tr>
+          <td><strong>L4</strong></td>
+          <td>24 GB</td>
+          <td>121</td>
+          <td>$$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Multi-GPU Strategies</h3>
+    <ul>
+      <li><strong>Tensor Parallelism:</strong> Split model layers across GPUs</li>
+      <li><strong>Pipeline Parallelism:</strong> Different GPUs handle different layers</li>
+      <li><strong>Data Parallelism:</strong> Replicate model, split data</li>
+      <li><strong>Hybrid:</strong> Combine multiple approaches</li>
+    </ul>
+
+    <div class=\"diagram-container\">
+      <pre class=\"mermaid\">
+graph LR
+    A[Input] --> B[\"GPU 1\
+(Layers 1-8)\"]
+    B --> C[\"GPU 2\
+(Layers 9-16)\"]
+    C --> D[\"GPU 3\
+(Layers 17-24)\"]
+    D --> E[\"GPU 4\
+(Layers 25-32)\"]
+    E --> F[Output]
+    
+    style B fill:#3b82f6
+    style C fill:#8b5cf6
+    style D fill:#ec4899
+    style E fill:#10b981
+      </pre>
+    </div>
+
+    <h2>Distributed Training</h2>
+
+    <h3>Data Parallelism</h3>
+    <pre><code>Each GPU has full model copy, processes different data:
+
+GPU 0: Model copy → Batch 0 → Gradients
+GPU 1: Model copy → Batch 1 → Gradients
+GPU 2: Model copy → Batch 2 → Gradients
+GPU 3: Model copy → Batch 3 → Gradients
+        ↓
+    All-Reduce gradients
+        ↓
+    Update all model copies
+</code></pre>
+
+    <h3>ZeRO (Zero Redundancy Optimizer)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Stage</th>
+          <th>What's Sharded</th>
+          <th>Memory Saving</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ZeRO-1</strong></td>
+          <td>Optimizer states</td>
+          <td>4x</td>
+        </tr>
+        <tr>
+          <td><strong>ZeRO-2</strong></td>
+          <td>+ Gradients</td>
+          <td>8x</td>
+        </tr>
+        <tr>
+          <td><strong>ZeRO-3</strong></td>
+          <td>+ Model parameters</td>
+          <td>Linear with GPUs</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>DeepSpeed & FSDP</h3>
+    <ul>
+      <li><strong>DeepSpeed:</strong> Microsoft's training optimization library</li>
+      <li><strong>FSDP:</strong> PyTorch Fully Sharded Data Parallel</li>
+      <li>Both implement ZeRO and other optimizations</li>
+      <li>Enable training 100B+ parameter models</li>
+    </ul>
+
+    <h2>Cloud Platforms</h2>
+
+    <h3>Major Providers</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>GPU Options</th>
+          <th>AI Services</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>AWS</strong></td>
+          <td>P4, P5 (H100), G5</td>
+          <td>SageMaker, Bedrock</td>
+        </tr>
+        <tr>
+          <td><strong>Azure</strong></td>
+          <td>NC, ND (A100, H100)</td>
+          <td>Azure ML, OpenAI Service</td>
+        </tr>
+        <tr>
+          <td><strong>GCP</strong></td>
+          <td>A2, A3 (A100, H100)</td>
+          <td>Vertex AI</td>
+        </tr>
+        <tr>
+          <td><strong>Lambda Labs</strong></td>
+          <td>A100, H100</td>
+          <td>GPU cloud</td>
+        </tr>
+        <tr>
+          <td><strong>RunPod</strong></td>
+          <td>RTX 4090, A100</td>
+          <td>Serverless GPUs</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Serverless Options</h3>
+    <ul>
+      <li><strong>Modal:</strong> Serverless compute for AI</li>
+      <li><strong>Replicate:</strong> Run models via API</li>
+      <li><strong>Banana:</strong> ML inference hosting</li>
+      <li><strong>Together AI:</strong> Inference and training</li>
+    </ul>
+
+    <h2>Cost Optimization</h2>
+
+    <h3>Strategies</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Strategy</th>
+          <th>Savings</th>
+          <th>Trade-off</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Quantization</strong></td>
+          <td>2-4x</td>
+          <td>Slight quality loss</td>
+        </tr>
+        <tr>
+          <td><strong>Smaller Models</strong></td>
+          <td>5-10x</td>
+          <td>Lower capability</td>
+        </tr>
+        <tr>
+          <td><strong>Batching</strong></td>
+          <td>2-5x throughput</td>
+          <td>Added latency</td>
+        </tr>
+        <tr>
+          <td><strong>Caching</strong></td>
+          <td>50-90%</td>
+          <td>Staleness risk</td>
+        </tr>
+        <tr>
+          <td><strong>Spot Instances</strong></td>
+          <td>60-80%</td>
+          <td>Can be interrupted</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Cost Calculation</h3>
+    <pre><code>Example: 7B model serving
+
+GPU: A100 40GB @ $2/hour
+Throughput: 1000 req/hour (with optimizations)
+
+Cost per 1000 requests = $2
+Cost per request = $0.002
+
+Optimizations:
+- Quantization (INT8) → Use L4 @ $0.50/hour → $0.0005/req
+- Batching → 2000 req/hour → $0.00025/req
+- Caching (50% hit rate) → $0.000125/req
+
+Total savings: 16x !
+</code></pre>
+
+    <div class=\"callout best-practice\">
+      <div class=\"callout-title\">✅ Infrastructure Best Practices</div>
+      <ul>
+        <li><strong>Start Small:</strong> Use smallest model that meets requirements</li>
+        <li><strong>Measure First:</strong> Profile before optimizing</li>
+        <li><strong>Cache Aggressively:</strong> Most queries are similar</li>
+        <li><strong>Use Managed Services:</strong> Unless scale justifies self-hosting</li>
+        <li><strong>Monitor Constantly:</strong> Track costs, latency, errors</li>
+      </ul>
+    </div>
+
+    <h2>Key Terminology</h2>
+    <ul>
+      <li><strong>Inference:</strong> Running model to generate predictions</li>
+      <li><strong>Throughput:</strong> Requests processed per unit time</li>
+      <li><strong>Latency:</strong> Time from request to response</li>
+      <li><strong>TFLOPS:</strong> Trillion floating-point operations per second</li>
+      <li><strong>KV Cache:</strong> Cached key-value pairs from attention mechanism</li>
+    </ul>
+
+    <h2>Summary</h2>
+    <div class=\"callout info\">
+      <ul>
+        <li>vLLM's PagedAttention enables 2-4x higher throughput</li>
+        <li>Quantization reduces model size 2-8x with minimal quality loss</li>
+        <li>Continuous batching improves throughput without latency penalty</li>
+        <li>Caching (KV and semantic) dramatically reduces costs</li>
+        <li>ZeRO enables training models that don't fit on single GPU</li>
+        <li>Cloud providers offer managed services for easier deployment</li>
+      </ul>
+    </div>
+
+    <h2>Review Questions</h2>
+    <ol>
+      <li>How does PagedAttention improve memory efficiency?</li>
+      <li>Compare the trade-offs of different quantization methods (INT8, INT4, NF4).</li>
+      <li>Explain continuous batching and why it's better than static batching.</li>
+      <li>What are the three stages of ZeRO and what does each shard?</li>
+      <li>How can caching reduce inference costs?</li>
+      <li>When should you use serverless vs dedicated GPU infrastructure?</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+    <ol>
+      <li><strong>Deploy with vLLM:</strong>
+        <ul>
+          <li>Set up vLLM server with Llama-2-7B</li>
+          <li>Benchmark throughput and latency</li>
+          <li>Compare with standard transformers inference</li>
+        </ul>
+      </li>
+      <li><strong>Quantization Experiment:</strong>
+        <ul>
+          <li>Quantize model to INT8 and INT4 with GPTQ/AWQ</li>
+          <li>Measure quality degradation on benchmark</li>
+          <li>Calculate memory savings and speed improvements</li>
+        </ul>
+      </li>
+      <li><strong>Cost Optimization:</strong>
+        <ul>
+          <li>Implement semantic caching layer</li>
+          <li>Measure cache hit rate over time</li>
+          <li>Calculate cost savings compared to no caching</li>
+        </ul>
+      </li>
+    </ol>
 
   </article>
 </BaseLayout>

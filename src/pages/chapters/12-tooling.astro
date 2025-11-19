@@ -15,25 +15,442 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>The AI ecosystem provides powerful tools and frameworks for building LLM applications. This chapter covers popular libraries, platforms, and development tools for AI engineering.</p>
     </div>
 
-    <div class="callout warning">
-      <div class="callout-title">🚧 Content In Progress</div>
-      <p>This chapter is currently being developed. Check back soon for comprehensive content on AI tooling.</p>
+    <h2>The AI Development Stack</h2>
+    
+    <p>The AI ecosystem provides specialized tools for every layer of LLM application development.</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[Application Layer<br/>Frontend, APIs] --> B[Orchestration Layer<br/>LangChain, LlamaIndex]
+    B --> C[Model Layer<br/>OpenAI, Anthropic, OSS]
+    B --> D[Data Layer<br/>Vector DBs, Caches]
+    B --> E[Observability<br/>LangSmith, Weights & Biases]
+    
+    style B fill:#3b82f6
+    style C fill:#8b5cf6
+    style D fill:#ec4899
+      `} />
     </div>
 
-    <h2>Topics to be Covered</h2>
-    
+    <h2>LangChain</h2>
+
+    <p>Comprehensive framework for building LLM applications with chains, agents, and memory.</p>
+
+    <h3>Core Concepts</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Purpose</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Chains</strong></td>
+          <td>Sequence of LLM calls</td>
+          <td>Prompt → LLM → Parser</td>
+        </tr>
+        <tr>
+          <td><strong>Agents</strong></td>
+          <td>Autonomous decision-making</td>
+          <td>ReAct, Plan-and-Execute</td>
+        </tr>
+        <tr>
+          <td><strong>Memory</strong></td>
+          <td>Conversation state</td>
+          <td>Buffer, Summary, Vector</td>
+        </tr>
+        <tr>
+          <td><strong>Tools</strong></td>
+          <td>External capabilities</td>
+          <td>Search, Calculator, APIs</td>
+        </tr>
+        <tr>
+          <td><strong>Retrievers</strong></td>
+          <td>Document retrieval</td>
+          <td>Vector, BM25, Hybrid</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>LangChain Example</h3>
+    <pre><code>{`from langchain.chat_models import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
+from langchain.chains import LLMChain
+
+# Define prompt
+prompt = ChatPromptTemplate.from_template(
+    "Explain {concept} in simple terms"
+)
+
+# Create chain
+llm = ChatOpenAI(model="gpt-4")
+chain = LLMChain(llm=llm, prompt=prompt)
+
+# Run
+result = chain.run(concept="quantum computing")
+`}</code></pre>
+
+    <h3>LangChain Expression Language (LCEL)</h3>
+    <pre><code>{`Modern LangChain with pipe operator:
+
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
+
+chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+
+result = chain.invoke("What is RAG?")
+`}</code></pre>
+
+    <h2>LlamaIndex</h2>
+
+    <p>Data framework focused on connecting LLMs with private/structured data.</p>
+
+    <h3>Key Features</h3>
     <ul>
-      <li><strong>LangChain</strong> - Building LLM applications with chains and agents</li>
-      <li><strong>LlamaIndex</strong> - Data frameworks for LLM applications</li>
-      <li><strong>Hugging Face</strong> - Models, datasets, and Transformers library</li>
-      <li><strong>Prompt Management</strong> - LangSmith, PromptLayer, and versioning</li>
-      <li><strong>Evaluation Tools</strong> - Testing and monitoring LLM applications</li>
-      <li><strong>Vector Database SDKs</strong> - Integration with vector stores</li>
-      <li><strong>AI Orchestration</strong> - Workflow management and deployment</li>
+      <li><strong>Data Connectors:</strong> 100+ integrations (PDFs, APIs, databases)</li>
+      <li><strong>Indexes:</strong> Vector, tree, keyword, graph indexes</li>
+      <li><strong>Query Engines:</strong> Flexible retrieval and synthesis</li>
+      <li><strong>Chat Engines:</strong> Conversational interfaces over data</li>
+      <li><strong>Agents:</strong> Data agents with tool use</li>
     </ul>
 
-    <h2>Coming Soon</h2>
-    <p>This chapter will include hands-on tutorials for using popular AI development tools and frameworks.</p>
+    <h3>LlamaIndex Example</h3>
+    <pre><code>from llama_index import VectorStoreIndex, SimpleDirectoryReader
+
+# Load documents
+documents = SimpleDirectoryReader('data').load_data()
+
+# Create index
+index = VectorStoreIndex.from_documents(documents)
+
+# Query
+query_engine = index.as_query_engine()
+response = query_engine.query("What are the main topics?")
+</code></pre>
+
+    <h3>LangChain vs LlamaIndex</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>LangChain</th>
+          <th>LlamaIndex</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Focus</strong></td>
+          <td>General LLM orchestration</td>
+          <td>Data indexing & retrieval</td>
+        </tr>
+        <tr>
+          <td><strong>Strength</strong></td>
+          <td>Agents, chains, integrations</td>
+          <td>Document Q&A, structured data</td>
+        </tr>
+        <tr>
+          <td><strong>Learning Curve</strong></td>
+          <td>Moderate</td>
+          <td>Easier for RAG</td>
+        </tr>
+        <tr>
+          <td><strong>Use When</strong></td>
+          <td>Complex workflows, agents</td>
+          <td>Knowledge bases, search</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Hugging Face Ecosystem</h2>
+
+    <h3>Hub</h3>
+    <p>Central repository for models, datasets, and spaces:</p>
+    <ul>
+      <li><strong>Models:</strong> 500K+ pre-trained models</li>
+      <li><strong>Datasets:</strong> 100K+ datasets for training/eval</li>
+      <li><strong>Spaces:</strong> ML demo hosting (Gradio, Streamlit)</li>
+      <li><strong>Model Cards:</strong> Documentation and metadata</li>
+    </ul>
+
+    <h3>Transformers Library</h3>
+    <pre><code>{`from transformers import pipeline
+
+# Use any model from Hub
+classifier = pipeline(
+    "sentiment-analysis",
+    model="distilbert-base-uncased-finetuned-sst-2-english"
+)
+
+result = classifier("I love this product!")
+# [{'label': 'POSITIVE', 'score': 0.9998}]
+`}</code></pre>
+
+    <h3>Key Libraries</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Library</th>
+          <th>Purpose</th>
+          <th>Features</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Transformers</strong></td>
+          <td>Model inference & training</td>
+          <td>10K+ models, easy API</td>
+        </tr>
+        <tr>
+          <td><strong>Datasets</strong></td>
+          <td>Data loading & processing</td>
+          <td>Lazy loading, streaming</td>
+        </tr>
+        <tr>
+          <td><strong>Accelerate</strong></td>
+          <td>Distributed training</td>
+          <td>Multi-GPU, mixed precision</td>
+        </tr>
+        <tr>
+          <td><strong>PEFT</strong></td>
+          <td>Parameter-efficient fine-tuning</td>
+          <td>LoRA, prefix tuning</td>
+        </tr>
+        <tr>
+          <td><strong>TRL</strong></td>
+          <td>Reinforcement learning</td>
+          <td>RLHF, DPO, PPO</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Prompt Management</h2>
+
+    <h3>Why Prompt Management?</h3>
+    <ul>
+      <li><strong>Version Control:</strong> Track prompt changes over time</li>
+      <li><strong>A/B Testing:</strong> Compare prompt variations</li>
+      <li><strong>Collaboration:</strong> Share prompts across team</li>
+      <li><strong>Monitoring:</strong> Track performance metrics</li>
+    </ul>
+
+    <h3>Tools</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Company</th>
+          <th>Key Features</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LangSmith</strong></td>
+          <td>LangChain</td>
+          <td>Tracing, evaluation, monitoring</td>
+        </tr>
+        <tr>
+          <td><strong>PromptLayer</strong></td>
+          <td>PromptLayer</td>
+          <td>Logging, versioning, analytics</td>
+        </tr>
+        <tr>
+          <td><strong>Helicone</strong></td>
+          <td>Helicone</td>
+          <td>Observability, caching, proxy</td>
+        </tr>
+        <tr>
+          <td><strong>Weights & Biases</strong></td>
+          <td>W&B</td>
+          <td>Experiment tracking, prompts</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>LangSmith Example</h3>
+    <pre><code>import os
+from langsmith import Client
+
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_API_KEY"] = "..."
+
+# All LangChain calls automatically logged!
+chain.invoke("question")
+
+# View in LangSmith dashboard:
+# - Execution traces
+# - Token usage
+# - Latency
+# - Costs
+</code></pre>
+
+    <h2>Evaluation & Testing</h2>
+
+    <h3>Evaluation Frameworks</h3>
+    <ul>
+      <li><strong>RAGAS:</strong> RAG-specific metrics (faithfulness, relevance)</li>
+      <li><strong>TruLens:</strong> LLM observability and evaluation</li>
+      <li><strong>DeepEval:</strong> Unit testing for LLM outputs</li>
+      <li><strong>PromptFoo:</strong> Prompt testing and comparison</li>
+    </ul>
+
+    <h3>Evaluation Approaches</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>How It Works</th>
+          <th>Pros/Cons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LLM-as-Judge</strong></td>
+          <td>Use LLM to evaluate outputs</td>
+          <td>✅ Scalable ❌ Expensive</td>
+        </tr>
+        <tr>
+          <td><strong>Human Eval</strong></td>
+          <td>Manual review</td>
+          <td>✅ Accurate ❌ Slow</td>
+        </tr>
+        <tr>
+          <td><strong>Metrics</strong></td>
+          <td>BLEU, ROUGE, BERTScore</td>
+          <td>✅ Fast ❌ Limited</td>
+        </tr>
+        <tr>
+          <td><strong>Unit Tests</strong></td>
+          <td>Assert expected outputs</td>
+          <td>✅ Deterministic ❌ Brittle</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Vector Database SDKs</h2>
+
+    <h3>Integration Examples</h3>
+    <pre><code>{`# Pinecone
+from pinecone import Pinecone
+pc = Pinecone(api_key="...")
+index = pc.Index("my-index")
+index.query(vector=[...], top_k=5)
+
+# Weaviate
+import weaviate
+client = weaviate.Client("http://localhost:8080")
+client.query.get("Article", ["title"]).with_near_text({"concepts": ["AI"]}).do()
+
+# Qdrant
+from qdrant_client import QdrantClient
+client = QdrantClient(url="http://localhost:6333")
+client.search(collection_name="docs", query_vector=[...], limit=5)
+
+# Chroma
+import chromadb
+client = chromadb.Client()
+collection = client.create_collection("docs")
+collection.query(query_texts=["AI agents"], n_results=5)
+`}</code></pre>
+
+    <h2>Other Essential Tools</h2>
+
+    <h3>Model Serving</h3>
+    <ul>
+      <li><strong>vLLM:</strong> High-throughput LLM inference</li>
+      <li><strong>Text Generation Inference (TGI):</strong> Hugging Face's server</li>
+      <li><strong>Ollama:</strong> Run LLMs locally (Mac, Linux, Windows)</li>
+      <li><strong>LM Studio:</strong> GUI for local LLM inference</li>
+    </ul>
+
+    <h3>Development Tools</h3>
+    <ul>
+      <li><strong>Cursor:</strong> AI-first code editor</li>
+      <li><strong>Continue:</strong> VS Code extension for coding assistants</li>
+      <li><strong>Jupyter:</strong> Interactive development & experimentation</li>
+      <li><strong>Gradio/Streamlit:</strong> Quick UI prototypes</li>
+    </ul>
+
+    <h3>Workflow Orchestration</h3>
+    <ul>
+      <li><strong>Airflow:</strong> Data pipeline orchestration</li>
+      <li><strong>Prefect:</strong> Modern workflow automation</li>
+      <li><strong>Temporal:</strong> Durable execution engine</li>
+      <li><strong>Modal:</strong> Serverless compute for AI</li>
+    </ul>
+
+    <div class="callout best-practice">
+      <div class="callout-title">✅ Tool Selection Tips</div>
+      <ul>
+        <li><strong>Start Simple:</strong> Use managed services before self-hosting</li>
+        <li><strong>Evaluate Fit:</strong> Match tool to your use case (RAG vs agents)</li>
+        <li><strong>Consider Lock-in:</strong> Prefer tools with standard APIs</li>
+        <li><strong>Check Community:</strong> Active maintenance and support</li>
+        <li><strong>Monitor Costs:</strong> Some tools expensive at scale</li>
+      </ul>
+    </div>
+
+    <h2>Key Terminology</h2>
+    <ul>
+      <li><strong>Orchestration:</strong> Coordinating multiple components in LLM applications</li>
+      <li><strong>Chain:</strong> Sequence of processing steps (prompt → LLM → parse)</li>
+      <li><strong>Tracing:</strong> Recording execution paths for debugging</li>
+      <li><strong>Model Hub:</strong> Repository of pre-trained models</li>
+      <li><strong>Pipeline:</strong> Pre-configured workflow for common tasks</li>
+    </ul>
+
+    <h2>Summary</h2>
+    <div class="callout info">
+      <ul>
+        <li>LangChain excels at complex orchestration and agent workflows</li>
+        <li>LlamaIndex specializes in data indexing and retrieval</li>
+        <li>Hugging Face provides massive ecosystem of models and datasets</li>
+        <li>Prompt management tools enable versioning and experimentation</li>
+        <li>Evaluation frameworks help measure and improve LLM quality</li>
+        <li>Choose tools based on your specific use case and scale</li>
+      </ul>
+    </div>
+
+    <h2>Review Questions</h2>
+    <ol>
+      <li>When would you choose LangChain over LlamaIndex and vice versa?</li>
+      <li>What are the key components of a LangChain application?</li>
+      <li>How does the Hugging Face Transformers library simplify model usage?</li>
+      <li>Why is prompt management important for production applications?</li>
+      <li>Compare different LLM evaluation approaches and their trade-offs.</li>
+      <li>What considerations should guide your choice of vector database?</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+    <ol>
+      <li><strong>Build with LangChain:</strong>
+        <ul>
+          <li>Create RAG chain with memory and chat history</li>
+          <li>Implement ReAct agent with custom tools</li>
+          <li>Add LangSmith tracing and analyze performance</li>
+        </ul>
+      </li>
+      <li><strong>Hugging Face Workflow:</strong>
+        <ul>
+          <li>Fine-tune model from Hub on custom dataset</li>
+          <li>Deploy model to Hugging Face Space</li>
+          <li>Create Gradio interface for inference</li>
+        </ul>
+      </li>
+      <li><strong>Evaluation Pipeline:</strong>
+        <ul>
+          <li>Set up RAGAS for RAG evaluation</li>
+          <li>Create test dataset with golden answers</li>
+          <li>Compare different retrieval strategies with metrics</li>
+        </ul>
+      </li>
+    </ol>
 
   </article>
 </BaseLayout>

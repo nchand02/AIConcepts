@@ -15,25 +15,457 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>RAG systems enhance LLMs by retrieving relevant information from knowledge bases before generating responses. This chapter covers RAG architecture, implementation patterns, and best practices.</p>
     </div>
 
-    <div class="callout warning">
-      <div class="callout-title">🚧 Content In Progress</div>
-      <p>This chapter is currently being developed. Check back soon for comprehensive content on RAG systems.</p>
-    </div>
-
-    <h2>Topics to be Covered</h2>
+    <h2>What is RAG?</h2>
     
+    <p><strong>Retrieval-Augmented Generation (RAG)</strong> combines information retrieval with LLM generation to provide accurate, grounded responses using external knowledge.</p>
+
+    <pre><code>Problem: LLMs have knowledge cutoff dates and can hallucinate
+Solution: Retrieve relevant information, add to prompt
+
+Traditional: User Query → LLM → Answer (may hallucinate)
+RAG:        User Query → Retrieve Context → LLM + Context → Grounded Answer
+</code></pre>
+
+    <h3>Why RAG?</h3>
     <ul>
-      <li><strong>RAG Fundamentals</strong> - Why RAG? Architecture and components</li>
-      <li><strong>Retrieval Strategies</strong> - Dense retrieval, sparse retrieval, hybrid approaches</li>
-      <li><strong>Document Processing</strong> - Chunking, preprocessing, and indexing</li>
-      <li><strong>Prompt Engineering for RAG</strong> - Context injection and prompt templates</li>
-      <li><strong>Advanced RAG Patterns</strong> - Query transformation, re-ranking, fusion</li>
-      <li><strong>Evaluation Metrics</strong> - Measuring RAG performance</li>
-      <li><strong>Production RAG Systems</strong> - Scaling, caching, and optimization</li>
+      <li><strong>Up-to-date Information:</strong> Access latest data without retraining</li>
+      <li><strong>Domain-Specific Knowledge:</strong> Private/proprietary data</li>
+      <li><strong>Reduce Hallucination:</strong> Ground answers in retrieved facts</li>
+      <li><strong>Cost-Effective:</strong> Cheaper than fine-tuning for many use cases</li>
+      <li><strong>Transparency:</strong> Can cite sources</li>
     </ul>
 
-    <h2>Coming Soon</h2>
-    <p>This chapter will include end-to-end examples of building production-ready RAG applications.</p>
+    <h2>RAG Architecture</h2>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[User Query] --> B[Query Embedding]
+    B --> C[Vector DB Search]
+    D[Document Corpus] --> E[Chunk & Embed]
+    E --> F[Vector Database]
+    C --> F
+    F --> G[Retrieved Context]
+    A --> H[LLM]
+    G --> H
+    H --> I[Generated Answer]
+    
+    style B fill:#3b82f6
+    style F fill:#8b5cf6
+    style H fill:#ec4899
+      `} />
+    </div>
+
+    <h3>Core Components</h3>
+    <ol>
+      <li><strong>Document Ingestion:</strong> Load, chunk, embed documents</li>
+      <li><strong>Vector Store:</strong> Index embeddings for fast retrieval</li>
+      <li><strong>Retriever:</strong> Find relevant context for query</li>
+      <li><strong>Generator:</strong> LLM generates answer using context</li>
+    </ol>
+
+    <h2>Document Processing</h2>
+
+    <h3>Chunking Strategies</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Strategy</th>
+          <th>Method</th>
+          <th>Pros</th>
+          <th>Cons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Fixed Size</strong></td>
+          <td>Split every N tokens</td>
+          <td>Simple, predictable</td>
+          <td>May break context</td>
+        </tr>
+        <tr>
+          <td><strong>Sentence-Based</strong></td>
+          <td>Split on sentences</td>
+          <td>Preserves meaning</td>
+          <td>Variable length</td>
+        </tr>
+        <tr>
+          <td><strong>Recursive</strong></td>
+          <td>Try paragraphs, sentences, then tokens</td>
+          <td>Respects structure</td>
+          <td>More complex</td>
+        </tr>
+        <tr>
+          <td><strong>Semantic</strong></td>
+          <td>Split on topic boundaries</td>
+          <td>Coherent chunks</td>
+          <td>Computationally expensive</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Chunk Size Considerations</h3>
+    <pre><code>Small Chunks (200-300 tokens):
+  ✅ Precise retrieval
+  ✅ Less noise
+  ❌ May lack context
+  ❌ More chunks to index
+
+Large Chunks (800-1000 tokens):
+  ✅ More context
+  ✅ Fewer chunks
+  ❌ Less precise
+  ❌ May exceed LLM context window
+  
+Sweet Spot: 400-600 tokens with 50-100 token overlap
+</code></pre>
+
+    <h3>Overlap Strategy</h3>
+    <pre><code>Chunk 1: [Tokens 0-500]
+Chunk 2: [Tokens 450-950]   ← 50 token overlap
+Chunk 3: [Tokens 900-1400]
+
+Prevents splitting across important boundaries
+</code></pre>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠️ Chunking Gotchas</div>
+      <ul>
+        <li><strong>Code:</strong> Don't split functions/classes mid-definition</li>
+        <li><strong>Tables:</strong> Keep headers with data rows</li>
+        <li><strong>Lists:</strong> Keep list items together when possible</li>
+        <li><strong>Markdown:</strong> Respect heading hierarchy</li>
+      </ul>
+    </div>
+
+    <h2>Retrieval Strategies</h2>
+
+    <h3>Dense Retrieval (Semantic)</h3>
+    <ul>
+      <li>Embed query and documents with same model</li>
+      <li>Cosine similarity in vector space</li>
+      <li>Captures semantic meaning</li>
+    </ul>
+
+    <h3>Sparse Retrieval (Keyword)</h3>
+    <ul>
+      <li>BM25, TF-IDF algorithms</li>
+      <li>Exact keyword matching</li>
+      <li>Good for specific terms (names, codes)</li>
+    </ul>
+
+    <h3>Hybrid Retrieval</h3>
+    <p>Combine dense + sparse for best results:</p>
+    <pre><code>1. Get top K from dense retrieval
+2. Get top K from sparse retrieval
+3. Fuse results using RRF (Reciprocal Rank Fusion):
+
+RRF_score(doc) = Σ 1/(k + rank_i(doc))
+
+Where k = 60 (typical), rank_i = rank in retrieval i
+</code></pre>
+
+    <h2>Advanced RAG Techniques</h2>
+
+    <h3>Query Transformation</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Technique</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Query Expansion</strong></td>
+          <td>Generate multiple versions</td>
+          <td>"AI safety" → add "alignment", "robustness"</td>
+        </tr>
+        <tr>
+          <td><strong>HyDE</strong></td>
+          <td>Generate hypothetical answer, use to retrieve</td>
+          <td>Query → LLM → fake answer → retrieve similar</td>
+        </tr>
+        <tr>
+          <td><strong>Step-back</strong></td>
+          <td>Ask more general question first</td>
+          <td>"What causes X?" → "What is X?"</td>
+        </tr>
+        <tr>
+          <td><strong>Multi-query</strong></td>
+          <td>Generate multiple perspectives</td>
+          <td>1 query → 3-5 variations → retrieve all</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Re-ranking</h3>
+    <p>Initial retrieval gets top 100, re-ranker refines to top 5:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Query] --> B[Fast Retrieval]
+    B --> C[Top 100 Docs]
+    C --> D[Re-ranker Model]
+    D --> E[Top 5 Docs]
+    E --> F[LLM]
+    
+    style B fill:#3b82f6
+    style D fill:#8b5cf6
+    style F fill:#ec4899
+      `} />
+    </div>
+
+    <ul>
+      <li><strong>Models:</strong> Cohere rerank, bge-reranker, ColBERT</li>
+      <li><strong>Cross-encoder:</strong> Query + document together (slow but accurate)</li>
+      <li><strong>Trade-off:</strong> Speed vs accuracy</li>
+    </ul>
+
+    <h3>Contextual Compression</h3>
+    <p>Remove irrelevant parts of retrieved documents:</p>
+    <ul>
+      <li>Extract only relevant sentences/paragraphs</li>
+      <li>Reduces context length for LLM</li>
+      <li>Lowers cost and latency</li>
+    </ul>
+
+    <h3>Agent-Based RAG</h3>
+    <p>Let LLM decide when/how to retrieve:</p>
+    <pre><code>1. User asks complex question
+2. LLM plans: "Need to retrieve X, then Y"
+3. Execute retrieval for X
+4. LLM processes X, then retrieves Y
+5. LLM synthesizes final answer
+
+Tool: ReAct (Reasoning + Acting) pattern
+</code></pre>
+
+    <h2>Prompt Engineering for RAG</h2>
+
+    <h3>Basic RAG Prompt</h3>
+    <pre><code>{`You are a helpful assistant. Answer the question based on the context below.
+
+Context:
+{retrieved_documents}
+
+Question: {user_query}
+
+Answer:`}</code></pre>
+
+    <h3>Advanced RAG Prompt</h3>
+    <pre><code>{`You are an expert assistant. Use the provided context to answer the question.
+
+Instructions:
+- Base your answer ONLY on the context provided
+- If the context doesn't contain the answer, say "I don't have enough information"
+- Cite the source document when making claims
+- Be concise but complete
+
+Context:
+[Document 1] {doc1_content}
+[Document 2] {doc2_content}
+[Document 3] {doc3_content}
+
+Question: {user_query}
+
+Answer with citations:`}</code></pre>
+
+    <div class="callout best-practice">
+      <div class="callout-title">✅ RAG Prompt Best Practices</div>
+      <ul>
+        <li>Explicitly instruct to use only provided context</li>
+        <li>Request citations/sources for transparency</li>
+        <li>Handle cases where context is insufficient</li>
+        <li>Put most relevant context near the end (recency bias)</li>
+        <li>Include document metadata (title, date, source)</li>
+      </ul>
+    </div>
+
+    <h2>RAG Evaluation</h2>
+
+    <h3>Retrieval Metrics</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>What it Measures</th>
+          <th>Formula</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Precision@K</strong></td>
+          <td>% of top K that are relevant</td>
+          <td>relevant_in_top_K / K</td>
+        </tr>
+        <tr>
+          <td><strong>Recall@K</strong></td>
+          <td>% of all relevant docs in top K</td>
+          <td>relevant_in_top_K / total_relevant</td>
+        </tr>
+        <tr>
+          <td><strong>MRR</strong></td>
+          <td>Mean Reciprocal Rank</td>
+          <td>1 / rank_of_first_relevant</td>
+        </tr>
+        <tr>
+          <td><strong>NDCG</strong></td>
+          <td>Normalized Discounted Cumulative Gain</td>
+          <td>Weighted by position</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Generation Metrics</h3>
+    <ul>
+      <li><strong>Faithfulness:</strong> Answer grounded in context? (LLM-as-judge)</li>
+      <li><strong>Answer Relevance:</strong> Addresses the question? (LLM-as-judge)</li>
+      <li><strong>Context Relevance:</strong> Retrieved context relevant? (LLM-as-judge)</li>
+    </ul>
+
+    <h3>End-to-End Frameworks</h3>
+    <ul>
+      <li><strong>RAGAS:</strong> Automated RAG evaluation metrics</li>
+      <li><strong>TruLens:</strong> RAG observability and evaluation</li>
+      <li><strong>Phoenix:</strong> LLM observability platform</li>
+    </ul>
+
+    <h2>RAG Tools & Frameworks</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Framework</th>
+          <th>Strengths</th>
+          <th>Best For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LangChain</strong></td>
+          <td>Comprehensive, many integrations</td>
+          <td>Complex workflows, agents</td>
+        </tr>
+        <tr>
+          <td><strong>LlamaIndex</strong></td>
+          <td>Index-focused, great docs</td>
+          <td>Document Q&A, knowledge bases</td>
+        </tr>
+        <tr>
+          <td><strong>Haystack</strong></td>
+          <td>Production-ready, modular</td>
+          <td>Enterprise deployments</td>
+        </tr>
+        <tr>
+          <td><strong>Semantic Kernel</strong></td>
+          <td>Microsoft, C#/.NET support</td>
+          <td>.NET ecosystems</td>
+        </tr>
+        <tr>
+          <td><strong>Canopy</strong></td>
+          <td>Pinecone-native, simple</td>
+          <td>Quick start with Pinecone</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Production Considerations</h2>
+
+    <h3>Performance Optimization</h3>
+    <ul>
+      <li><strong>Caching:</strong> Cache frequent queries and embeddings</li>
+      <li><strong>Async:</strong> Parallelize retrieval and embedding</li>
+      <li><strong>Batch Processing:</strong> Bulk embed documents</li>
+      <li><strong>Indexing:</strong> Pre-compute and optimize vector indices</li>
+    </ul>
+
+    <h3>Cost Management</h3>
+    <pre><code>Cost = Embedding Cost + Vector DB Cost + LLM Cost
+
+Optimization:
+- Use smaller/cheaper embedding models (384d vs 1536d)
+- Quantize vectors (8-bit instead of 32-bit float)
+- Limit retrieved chunks (top 3 vs top 10)
+- Cache results for common queries
+</code></pre>
+
+    <h3>Monitoring</h3>
+    <ul>
+      <li><strong>Latency:</strong> P50, P95, P99 retrieval and generation times</li>
+      <li><strong>Quality:</strong> User feedback, thumbs up/down</li>
+      <li><strong>Retrieval:</strong> How often is context relevant?</li>
+      <li><strong>Errors:</strong> Hallucinations, refusals, timeouts</li>
+    </ul>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠️ Common RAG Pitfalls</div>
+      <ul>
+        <li><strong>Poor Chunking:</strong> Splits context mid-thought</li>
+        <li><strong>Too Many Chunks:</strong> Exceeds LLM context window</li>
+        <li><strong>Irrelevant Retrieval:</strong> Poor embedding model or query formulation</li>
+        <li><strong>Stale Data:</strong> Forgetting to update index</li>
+        <li><strong>No Fallback:</strong> LLM uses parametric knowledge when retrieval fails</li>
+      </ul>
+    </div>
+
+    <h2>Key Terminology</h2>
+    <ul>
+      <li><strong>Grounding:</strong> Basing LLM output on retrieved facts</li>
+      <li><strong>Hallucination:</strong> LLM generating false information</li>
+      <li><strong>Dense Passage Retrieval (DPR):</strong> Embedding-based retrieval</li>
+      <li><strong>Context Window:</strong> Maximum tokens LLM can process</li>
+      <li><strong>Prompt Stuffing:</strong> Adding retrieved context to prompt</li>
+    </ul>
+
+    <h2>Summary</h2>
+    <div class="callout info">
+      <ul>
+        <li>RAG combines retrieval and generation for grounded, up-to-date answers</li>
+        <li>Key components: document processing, vector store, retriever, generator</li>
+        <li>Chunking strategy critical: 400-600 tokens with overlap is common</li>
+        <li>Hybrid retrieval (dense + sparse) often outperforms either alone</li>
+        <li>Advanced techniques: query transformation, re-ranking, contextual compression</li>
+        <li>Evaluate both retrieval quality and generation faithfulness</li>
+      </ul>
+    </div>
+
+    <h2>Review Questions</h2>
+    <ol>
+      <li>What problems does RAG solve compared to using an LLM alone?</li>
+      <li>Why is chunk size important and what are typical ranges?</li>
+      <li>Explain the difference between dense and sparse retrieval. When would you use each?</li>
+      <li>How does re-ranking improve retrieval quality?</li>
+      <li>What metrics would you use to evaluate a RAG system's performance?</li>
+      <li>Describe a scenario where agent-based RAG would be beneficial.</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+    <ol>
+      <li><strong>Build Basic RAG:</strong>
+        <ul>
+          <li>Index a document corpus using LangChain or LlamaIndex</li>
+          <li>Implement query → retrieval → generation pipeline</li>
+          <li>Compare results with and without retrieval</li>
+        </ul>
+      </li>
+      <li><strong>Optimize Chunking:</strong>
+        <ul>
+          <li>Experiment with different chunk sizes (200, 400, 800 tokens)</li>
+          <li>Test with/without overlap</li>
+          <li>Measure retrieval precision for each configuration</li>
+        </ul>
+      </li>
+      <li><strong>Hybrid Retrieval:</strong>
+        <ul>
+          <li>Implement both dense (vector) and sparse (BM25) retrieval</li>
+          <li>Fuse results using RRF</li>
+          <li>Compare hybrid vs single-method retrieval quality</li>
+        </ul>
+      </li>
+    </ol>
 
   </article>
 </BaseLayout>

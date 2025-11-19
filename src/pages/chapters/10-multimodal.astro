@@ -15,25 +15,431 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Multimodal AI systems process and understand multiple types of data—text, images, audio, video. This chapter covers vision-language models, cross-modal understanding, and state-of-the-art multimodal systems.</p>
     </div>
 
-    <div class="callout warning">
-      <div class="callout-title">🚧 Content In Progress</div>
-      <p>This chapter is currently being developed. Check back soon for comprehensive content on multimodal AI.</p>
-    </div>
-
-    <h2>Topics to be Covered</h2>
+    <h2>What is Multimodal AI?</h2>
     
+    <p>Multimodal AI systems process and understand multiple types of data—text, images, audio, video—enabling richer interactions and cross-modal reasoning.</p>
+
+    <pre><code>Single Modality:   Text → LLM → Text
+Multimodal:        Image + Text → Model → Text
+                   Text → Model → Image
+                   Audio + Video → Model → Text
+</code></pre>
+
+    <h3>Why Multimodal Matters</h3>
     <ul>
-      <li><strong>Vision-Language Models</strong> - CLIP, ALIGN, and contrastive learning</li>
-      <li><strong>Image Understanding</strong> - GPT-4V, Gemini Vision, LLaVA</li>
-      <li><strong>Visual Question Answering</strong> - VQA architectures and techniques</li>
-      <li><strong>Image Captioning</strong> - Generating descriptions from images</li>
-      <li><strong>Video Understanding</strong> - Temporal reasoning and action recognition</li>
-      <li><strong>Audio-Visual Models</strong> - Speech and visual integration</li>
-      <li><strong>Multimodal Embeddings</strong> - Unified representation spaces</li>
+      <li><strong>Human Communication:</strong> We naturally use vision, speech, gesture</li>
+      <li><strong>Richer Context:</strong> Image contains information text cannot capture</li>
+      <li><strong>Cross-Modal Tasks:</strong> Image captioning, visual Q&A, text-to-image</li>
+      <li><strong>Real-World Applications:</strong> Accessibility, content moderation, robotics</li>
     </ul>
 
-    <h2>Coming Soon</h2>
-    <p>This chapter will include examples of building multimodal applications and understanding cross-modal reasoning.</p>
+    <h2>Vision-Language Models</h2>
+
+    <h3>CLIP (Contrastive Language-Image Pre-training)</h3>
+    <p>Learns joint embedding space for text and images through contrastive learning.</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[Image Batch] --> B[Image Encoder<br/>ViT or ResNet]
+    C[Text Batch] --> D[Text Encoder<br/>Transformer]
+    B --> E[Image Embeddings]
+    D --> F[Text Embeddings]
+    E --> G[Contrastive Loss<br/>Match pairs]
+    F --> G
+    
+    style B fill:#3b82f6
+    style D fill:#8b5cf6
+    style G fill:#ec4899
+      `} />
+    </div>
+
+    <h3>CLIP Training</h3>
+    <pre><code>Dataset: 400M image-text pairs from internet
+
+Objective: Maximize similarity for correct pairs,
+           minimize for incorrect pairs
+
+Contrastive Loss (InfoNCE):
+  L = -log(exp(sim(img_i, txt_i) / τ) / 
+        Σ_j exp(sim(img_i, txt_j) / τ))
+
+Result: Zero-shot classification, image search
+</code></pre>
+
+    <h3>CLIP Applications</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>How CLIP Helps</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Zero-shot Classification</strong></td>
+          <td>Compare image to class descriptions</td>
+          <td>"photo of a dog" vs "photo of a cat"</td>
+        </tr>
+        <tr>
+          <td><strong>Image Search</strong></td>
+          <td>Match text query to images</td>
+          <td>"mountain sunset" → relevant photos</td>
+        </tr>
+        <tr>
+          <td><strong>Content Moderation</strong></td>
+          <td>Find unsafe content</td>
+          <td>Query: "violent content"</td>
+        </tr>
+        <tr>
+          <td><strong>Image Generation</strong></td>
+          <td>Guide diffusion models</td>
+          <td>Stable Diffusion uses CLIP</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Other Vision-Language Models</h3>
+    <ul>
+      <li><strong>ALIGN:</strong> Google's version, 1.8B image-text pairs</li>
+      <li><strong>BLIP/BLIP-2:</strong> Bidirectional training for better understanding</li>
+      <li><strong>SigLIP:</strong> Improved CLIP with sigmoid loss</li>
+      <li><strong>OpenCLIP:</strong> Open-source CLIP implementation</li>
+    </ul>
+
+    <h2>Visual Language Models (VLMs)</h2>
+
+    <p>VLMs combine vision encoders with LLMs for image understanding and reasoning.</p>
+
+    <h3>Architecture Pattern</h3>
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Image] --> B[Vision Encoder<br/>CLIP/ViT]
+    B --> C[Projection Layer]
+    C --> D[Visual Tokens]
+    E[Text Input] --> F[LLM<br/>Llama/Mistral]
+    D --> F
+    F --> G[Text Output]
+    
+    style B fill:#3b82f6
+    style C fill:#8b5cf6
+    style F fill:#ec4899
+      `} />
+    </div>
+
+    <h3>Popular VLMs</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Company</th>
+          <th>Key Features</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>GPT-4V</strong></td>
+          <td>OpenAI</td>
+          <td>Strong reasoning, multiple images</td>
+        </tr>
+        <tr>
+          <td><strong>Gemini Vision</strong></td>
+          <td>Google</td>
+          <td>Native multimodal, video understanding</td>
+        </tr>
+        <tr>
+          <td><strong>Claude 3</strong></td>
+          <td>Anthropic</td>
+          <td>High accuracy, long context</td>
+        </tr>
+        <tr>
+          <td><strong>LLaVA</strong></td>
+          <td>Open-source</td>
+          <td>Instruction-following, efficient</td>
+        </tr>
+        <tr>
+          <td><strong>Qwen-VL</strong></td>
+          <td>Alibaba</td>
+          <td>Multilingual, grounding</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Image Understanding Tasks</h2>
+
+    <h3>Visual Question Answering (VQA)</h3>
+    <pre><code>Input:  Image + Question
+Output: Answer
+
+Example:
+Image:  [Photo of a beach]
+Q:      "What is the weather like?"
+A:      "It appears to be sunny with clear skies"
+
+Challenges:
+- Requires visual perception + reasoning
+- Compositional understanding (counting, spatial)
+- Common sense knowledge
+</code></pre>
+
+    <h3>Image Captioning</h3>
+    <pre><code>Input:  Image
+Output: Natural language description
+
+Example:
+Image:  [Photo of dog in park]
+Caption: "A golden retriever playing with a ball 
+          in a grassy park on a sunny day"
+
+Evaluation Metrics:
+- BLEU: N-gram overlap
+- CIDEr: Consensus-based
+- SPICE: Semantic similarity
+</code></pre>
+
+    <h3>Optical Character Recognition (OCR)</h3>
+    <ul>
+      <li><strong>Traditional OCR:</strong> Tesseract, specialized models</li>
+      <li><strong>VLM OCR:</strong> GPT-4V, Gemini can read text in images</li>
+      <li><strong>Document Understanding:</strong> Parse receipts, forms, invoices</li>
+    </ul>
+
+    <h3>Object Detection & Grounding</h3>
+    <pre><code>Object Detection: "What objects are in the image?"
+Grounding: "Where is the red car?" → Bounding box
+
+Methods:
+- Specialized models: YOLO, DINO, SAM
+- VLMs with location: Qwen-VL, Kosmos-2
+</code></pre>
+
+    <h2>Video Understanding</h2>
+
+    <p>Extending visual understanding to temporal dimension:</p>
+
+    <h3>Video LLMs</h3>
+    <ul>
+      <li><strong>Gemini 1.5:</strong> Native video understanding, 1M token context</li>
+      <li><strong>Video-LLaMA:</strong> Open-source video Q&A</li>
+      <li><strong>Video-ChatGPT:</strong> Spatio-temporal reasoning</li>
+    </ul>
+
+    <h3>Video Tasks</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Action Recognition</strong></td>
+          <td>Classify activity in video</td>
+          <td>"person is playing basketball"</td>
+        </tr>
+        <tr>
+          <td><strong>Video Captioning</strong></td>
+          <td>Describe what's happening</td>
+          <td>"A chef is preparing pasta..."</td>
+        </tr>
+        <tr>
+          <td><strong>Temporal Reasoning</strong></td>
+          <td>Understand sequence of events</td>
+          <td>"What happened after the goal?"</td>
+        </tr>
+        <tr>
+          <td><strong>Video Q&A</strong></td>
+          <td>Answer questions about video</td>
+          <td>"How many people are in the scene?"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Challenges</h3>
+    <ul>
+      <li><strong>Temporal Reasoning:</strong> Understanding causality and sequence</li>
+      <li><strong>Long Videos:</strong> Context window limitations</li>
+      <li><strong>Efficiency:</strong> Processing many frames is expensive</li>
+      <li><strong>Audio-Visual Alignment:</strong> Sync speech with visuals</li>
+    </ul>
+
+    <h2>Audio & Speech</h2>
+
+    <h3>Speech Recognition</h3>
+    <ul>
+      <li><strong>Whisper:</strong> OpenAI's multilingual ASR model</li>
+      <li><strong>Wav2Vec 2.0:</strong> Self-supervised speech representation</li>
+      <li><strong>Seamless M4T:</strong> Multilingual translation and speech</li>
+    </ul>
+
+    <h3>Audio-Visual Models</h3>
+    <pre><code>Combine audio and visual information:
+
+Example: AV-HuBERT
+- Learn from synchronized audio-video
+- Better speech recognition (lip reading)
+- Multimodal embeddings
+
+Use Cases:
+- Video dubbing
+- Speaker diarization (who is speaking?)
+- Emotion recognition (face + voice)
+</code></pre>
+
+    <h2>Multimodal Training Strategies</h2>
+
+    <h3>Contrastive Learning</h3>
+    <pre><code>Pull together: Matching pairs (image + caption)
+Push apart:    Non-matching pairs
+
+Used in: CLIP, ALIGN, ImageBind
+</code></pre>
+
+    <h3>Instruction Tuning</h3>
+    <pre><code>{`Multimodal instruction datasets:
+
+{
+  "image": "path/to/image.jpg",
+  "conversations": [
+    {"from": "human", "value": "What's in this image?"},
+    {"from": "assistant", "value": "The image shows..."}
+  ]
+}
+
+Examples: LLaVA-Instruct, ShareGPT4V
+`}</code></pre>
+
+    <h3>Alignment Techniques</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Approach</th>
+          <th>Used By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Projection Layer</strong></td>
+          <td>Linear mapping from vision to LLM space</td>
+          <td>LLaVA, MiniGPT-4</td>
+        </tr>
+        <tr>
+          <td><strong>Q-Former</strong></td>
+          <td>Learnable queries extract visual features</td>
+          <td>BLIP-2, InstructBLIP</td>
+        </tr>
+        <tr>
+          <td><strong>Cross-Attention</strong></td>
+          <td>Attend between modalities</td>
+          <td>Flamingo, PALM-E</td>
+        </tr>
+        <tr>
+          <td><strong>Native Multimodal</strong></td>
+          <td>Trained from scratch on multiple modalities</td>
+          <td>Gemini, Chameleon</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Building Multimodal Applications</h2>
+
+    <h3>Using Vision APIs</h3>
+    <pre><code>{`OpenAI GPT-4V Example:
+
+response = client.chat.completions.create(
+  model="gpt-4-vision-preview",
+  messages=[{
+    "role": "user",
+    "content": [
+      {"type": "text", "text": "What's in this image?"},
+      {"type": "image_url", "image_url": {"url": image_url}}
+    ]
+  }]
+)
+`}</code></pre>
+
+    <h3>Local VLM Inference</h3>
+    <pre><code>Using LLaVA with Transformers:
+
+from transformers import LlavaNextProcessor, LlavaNextForConditionalGeneration
+
+model = LlavaNextForConditionalGeneration.from_pretrained("llava-hf/llava-v1.6-mistral-7b-hf")
+processor = LlavaNextProcessor.from_pretrained("llava-hf/llava-v1.6-mistral-7b-hf")
+
+prompt = "What is shown in this image?"
+inputs = processor(prompt, image, return_tensors="pt")
+output = model.generate(**inputs)
+</code></pre>
+
+    <div class="callout best-practice">
+      <div class="callout-title">✅ Multimodal Best Practices</div>
+      <ul>
+        <li><strong>Image Quality:</strong> Higher resolution → better understanding</li>
+        <li><strong>Prompt Clarity:</strong> Be specific about what you want to know</li>
+        <li><strong>Context:</strong> Provide relevant context with the image</li>
+        <li><strong>Fallbacks:</strong> Have text-only backup for when vision fails</li>
+        <li><strong>Privacy:</strong> Be careful with sensitive visual data</li>
+      </ul>
+    </div>
+
+    <h2>Key Terminology</h2>
+    <ul>
+      <li><strong>Vision Encoder:</strong> Neural network that processes images into embeddings</li>
+      <li><strong>Contrastive Learning:</strong> Training by comparing similar vs dissimilar pairs</li>
+      <li><strong>Visual Tokens:</strong> Image representation fed to LLM</li>
+      <li><strong>Cross-Modal:</strong> Bridging between different modalities (text↔image)</li>
+      <li><strong>Grounding:</strong> Locating objects/regions in images</li>
+    </ul>
+
+    <h2>Summary</h2>
+    <div class="callout info">
+      <ul>
+        <li>Multimodal AI processes text, images, audio, and video together</li>
+        <li>CLIP learns joint embeddings through contrastive learning</li>
+        <li>VLMs combine vision encoders with LLMs for image understanding</li>
+        <li>Major VLMs: GPT-4V, Gemini Vision, Claude 3, LLaVA</li>
+        <li>Tasks include VQA, captioning, OCR, video understanding</li>
+        <li>Alignment techniques: projection layers, Q-Former, cross-attention</li>
+      </ul>
+    </div>
+
+    <h2>Review Questions</h2>
+    <ol>
+      <li>How does CLIP achieve zero-shot image classification?</li>
+      <li>Explain the architecture of a typical VLM (vision-language model).</li>
+      <li>What are the main challenges in video understanding compared to single images?</li>
+      <li>Describe three different methods for aligning vision and language modalities.</li>
+      <li>What metrics are used to evaluate image captioning quality?</li>
+      <li>How do audio-visual models improve speech recognition?</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+    <ol>
+      <li><strong>CLIP Exploration:</strong>
+        <ul>
+          <li>Use OpenCLIP to embed images and text</li>
+          <li>Build zero-shot image classifier with custom labels</li>
+          <li>Implement image search with text queries</li>
+        </ul>
+      </li>
+      <li><strong>VLM Application:</strong>
+        <ul>
+          <li>Use GPT-4V or LLaVA for visual question answering</li>
+          <li>Build document OCR and extraction system</li>
+          <li>Create image captioning pipeline with quality metrics</li>
+        </ul>
+      </li>
+      <li><strong>Video Analysis:</strong>
+        <ul>
+          <li>Extract key frames from video</li>
+          <li>Use VLM to caption each frame</li>
+          <li>Generate video summary from frame captions</li>
+        </ul>
+      </li>
+    </ol>
 
   </article>
 </BaseLayout>
