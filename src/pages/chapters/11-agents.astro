@@ -308,7 +308,7 @@ Simpler than AutoGPT but effective
 
     <h2>Model Context Protocol (MCP)</h2>
 
-    <p>MCP is an open standard for connecting AI applications with data sources and tools, developed by Anthropic.</p>
+    <p>MCP is an emerging open standard (announced late 2023) for connecting AI applications with data sources and tools, developed by Anthropic. Adoption is growing across the AI ecosystem as of 2024.</p>
 
     <h3>MCP Architecture</h3>
     <div class="diagram-container">
@@ -456,6 +456,18 @@ async def call_tool(name: str, arguments: dict):
         <li><strong>Monitoring:</strong> Log all actions for audit</li>
         <li><strong>Rollback:</strong> Ability to undo agent actions</li>
       </ul>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-title">🚨 CRITICAL: Production Readiness</div>
+      <p><strong>Autonomous agents are NOT production-ready for mission-critical applications.</strong></p>
+      <ul>
+        <li><strong>Reliability:</strong> Even SOTA models have 10-30% task failure rates on complex multi-step problems</li>
+        <li><strong>Hallucination:</strong> Agents can confidently execute incorrect plans</li>
+        <li><strong>Cost:</strong> Unconstrained agents can rack up thousands of dollars in API costs</li>
+        <li><strong>Security:</strong> Prompt injection and tool misuse are active research problems</li>
+      </ul>
+      <p><strong>Best Practice:</strong> Use agents for non-critical tasks, internal tools, or with heavy human oversight. For critical applications, use deterministic workflows with LLMs as components, not autonomous decision-makers.</p>
     </div>
 
     <h2>Key Terminology</h2>
