@@ -15,25 +15,525 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Generative AI encompasses models that create new content—images, text, audio, and more. This chapter covers GANs, VAEs, diffusion models, and the technologies behind DALL-E, Stable Diffusion, and Midjourney.</p>
     </div>
 
-    <div class="callout warning">
-      <div class="callout-title">🚧 Content In Progress</div>
-      <p>This chapter is currently being developed. Check back soon for comprehensive content on generative AI models and techniques.</p>
-    </div>
-
-    <h2>Topics to be Covered</h2>
+    <h2>What is Generative AI?</h2>
     
+    <p>Generative AI creates new content (images, text, audio, video) by learning patterns from training data. Unlike discriminative models that classify, generative models learn the underlying distribution of data to sample new instances.</p>
+
+    <h3>Key Characteristics</h3>
     <ul>
-      <li><strong>Generative Adversarial Networks (GANs)</strong> - Architecture, training dynamics, and applications</li>
-      <li><strong>Variational Autoencoders (VAEs)</strong> - Latent space modeling and generation</li>
-      <li><strong>Diffusion Models</strong> - DDPM, DDIM, and stable diffusion</li>
-      <li><strong>Text-to-Image Generation</strong> - DALL-E, Stable Diffusion, Midjourney</li>
-      <li><strong>Image-to-Image Translation</strong> - Style transfer and conditional generation</li>
-      <li><strong>Audio Generation</strong> - Music and speech synthesis</li>
-      <li><strong>Video Generation</strong> - Temporal consistency and coherence</li>
+      <li><strong>Content Creation:</strong> Generate novel data similar to training examples</li>
+      <li><strong>Distribution Learning:</strong> Model probability distributions P(X)</li>
+      <li><strong>Conditional Generation:</strong> Generate based on input conditions (prompts, images)</li>
+      <li><strong>Controllability:</strong> Guide generation with various control mechanisms</li>
     </ul>
 
-    <h2>Coming Soon</h2>
-    <p>This chapter will include detailed explanations, code examples, and practical applications of generative AI technologies.</p>
+    <h2>Generative Adversarial Networks (GANs)</h2>
+
+    <p>GANs consist of two networks competing in a minimax game:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Random Noise z] --> B[Generator G]
+    B --> C[Fake Image]
+    D[Real Images] --> E[Discriminator D]
+    C --> E
+    E --> F[Real/Fake Classification]
+    F --> G[Loss]
+    G --> B
+    G --> E
+    
+    style B fill:#3b82f6
+    style E fill:#ec4899
+      `} />
+    </div>
+
+    <h3>GAN Training Objective</h3>
+    <pre><code>{`min_G max_D V(D,G) = E_x[log D(x)] + E_z[log(1 - D(G(z)))]
+
+Generator: Minimize discriminator's ability to detect fakes
+Discriminator: Maximize ability to distinguish real from fake`}
+</code></pre>
+
+    <h3>Popular GAN Architectures</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Architecture</th>
+          <th>Year</th>
+          <th>Innovation</th>
+          <th>Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>DCGAN</strong></td>
+          <td>2015</td>
+          <td>Convolutional architecture</td>
+          <td>Image generation</td>
+        </tr>
+        <tr>
+          <td><strong>StyleGAN</strong></td>
+          <td>2019</td>
+          <td>Style-based generator</td>
+          <td>High-quality faces</td>
+        </tr>
+        <tr>
+          <td><strong>CycleGAN</strong></td>
+          <td>2017</td>
+          <td>Unpaired image translation</td>
+          <td>Style transfer</td>
+        </tr>
+        <tr>
+          <td><strong>Pix2Pix</strong></td>
+          <td>2017</td>
+          <td>Conditional image-to-image</td>
+          <td>Image translation</td>
+        </tr>
+        <tr>
+          <td><strong>ProGAN</strong></td>
+          <td>2018</td>
+          <td>Progressive growing</td>
+          <td>High-resolution images</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>GAN Training Challenges</h3>
+    <ul>
+      <li><strong>Mode Collapse:</strong> Generator produces limited variety</li>
+      <li><strong>Training Instability:</strong> Difficult to balance G and D</li>
+      <li><strong>Vanishing Gradients:</strong> When D becomes too strong</li>
+      <li><strong>No Explicit Likelihood:</strong> Hard to evaluate quality objectively</li>
+    </ul>
+
+    <h2>Variational Autoencoders (VAEs)</h2>
+
+    <p>VAEs learn to encode data into a latent space and decode back, with probabilistic constraints.</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Input Image x] --> B[Encoder q]
+    B --> C[Latent z ~ N(μ,σ)]
+    C --> D[Decoder p]
+    D --> E[Reconstructed x']
+    C --> F[KL Divergence]
+    E --> G[Reconstruction Loss]
+    F --> H[Total Loss]
+    G --> H
+    
+    style B fill:#3b82f6
+    style C fill:#8b5cf6
+    style D fill:#ec4899
+      `} />
+    </div>
+
+    <h3>VAE Loss Function</h3>
+    <pre><code>{`L = Reconstruction Loss + KL Divergence
+
+L = E[log p(x|z)] - KL[q(z|x) || p(z)]
+
+Reconstruction: How well decoder recreates input
+KL Divergence: Regularizes latent space to N(0,1)`}
+</code></pre>
+
+    <h3>VAE vs GAN</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>VAE</th>
+          <th>GAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Training</strong></td>
+          <td>Stable, straightforward</td>
+          <td>Unstable, adversarial</td>
+        </tr>
+        <tr>
+          <td><strong>Output Quality</strong></td>
+          <td>Blurry, smooth</td>
+          <td>Sharp, realistic</td>
+        </tr>
+        <tr>
+          <td><strong>Latent Space</strong></td>
+          <td>Structured, continuous</td>
+          <td>Less structured</td>
+        </tr>
+        <tr>
+          <td><strong>Likelihood</strong></td>
+          <td>Explicit (lower bound)</td>
+          <td>Implicit</td>
+        </tr>
+        <tr>
+          <td><strong>Use Case</strong></td>
+          <td>Compression, interpolation</td>
+          <td>High-quality synthesis</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Diffusion Models</h2>
+
+    <p>Diffusion models generate data by learning to reverse a gradual noising process.</p>
+
+    <h3>Forward Process (Noising)</h3>
+    <pre><code>{`q(x_t | x_{t-1}) = N(x_t; √(1-β_t)·x_{t-1}, β_t·I)
+
+Start with real image x_0
+Gradually add Gaussian noise over T steps
+End with pure noise x_T ~ N(0,I)`}
+</code></pre>
+
+    <h3>Reverse Process (Denoising)</h3>
+    <pre><code>{`p_θ(x_{t-1} | x_t) = N(x_{t-1}; μ_θ(x_t, t), Σ_θ(x_t, t))
+
+Learn to predict noise at each step
+Iteratively denoise from x_T to x_0
+Generate new samples by sampling x_T and denoising`}
+</code></pre>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Real Image x_0] --> B[+ Noise]
+    B --> C[x_1]
+    C --> D[+ Noise]
+    D --> E[x_T Pure Noise]
+    E --> F[- Noise]
+    F --> G[x_{T-1}]
+    G --> H[- Noise]
+    H --> I[x_0 Generated]
+    
+    style A fill:#10b981
+    style E fill:#ef4444
+    style I fill:#3b82f6
+      `} />
+    </div>
+
+    <h3>Diffusion Model Variants</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Key Feature</th>
+          <th>Speed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>DDPM</strong></td>
+          <td>Original diffusion, 1000 steps</td>
+          <td>Slow</td>
+        </tr>
+        <tr>
+          <td><strong>DDIM</strong></td>
+          <td>Deterministic sampling, 50 steps</td>
+          <td>Fast</td>
+        </tr>
+        <tr>
+          <td><strong>Latent Diffusion</strong></td>
+          <td>Diffusion in latent space</td>
+          <td>Very fast</td>
+        </tr>
+        <tr>
+          <td><strong>Consistency Models</strong></td>
+          <td>1-step generation</td>
+          <td>Ultra fast</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Text-to-Image Generation</h2>
+
+    <h3>Stable Diffusion Architecture</h3>
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[Text Prompt] --> B[CLIP Text Encoder]
+    B --> C[Text Embeddings]
+    D[Random Noise] --> E[U-Net]
+    C --> E
+    E --> F[Denoised Latent]
+    F --> G[VAE Decoder]
+    G --> H[Generated Image]
+    
+    style B fill:#3b82f6
+    style E fill:#8b5cf6
+    style G fill:#ec4899
+      `} />
+    </div>
+
+    <h3>Key Components</h3>
+    <ul>
+      <li><strong>Text Encoder (CLIP):</strong> Converts text to embeddings</li>
+      <li><strong>U-Net:</strong> Predicts noise at each diffusion step</li>
+      <li><strong>VAE:</strong> Compresses/decompresses images to/from latent space</li>
+      <li><strong>Scheduler:</strong> Controls denoising schedule (β values)</li>
+    </ul>
+
+    <h3>Popular Text-to-Image Models</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Company</th>
+          <th>Architecture</th>
+          <th>Strengths</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>DALL-E 3</strong></td>
+          <td>OpenAI</td>
+          <td>Diffusion</td>
+          <td>Prompt following, text rendering</td>
+        </tr>
+        <tr>
+          <td><strong>Stable Diffusion</strong></td>
+          <td>Stability AI</td>
+          <td>Latent Diffusion</td>
+          <td>Open source, fast</td>
+        </tr>
+        <tr>
+          <td><strong>Midjourney</strong></td>
+          <td>Midjourney</td>
+          <td>Proprietary</td>
+          <td>Artistic style, aesthetics</td>
+        </tr>
+        <tr>
+          <td><strong>Imagen</strong></td>
+          <td>Google</td>
+          <td>Cascaded Diffusion</td>
+          <td>Photorealism</td>
+        </tr>
+        <tr>
+          <td><strong>Firefly</strong></td>
+          <td>Adobe</td>
+          <td>Diffusion</td>
+          <td>Commercial safety</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Prompt Engineering for Image Generation</h3>
+    <pre><code>{`Basic Prompt:
+"A cat sitting on a chair"
+
+Enhanced Prompt:
+"A fluffy orange tabby cat sitting on a vintage wooden chair, 
+soft natural lighting, bokeh background, detailed fur texture, 
+professional photography, 4K, trending on artstation"
+
+Key Elements:
+- Subject: What to generate
+- Style: Art style, photography type
+- Lighting: Natural, studio, dramatic
+- Quality: 4K, detailed, high resolution
+- Modifiers: Trending on artstation, by artist name`}
+</code></pre>
+
+    <h2>Advanced Techniques</h2>
+
+    <h3>ControlNet</h3>
+    <p>Adds spatial conditioning to diffusion models for precise control.</p>
+    <ul>
+      <li><strong>Edge Detection:</strong> Generate from Canny edges</li>
+      <li><strong>Pose Control:</strong> Use OpenPose skeleton</li>
+      <li><strong>Depth Maps:</strong> Control spatial layout</li>
+      <li><strong>Segmentation:</strong> Semantic region control</li>
+    </ul>
+
+    <h3>LoRA (Low-Rank Adaptation)</h3>
+    <pre><code>{`Fine-tune diffusion models with minimal parameters:
+
+Original weights: W (512×512 = 262K params)
+LoRA: W + ΔW = W + B·A
+      where A (512×8), B (8×512) = only 8K params!
+
+Benefits:
+- Fast training (minutes on consumer GPU)
+- Small file size (~5-50 MB)
+- Stackable (use multiple LoRAs together)
+- Preserves base model quality`}
+</code></pre>
+
+    <h3>Inpainting & Outpainting</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Technique</th>
+          <th>Description</th>
+          <th>Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Inpainting</strong></td>
+          <td>Fill masked regions</td>
+          <td>Remove objects, edit parts</td>
+        </tr>
+        <tr>
+          <td><strong>Outpainting</strong></td>
+          <td>Extend image beyond borders</td>
+          <td>Expand canvas, create panoramas</td>
+        </tr>
+        <tr>
+          <td><strong>Image-to-Image</strong></td>
+          <td>Transform existing image</td>
+          <td>Style transfer, variations</td>
+        </tr>
+        <tr>
+          <td><strong>Upscaling</strong></td>
+          <td>Increase resolution</td>
+          <td>Enhance details, enlarge</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Evaluation Metrics</h2>
+
+    <h3>Quantitative Metrics</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Measures</th>
+          <th>Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FID</strong></td>
+          <td>Fréchet Inception Distance</td>
+          <td>Lower = better</td>
+        </tr>
+        <tr>
+          <td><strong>IS</strong></td>
+          <td>Inception Score</td>
+          <td>Higher = better</td>
+        </tr>
+        <tr>
+          <td><strong>CLIP Score</strong></td>
+          <td>Text-image alignment</td>
+          <td>Higher = better</td>
+        </tr>
+        <tr>
+          <td><strong>LPIPS</strong></td>
+          <td>Perceptual similarity</td>
+          <td>Lower = more similar</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Qualitative Evaluation</h3>
+    <ul>
+      <li><strong>Visual Quality:</strong> Sharpness, realism, artifacts</li>
+      <li><strong>Prompt Adherence:</strong> Matches text description</li>
+      <li><strong>Diversity:</strong> Variety in generated samples</li>
+      <li><strong>Consistency:</strong> Coherence across generations</li>
+    </ul>
+
+    <div class="callout best-practice">
+      <div class="callout-title">✅ Best Practices</div>
+      <ul>
+        <li>Start with pre-trained models (Stable Diffusion, DALL-E)</li>
+        <li>Use negative prompts to exclude unwanted elements</li>
+        <li>Experiment with CFG scale (7-15 for balanced results)</li>
+        <li>Fine-tune with LoRA for specific styles or subjects</li>
+        <li>Batch generate multiple samples to select best output</li>
+      </ul>
+    </div>
+
+    <h2>Ethical Considerations</h2>
+
+    <h3>Key Concerns</h3>
+    <ul>
+      <li><strong>Copyright:</strong> Training on copyrighted images</li>
+      <li><strong>Deepfakes:</strong> Generating realistic fake content</li>
+      <li><strong>Bias:</strong> Reproducing stereotypes from training data</li>
+      <li><strong>Attribution:</strong> Crediting artists whose style is mimicked</li>
+      <li><strong>Misuse:</strong> NSFW content, misinformation</li>
+    </ul>
+
+    <h3>Safety Measures</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Measure</th>
+          <th>Implementation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Content Filtering</strong></td>
+          <td>NSFW detectors, blocked prompts</td>
+        </tr>
+        <tr>
+          <td><strong>Watermarking</strong></td>
+          <td>Invisible markers to identify AI-generated</td>
+        </tr>
+        <tr>
+          <td><strong>Model Cards</strong></td>
+          <td>Document training data, limitations</td>
+        </tr>
+        <tr>
+          <td><strong>Usage Policies</strong></td>
+          <td>Terms of service, acceptable use</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Summary</h2>
+
+    <div class="callout info">
+      <ul>
+        <li>Generative AI creates new content by learning data distributions</li>
+        <li>GANs use adversarial training but can be unstable</li>
+        <li>VAEs provide structured latent spaces with stable training</li>
+        <li>Diffusion models are current state-of-the-art for image generation</li>
+        <li>Text-to-image models combine diffusion with language understanding</li>
+        <li>ControlNet and LoRA enable fine-grained control</li>
+        <li>Ethical considerations around copyright and misuse are critical</li>
+      </ul>
+    </div>
+
+    <h2>Review Questions</h2>
+    <ol>
+      <li>Explain the difference between the generator and discriminator in a GAN. How do they interact during training?</li>
+      <li>What is mode collapse in GANs and how can it be addressed?</li>
+      <li>How does the loss function of a VAE balance reconstruction and regularization?</li>
+      <li>Describe the forward and reverse processes in diffusion models.</li>
+      <li>What are the key advantages of latent diffusion (Stable Diffusion) over pixel-space diffusion?</li>
+      <li>How does ControlNet provide additional control over image generation?</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+    <ol>
+      <li>
+        <strong>Generate Images with Stable Diffusion</strong>
+        <ul>
+          <li>Install Stable Diffusion (Automatic1111 or ComfyUI)</li>
+          <li>Experiment with different prompts and parameters</li>
+          <li>Compare results with different CFG scales and steps</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Fine-tune a LoRA</strong>
+        <ul>
+          <li>Collect 15-30 images of a specific subject or style</li>
+          <li>Train a LoRA using Kohya or similar tool</li>
+          <li>Test the LoRA with various prompts</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Implement Image Evaluation</strong>
+        <ul>
+          <li>Generate 100 images with different prompts</li>
+          <li>Calculate FID and CLIP scores</li>
+          <li>Analyze correlation with human preferences</li>
+        </ul>
+      </li>
+    </ol>
 
   </article>
 </BaseLayout>
