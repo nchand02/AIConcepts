@@ -1,0 +1,371 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Chapter 5: Large Language Models" 
+  description="Comprehensive guide to Large Language Models, their architecture, training, and capabilities"
+  currentPage="/chapters/05-llms"
+>
+  <article>
+    <h1>Chapter 5: Large Language Models (LLMs)</h1>
+    
+    <div class="callout info">
+      <div class="callout-title">📚 Chapter Overview</div>
+      <p>Large Language Models represent the culmination of Transformer technology at massive scale. This chapter explores how models like GPT-4, Claude, and Llama achieve remarkable capabilities through scale, training techniques, and emergent abilities.</p>
+    </div>
+
+    <h2>What are Large Language Models?</h2>
+    
+    <p>LLMs are Transformer-based neural networks trained on massive text corpora to predict the next token in a sequence. Key characteristics:</p>
+
+    <ul>
+      <li><strong>Scale:</strong> Billions to trillions of parameters</li>
+      <li><strong>Pre-training:</strong> Unsupervised learning on huge datasets (web-scale text)</li>
+      <li><strong>Few-shot learning:</strong> Adapt to new tasks with minimal examples</li>
+      <li><strong>Emergent abilities:</strong> Capabilities that appear only at scale</li>
+      <li><strong>General purpose:</strong> Handle diverse tasks without task-specific training</li>
+    </ul>
+
+    <h2>Evolution of LLMs</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Year</th>
+          <th>Parameters</th>
+          <th>Key Innovation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>GPT-1</strong></td>
+          <td>2018</td>
+          <td>117M</td>
+          <td>Unsupervised pre-training + supervised fine-tuning</td>
+        </tr>
+        <tr>
+          <td><strong>BERT</strong></td>
+          <td>2018</td>
+          <td>340M</td>
+          <td>Bidirectional pre-training, masked language modeling</td>
+        </tr>
+        <tr>
+          <td><strong>GPT-2</strong></td>
+          <td>2019</td>
+          <td>1.5B</td>
+          <td>Zero-shot learning, coherent long-form generation</td>
+        </tr>
+        <tr>
+          <td><strong>T5</strong></td>
+          <td>2019</td>
+          <td>11B</td>
+          <td>Text-to-text framework, unified approach</td>
+        </tr>
+        <tr>
+          <td><strong>GPT-3</strong></td>
+          <td>2020</td>
+          <td>175B</td>
+          <td>Few-shot in-context learning</td>
+        </tr>
+        <tr>
+          <td><strong>Chinchilla</strong></td>
+          <td>2022</td>
+          <td>70B</td>
+          <td>Optimal compute-efficient scaling laws</td>
+        </tr>
+        <tr>
+          <td><strong>PaLM</strong></td>
+          <td>2022</td>
+          <td>540B</td>
+          <td>Breakthrough on reasoning tasks</td>
+        </tr>
+        <tr>
+          <td><strong>GPT-4</strong></td>
+          <td>2023</td>
+          <td>~1.7T</td>
+          <td>Multimodal, advanced reasoning, longer context</td>
+        </tr>
+        <tr>
+          <td><strong>Claude 3</strong></td>
+          <td>2024</td>
+          <td>Unknown</td>
+          <td>200K context, constitutional AI</td>
+        </tr>
+        <tr>
+          <td><strong>Llama 3</strong></td>
+          <td>2024</td>
+          <td>70B/405B</td>
+          <td>Open weights, excellent performance</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>LLM Architecture</h2>
+
+    <h3>Decoder-Only Transformers</h3>
+    
+    <p>Most modern LLMs (GPT, Llama, Claude) use decoder-only architecture:</p>
+
+    <pre set:html={`<code>Architecture Stack (e.g., GPT-4):
+┌─────────────────────────────────┐
+│ Token + Position Embeddings     │
+├─────────────────────────────────┤
+│ Transformer Layer 1              │
+│   - Multi-Head Attention         │
+│   - Feed-Forward Network         │
+├─────────────────────────────────┤
+│ Transformer Layer 2              │
+│   ...                            │
+├─────────────────────────────────┤
+│ Transformer Layer N (96+ layers) │
+├─────────────────────────────────┤
+│ Layer Normalization              │
+├─────────────────────────────────┤
+│ Output Projection (vocab_size)   │
+└─────────────────────────────────┘
+
+Typical specs (GPT-3 175B):
+- Layers: 96
+- Hidden size: 12,288
+- Attention heads: 96
+- Context window: 2,048 → 128K (GPT-4 Turbo)</code>`} />
+
+    <h3>Key Architectural Innovations</h3>
+
+    <ul>
+      <li><strong>Grouped Query Attention (GQA):</strong> Reduces memory, maintains quality</li>
+      <li><strong>RoPE (Rotary Position Embeddings):</strong> Better position encoding for long context</li>
+      <li><strong>SwiGLU Activation:</strong> Replaces GELU for better performance</li>
+      <li><strong>RMSNorm:</strong> Simpler, faster than LayerNorm</li>
+      <li><strong>Mixture of Experts:</strong> Conditional computation for massive scale</li>
+    </ul>
+
+    <h2>Training Process</h2>
+
+    <h3>Phase 1: Pre-training</h3>
+    
+    <p>Unsupervised learning on massive text corpora:</p>
+
+    <pre set:html={`<code>Objective: Next Token Prediction
+Given: "The cat sat on the"
+Predict: "mat" (or any valid continuation)
+
+Loss = -log P(w_t | w_1, ..., w_{{t-1}})
+
+Training Data Scale:
+- GPT-3: ~500B tokens
+- Llama 2: 2T tokens  
+- GPT-4: Estimated 10T+ tokens
+
+Training Compute:
+- GPT-3: ~3,640 petaflop-days
+- PaLM: ~2,500 petaflop-days
+- Modern LLMs: 10,000+ petaflop-days
+
+Cost: $2M - $100M+ per training run</code>`} />
+
+    <h3>Phase 2: Supervised Fine-Tuning (SFT)</h3>
+    
+    <p>Train on high-quality instruction-response pairs:</p>
+
+    <pre set:html={`<code>Example training data:
+{{
+  "instruction": "Explain quantum computing to a 10-year-old",
+  "response": "Imagine a magical coin that can be heads AND tails at the same time..."
+}}
+
+Dataset size: 10K - 1M examples
+Duration: Hours to days
+Purpose: Align model to follow instructions</code>`} />
+
+    <h3>Phase 3: Reinforcement Learning from Human Feedback (RLHF)</h3>
+    
+    <p>Optimize for human preferences:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[Generate Multiple Responses] --> B[Human Ranks Responses]
+    B --> C[Train Reward Model]
+    C --> D[PPO Training]
+    D --> E[Improved LLM]
+    E --> A
+    
+    style A fill:#e1f5ff
+    style E fill:#d4edda
+      `} />
+    </div>
+
+    <pre set:html={`<code>Steps:
+1. Collect human rankings of model outputs
+2. Train reward model to predict human preferences
+3. Use PPO (Proximal Policy Optimization) to optimize LLM
+4. Balance: maximize reward while staying close to SFT model
+
+Key challenge: Reward hacking (model exploits reward function)</code>`} />
+
+    <h2>Scaling Laws</h2>
+
+    <h3>Chinchilla Scaling Laws</h3>
+    
+    <p>Optimal model size vs. training data:</p>
+
+    <pre set:html={`<code>Key Finding: Most LLMs are undertrained!
+
+For compute budget C:
+- Optimal model parameters: N_opt ∝ C^0.5
+- Optimal training tokens: D_opt ∝ C^0.5
+
+Example:
+- Previous approach: 175B params, 300B tokens (GPT-3)
+- Compute-optimal: 70B params, 1.4T tokens (Chinchilla)
+- Result: Chinchilla outperforms GPT-3 despite fewer parameters
+
+Implication: Training data is as important as model size</code>`} />
+
+    <h3>Emergent Abilities</h3>
+    
+    <p>Capabilities that suddenly appear at sufficient scale:</p>
+
+    <ul>
+      <li><strong>Few-shot learning:</strong> Learn new tasks from examples in prompt</li>
+      <li><strong>Chain-of-thought reasoning:</strong> Break down complex problems step-by-step</li>
+      <li><strong>In-context learning:</strong> Adapt behavior based on prompt context</li>
+      <li><strong>Multi-step reasoning:</strong> Solve problems requiring multiple inferential steps</li>
+      <li><strong>Instruction following:</strong> Understand and execute complex instructions</li>
+    </ul>
+
+    <h2>Prompting Techniques</h2>
+
+    <h3>Zero-Shot Prompting</h3>
+    
+    <pre set:html={`<code>Prompt: "Translate to French: Hello, how are you?"
+Output: "Bonjour, comment allez-vous?"</code>`} />
+
+    <h3>Few-Shot Prompting</h3>
+    
+    <pre set:html={`<code>Prompt:
+"Translate to French:
+English: Hello → French: Bonjour
+English: Goodbye → French: Au revoir  
+English: Thank you → French: Merci
+English: Good morning → French:"
+
+Output: "Bonjour" or "Bon matin"</code>`} />
+
+    <h3>Chain-of-Thought (CoT)</h3>
+    
+    <pre set:html={`<code>Prompt: "Roger has 5 tennis balls. He buys 2 more cans of tennis balls. 
+Each can has 3 tennis balls. How many tennis balls does he have now?
+
+Let's think step by step:"
+
+Output:
+"1. Roger starts with 5 tennis balls
+2. He buys 2 cans
+3. Each can has 3 balls, so 2 × 3 = 6 balls
+4. Total: 5 + 6 = 11 tennis balls
+Answer: 11"</code>`} />
+
+    <h3>Advanced Prompting Patterns</h3>
+
+    <ul>
+      <li><strong>ReAct:</strong> Reasoning + Acting (interleave thought and action)</li>
+      <li><strong>Self-Consistency:</strong> Generate multiple answers, choose most common</li>
+      <li><strong>Tree of Thoughts:</strong> Explore multiple reasoning paths</li>
+      <li><strong>Automatic Prompt Engineering:</strong> Let LLMs optimize prompts</li>
+    </ul>
+
+    <h2>Context Window</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Context Length</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GPT-3</td>
+          <td>2,048 tokens</td>
+          <td>~1,500 words</td>
+        </tr>
+        <tr>
+          <td>GPT-3.5</td>
+          <td>4,096 tokens</td>
+          <td>~3,000 words</td>
+        </tr>
+        <tr>
+          <td>GPT-4</td>
+          <td>8,192 / 32,768 tokens</td>
+          <td>~6K / 24K words</td>
+        </tr>
+        <tr>
+          <td>GPT-4 Turbo</td>
+          <td>128,000 tokens</td>
+          <td>~96,000 words (~300 pages)</td>
+        </tr>
+        <tr>
+          <td>Claude 3</td>
+          <td>200,000 tokens</td>
+          <td>~150,000 words (~500 pages)</td>
+        </tr>
+        <tr>
+          <td>Gemini 1.5 Pro</td>
+          <td>1,000,000 tokens</td>
+          <td>~750,000 words</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Limitations and Challenges</h2>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠️ Known Issues</div>
+      <ul>
+        <li><strong>Hallucinations:</strong> Generate plausible but false information</li>
+        <li><strong>Lack of grounding:</strong> No connection to real-world facts</li>
+        <li><strong>Reasoning limitations:</strong> Struggle with complex logic and math</li>
+        <li><strong>Outdated knowledge:</strong> Training data has cutoff date</li>
+        <li><strong>Inconsistency:</strong> Different responses to same question</li>
+        <li><strong>Bias:</strong> Reflect biases in training data</li>
+        <li><strong>No true understanding:</strong> Pattern matching, not comprehension</li>
+      </ul>
+    </div>
+
+    <h2>Best Practices</h2>
+
+    <div class="callout success">
+      <div class="callout-title">✅ Effective LLM Usage</div>
+      <ul>
+        <li><strong>Clear instructions:</strong> Be specific and unambiguous</li>
+        <li><strong>Provide context:</strong> Include relevant background information</li>
+        <li><strong>Use examples:</strong> Few-shot prompting improves performance</li>
+        <li><strong>Break down tasks:</strong> Decompose complex problems</li>
+        <li><strong>Verify outputs:</strong> Always fact-check critical information</li>
+        <li><strong>Iterate prompts:</strong> Refine based on responses</li>
+        <li><strong>Set temperature:</strong> Lower for factual, higher for creative</li>
+      </ul>
+    </div>
+
+    <h2>Summary</h2>
+
+    <p>Large Language Models represent a paradigm shift in AI, achieving remarkable capabilities through scale and sophisticated training. Key points:</p>
+
+    <ul>
+      <li>Built on Transformer architecture, scaled to billions/trillions of parameters</li>
+      <li>Three-phase training: pre-training, SFT, RLHF</li>
+      <li>Emergent abilities appear only at sufficient scale</li>
+      <li>Effective prompting is critical for good results</li>
+      <li>Still have significant limitations (hallucinations, reasoning, grounding)</li>
+    </ul>
+
+    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--color-border); display: flex; justify-content: space-between;">
+      <a href="/chapters/04-transformers" class="btn btn-secondary">← Previous: Transformers</a>
+      <a href="/chapters/06-generative-ai" class="btn btn-primary">Next: Generative AI →</a>
+    </div>
+  </article>
+</BaseLayout>

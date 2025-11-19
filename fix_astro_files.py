@@ -84,7 +84,7 @@ def process_file(filepath):
 
 def main():
     """Main function to process all Astro files."""
-    base_dir = Path("/Users/navdeepsinghchander/ws-IntelliJ/AI_Tutorial_For_Everyone")
+    base_dir = Path("/Users/navdeepsinghchander/ws-IntelliJ/AIConcepts")
     
     # Find all .astro files
     astro_files = list(base_dir.glob("src/**/*.astro"))

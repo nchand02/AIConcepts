@@ -262,7 +262,7 @@ Homepage chapter links:
 ## 11. Deployment Readiness Tests ✅
 
 ### GitHub Pages Configuration
-- ✅ **Base Path:** `/AI_Tutorial_For_Everyone` configured
+- ✅ **Base Path:** `/AIConcepts` configured
 - ✅ **Static Output:** `output: "static"` in astro.config.mjs
 - ✅ **Asset Paths:** Relative paths used correctly
 - ✅ **Build Script:** npm run build works
@@ -286,7 +286,7 @@ Homepage chapter links:
 
 ### Live Testing
 - ✅ **Server Started:** Running on http://localhost:4321
-- ✅ **Base Path:** `/AI_Tutorial_For_Everyone` works correctly
+- ✅ **Base Path:** `/AIConcepts` works correctly
 - ✅ **Pages Load:** All pages accessible
 - ✅ **Assets Load:** CSS, JS, diagrams render
 - ✅ **Navigation Works:** Links functional in browser
@@ -323,10 +323,10 @@ Homepage chapter links:
 ## Known Issues & Recommendations
 
 ### Minor Issues (Non-Blocking)
-1. ⚠️ **GitHub Username Placeholder**
+1. ⚠️ **GitHub Username Updated**
    - Location: Homepage GitHub link
-   - Fix: Replace `yourusername` with actual GitHub username
-   - Impact: Low - just needs personalization
+   - Status: Fixed - now using nchand02/AIConcepts
+   - Impact: Low - personalization complete
 
 2. ⚠️ **NPM Vulnerabilities**
    - 3 moderate severity in dev dependencies
@@ -417,6 +417,6 @@ The website is ready for immediate deployment to GitHub Pages. All critical func
 
 ---
 
-**Preview the site now at:** http://localhost:4321/AI_Tutorial_For_Everyone
+**Preview the site now at:** http://localhost:4321/AIConcepts
 
 **Deploy when ready using:** `DEPLOYMENT_CHECKLIST.md` guide

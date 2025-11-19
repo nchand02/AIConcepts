@@ -4,6 +4,30 @@ Use this checklist to deploy your AI Tutorial website to GitHub Pages.
 
 ---
 
+## ✅ Current Status
+
+**Repository:** `nchand02/AIConcepts`  
+**Remote:** https://github.com/nchand02/AIConcepts.git  
+**Configuration:** Complete and ready to deploy  
+**Workflow:** `.github/workflows/static.yml` (configured for Astro build + deploy)  
+**Live URL (after deployment):** https://nchand02.github.io/AIConcepts
+
+### Quick Deploy (TL;DR)
+```bash
+# 1. Commit your changes
+git add .
+git commit -m "Ready for deployment"
+
+# 2. Push to GitHub
+git push origin main
+
+# 3. Enable GitHub Pages in Settings → Pages → Source: "GitHub Actions"
+
+# 4. Wait 2-3 minutes, then visit: https://nchand02.github.io/AIConcepts
+```
+
+---
+
 ## Pre-Deployment ✅
 
 - [x] Build succeeds without errors
@@ -11,19 +35,24 @@ Use this checklist to deploy your AI Tutorial website to GitHub Pages.
 - [x] Code blocks display properly
 - [x] Mermaid diagrams work
 - [x] Dark mode toggle functions
+- [x] Repository name updated to `AIConcepts`
+- [x] All GitHub links updated
+- [x] astro.config.mjs configured with correct base path
 
 ---
 
 ## Deployment Steps
 
-### Step 1: Initialize Git Repository
+### Step 1: Verify Git Repository
 
 ```bash
-cd /Users/navdeepsinghchander/ws-IntelliJ/AI_Tutorial_For_Everyone
-git init
+cd /Users/navdeepsinghchander/ws-IntelliJ/AIConcepts
+git status
 ```
 
-**Expected output:** `Initialized empty Git repository`
+**Expected output:** Current branch and status information
+
+**Note:** Repository is already initialized and connected to `https://github.com/nchand02/AIConcepts.git`
 
 ---
 
@@ -38,36 +67,35 @@ dist/
 
 ---
 
-### Step 3: Initial Commit
+### Step 3: Commit Your Changes
 
 ```bash
 git add .
-git commit -m "Initial commit: Complete AI Tutorial website with 5 chapters"
+git commit -m "Updated repository name and deployment configuration"
 ```
 
-**Expected output:** `6 files changed...`
+**Note:** Make sure all your latest changes are committed before deploying
 
 ---
 
-### Step 4: Create GitHub Repository
+### Step 4: Verify GitHub Repository
 
-1. Go to https://github.com/new
-2. **Repository name:** `AI_Tutorial_For_Everyone`
-3. **Description:** "Comprehensive AI tutorial covering foundations to LLMs"
-4. **Visibility:** Public
-5. **DO NOT** initialize with README, .gitignore, or license (already exists)
-6. Click **"Create repository"**
+**Your repository is already created and connected:**
+- **Repository:** `nchand02/AIConcepts`
+- **URL:** https://github.com/nchand02/AIConcepts
+- **Remote:** Already configured
+
+Verify with:
+```bash
+git remote -v
+```
 
 ---
 
-### Step 5: Link and Push to GitHub
-
-Replace `YOUR_USERNAME` with your GitHub username:
+### Step 5: Push to GitHub
 
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/AI_Tutorial_For_Everyone.git
-git branch -M main
-git push -u origin main
+git push origin main
 ```
 
 **Expected output:** 
@@ -90,12 +118,14 @@ Writing objects: 100%...
 
 ### Step 7: Trigger Deployment
 
-The GitHub Actions workflow will automatically trigger on your first push to `main`. 
+The GitHub Actions workflow will automatically trigger on every push to `main`. 
 
 To monitor:
 1. Go to **Actions** tab in your repository
-2. Watch the **"Deploy to GitHub Pages"** workflow
+2. Watch the **"Deploy Astro site to Pages"** workflow
 3. Should complete in 2-3 minutes
+
+**Note:** The workflow file is already configured at `.github/workflows/static.yml`
 
 ---
 
@@ -105,7 +135,7 @@ Once Actions shows ✅ green checkmark:
 
 **Your site will be live at:**
 ```
-https://YOUR_USERNAME.github.io/AI_Tutorial_For_Everyone
+https://nchand02.github.io/AIConcepts
 ```
 
 ---
@@ -166,7 +196,7 @@ This is already in `BaseLayout.astro` ✅
 **Check:** Browser DevTools → Network tab
 
 **Fix:** Ensure CSS file path is correct:
-- Should be `/AI_Tutorial_For_Everyone/styles/global.css`
+- Should be `/AIConcepts/styles/global.css`
 - Check `astro.config.mjs` base path
 
 ---

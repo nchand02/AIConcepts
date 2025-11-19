@@ -3,7 +3,7 @@
 # Fix Python f-strings and other curly braces in code blocks
 # Replace problematic patterns with HTML entities
 
-cd /Users/navdeepsinghchander/ws-IntelliJ/AI_Tutorial_For_Everyone
+cd /Users/navdeepsinghchander/ws-IntelliJ/AIConcepts
 
 # Backup files first
 for file in src/pages/chapters/*.astro; do

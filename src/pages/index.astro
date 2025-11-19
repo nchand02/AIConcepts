@@ -1,0 +1,442 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Home" description="Comprehensive guide to Artificial Intelligence and Machine Learning - from foundations to advanced applications" currentPage="">
+  <div class="hero">
+    <h1>🤖 AI Learning Portal</h1>
+    <p class="hero-subtitle">A Comprehensive Guide to Artificial Intelligence & Machine Learning</p>
+    <p class="hero-description">
+      Master the fundamentals and advanced concepts of AI, from basic machine learning to cutting-edge 
+      large language models, multimodal systems, and AI agents. This interactive learning portal covers 
+      everything you need to understand and build with AI.
+    </p>
+    
+    <div class="cta-buttons">
+      <a href="/chapters/01-foundations" class="btn btn-primary">Start Learning →</a>
+      <a href="https://github.com/nchand02/AIConcepts" class="btn btn-secondary" target="_blank">View on GitHub</a>
+    </div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📚</div>
+      <h3>Comprehensive Content</h3>
+      <p>15 detailed chapters covering foundations through advanced topics like RAG, fine-tuning, and AI agents.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Visual Learning</h3>
+      <p>Rich diagrams, flowcharts, and visual aids using Mermaid.js and ASCII art for better understanding.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">💡</div>
+      <h3>Practical Examples</h3>
+      <p>Real-world code examples, exercises, and hands-on projects to reinforce learning.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🌓</div>
+      <h3>Dark Mode</h3>
+      <p>Comfortable reading experience with automatic theme switching and preference persistence.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Responsive Design</h3>
+      <p>Fully optimized for mobile, tablet, and desktop viewing with smooth navigation.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>Searchable</h3>
+      <p>Quick search functionality to find topics and concepts across all chapters instantly.</p>
+    </div>
+  </div>
+
+  <section class="chapter-overview">
+    <h2>📖 What You'll Learn</h2>
+    
+    <div class="chapter-list">
+      <div class="chapter-item">
+        <div class="chapter-num">01</div>
+        <div class="chapter-info">
+          <h3>Foundations of AI</h3>
+          <p>History, core concepts, search algorithms, knowledge representation, and the evolution of artificial intelligence.</p>
+          <a href="/chapters/01-foundations" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">02</div>
+        <div class="chapter-info">
+          <h3>Machine Learning</h3>
+          <p>Supervised, unsupervised, and reinforcement learning fundamentals with practical algorithms and applications.</p>
+          <a href="/chapters/02-machine-learning" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">03</div>
+        <div class="chapter-info">
+          <h3>Deep Learning</h3>
+          <p>Neural networks, CNNs, RNNs, LSTMs, and the foundations of modern deep learning architectures.</p>
+          <a href="/chapters/03-deep-learning" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">04</div>
+        <div class="chapter-info">
+          <h3>Transformers</h3>
+          <p>Attention mechanisms, the transformer architecture, BERT, GPT, and the revolution in NLP.</p>
+          <a href="/chapters/04-transformers" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">05</div>
+        <div class="chapter-info">
+          <h3>Large Language Models</h3>
+          <p>GPT-4, Claude, LLaMA, training at scale, prompting strategies, and LLM capabilities.</p>
+          <a href="/chapters/05-llms" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">06</div>
+        <div class="chapter-info">
+          <h3>Generative AI</h3>
+          <p>Diffusion models, GANs, VAEs, DALL-E, Stable Diffusion, and creative AI applications.</p>
+          <a href="/chapters/06-generative-ai" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">07</div>
+        <div class="chapter-info">
+          <h3>Embeddings & Vector Databases</h3>
+          <p>Semantic search, vector representations, Pinecone, Weaviate, and similarity search at scale.</p>
+          <a href="/chapters/07-embeddings" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">08</div>
+        <div class="chapter-info">
+          <h3>Retrieval-Augmented Generation</h3>
+          <p>Combining retrieval and generation, building RAG systems, and grounding LLMs in real data.</p>
+          <a href="/chapters/08-rag" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">09</div>
+        <div class="chapter-info">
+          <h3>Fine-Tuning</h3>
+          <p>LoRA, QLoRA, PEFT methods, instruction tuning, and adapting models for specific tasks.</p>
+          <a href="/chapters/09-fine-tuning" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">10</div>
+        <div class="chapter-info">
+          <h3>Multimodal AI</h3>
+          <p>Vision-language models, GPT-4V, Gemini, CLIP, and AI systems that understand multiple modalities.</p>
+          <a href="/chapters/10-multimodal" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">11</div>
+        <div class="chapter-info">
+          <h3>AI Agents & MCP</h3>
+          <p>Autonomous agents, ReAct, AutoGPT, Model Context Protocol, and agentic AI systems.</p>
+          <a href="/chapters/11-agents" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">12</div>
+        <div class="chapter-info">
+          <h3>AI Tooling & Ecosystems</h3>
+          <p>LangChain, LlamaIndex, Hugging Face, development frameworks, and the AI tech stack.</p>
+          <a href="/chapters/12-tooling" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">13</div>
+        <div class="chapter-info">
+          <h3>AI Infrastructure</h3>
+          <p>Model serving, inference optimization, quantization, distributed training, and production deployment.</p>
+          <a href="/chapters/13-infrastructure" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">14</div>
+        <div class="chapter-info">
+          <h3>System Design for AI</h3>
+          <p>Architecture patterns, scaling strategies, monitoring, and building production AI systems.</p>
+          <a href="/chapters/14-system-design" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+      
+      <div class="chapter-item">
+        <div class="chapter-num">15</div>
+        <div class="chapter-info">
+          <h3>Complete Glossary</h3>
+          <p>Comprehensive reference of all AI/ML terms, concepts, and terminology used throughout the portal.</p>
+          <a href="/chapters/15-glossary" class="chapter-link">Explore →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="learning-path">
+    <h2>🎯 Recommended Learning Path</h2>
+    
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TD
+    A[Start: Foundations of AI] --> B[Machine Learning Basics]
+    B --> C[Deep Learning & Neural Networks]
+    C --> D[Transformers Architecture]
+    D --> E[Large Language Models]
+    E --> F[Choose Your Path]
+    F -->|Creative AI| G[Generative AI]
+    F -->|Applied AI| H[RAG & Embeddings]
+    F -->|Specialization| I[Fine-Tuning]
+    G --> J[Multimodal AI]
+    H --> J
+    I --> J
+    J --> K[AI Agents & MCP]
+    K --> L[Production Systems]
+    L --> M[Complete Glossary Reference]
+    
+    style A fill:#3b82f6,stroke:#2563eb,color:#fff
+    style E fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style J fill:#ec4899,stroke:#db2777,color:#fff
+    style L fill:#10b981,stroke:#059669,color:#fff
+      `} />
+    </div>
+    
+    <div class="callout info">
+      <div class="callout-title">💡 Pro Tip</div>
+      <p>
+        If you're new to AI, follow the chapters in order. If you have experience, feel free to jump to 
+        specific topics using the sidebar navigation. Each chapter is self-contained but builds on previous concepts.
+      </p>
+    </div>
+  </section>
+
+  <!-- AI Studio Integration Placeholder -->
+  <section class="ai-integration-placeholder">
+    <h2>🤖 Future: AI-Powered Learning Assistant</h2>
+    <div id="ai-chat-widget-placeholder" class="callout info">
+      <p>
+        This section is reserved for future integration with Google AI Studio or other AI chat interfaces.
+        The placeholder ensures the site structure supports interactive AI assistance when implemented.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: var(--space-3xl) 0;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-3xl);
+  }
+  
+  .hero h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-lg);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .hero-subtitle {
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+  
+  .hero-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto var(--space-2xl);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+  }
+  
+  .btn-secondary:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    text-decoration: none;
+    transform: translateY(-2px);
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+  }
+  
+  .feature-card {
+    padding: var(--space-xl);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+  }
+  
+  .feature-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+  
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+  }
+  
+  .feature-card h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-lg);
+  }
+  
+  .feature-card p {
+    margin-bottom: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+  
+  .chapter-overview {
+    margin-top: var(--space-3xl);
+  }
+  
+  .chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+  
+  .chapter-item {
+    display: flex;
+    gap: var(--space-xl);
+    padding: var(--space-xl);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+  }
+  
+  .chapter-item:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .chapter-num {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    min-width: 60px;
+  }
+  
+  .chapter-info {
+    flex: 1;
+  }
+  
+  .chapter-info h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xl);
+  }
+  
+  .chapter-info p {
+    margin-bottom: var(--space-md);
+    color: var(--color-text-secondary);
+  }
+  
+  .chapter-link {
+    display: inline-block;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .chapter-link:hover {
+    text-decoration: underline;
+  }
+  
+  .learning-path {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-3xl);
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .ai-integration-placeholder {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-3xl);
+    border-top: 1px solid var(--color-border);
+  }
+  
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: var(--font-size-3xl);
+    }
+    
+    .chapter-item {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    
+    .chapter-num {
+      font-size: var(--font-size-2xl);
+    }
+  }
+</style>

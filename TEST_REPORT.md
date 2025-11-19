@@ -111,7 +111,7 @@ All pages successfully built and ready for deployment:
 ## Deployment Readiness
 
 ### GitHub Pages Configuration ✅
-- **Base URL:** Configured as `/AI_Tutorial_For_Everyone`
+- **Base URL:** Configured as `/AIConcepts`
 - **Static Export:** `output: "static"` set in astro.config.mjs
 - **Assets Path:** Relative paths used throughout
 - **GitHub Actions:** Workflow documented in README.md
@@ -126,13 +126,13 @@ All pages successfully built and ready for deployment:
    ```
 
 2. **Create GitHub Repository:**
-   - Repository name: `AI_Tutorial_For_Everyone`
+   - Repository name: `AIConcepts`
    - Set to public
    - Don't initialize with README (already exists)
 
 3. **Push to GitHub:**
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/AI_Tutorial_For_Everyone.git
+   git remote add origin https://github.com/nchand02/AIConcepts.git
    git branch -M main
    git push -u origin main
    ```
@@ -144,7 +144,7 @@ All pages successfully built and ready for deployment:
 
 5. **Verify Deployment:**
    - Wait 2-3 minutes for first deployment
-   - Access: `https://YOUR_USERNAME.github.io/AI_Tutorial_For_Everyone`
+   - Access: `https://nchand02.github.io/AIConcepts`
 
 ---
 
@@ -247,7 +247,7 @@ git add .
 git commit -m "Initial commit: AI Tutorial Website - Ready for publication"
 
 # 4. Create GitHub repo, then:
-git remote add origin https://github.com/YOUR_USERNAME/AI_Tutorial_For_Everyone.git
+git remote add origin https://github.com/nchand02/AIConcepts.git
 git branch -M main
 git push -u origin main
 

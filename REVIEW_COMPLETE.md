@@ -127,18 +127,18 @@ git init
 git add .
 git commit -m "Initial commit: AI Tutorial website"
 
-# Step 2: Create GitHub repo named "AI_Tutorial_For_Everyone"
+# Step 2: Create GitHub repo named "AIConcepts"
 
 # Step 3: Push (replace YOUR_USERNAME)
-git remote add origin https://github.com/YOUR_USERNAME/AI_Tutorial_For_Everyone.git
+git remote add origin https://github.com/nchand02/AIConcepts.git
 git branch -M main
 git push -u origin main
 
 # Step 4: Enable GitHub Pages
 # Go to repo Settings → Pages → Source: "GitHub Actions"
 
-# Step 5: Wait 2-3 minutes, then visit:
-# https://YOUR_USERNAME.github.io/AI_Tutorial_For_Everyone
+# Step 4: Wait 2-5 minutes, then visit:
+# https://nchand02.github.io/AIConcepts
 ```
 
 **Detailed instructions:** See `DEPLOYMENT_CHECKLIST.md`
@@ -337,7 +337,7 @@ If you need help with deployment:
 
 All critical issues resolved, build succeeds, pages render correctly, and the site is production-ready for GitHub Pages.
 
-**Preview running at:** http://localhost:4321/AI_Tutorial_For_Everyone
+**Preview running at:** http://localhost:4321/AIConcepts
 
 **Next action:** Follow `DEPLOYMENT_CHECKLIST.md` to publish to GitHub Pages.
 

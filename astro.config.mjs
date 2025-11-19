@@ -2,8 +2,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://yourusername.github.io',
-  base: '/AI_Tutorial_For_Everyone',
+  site: 'https://nchand02.github.io',
+  base: '/AIConcepts',
   build: {
     assets: 'assets'
   },
