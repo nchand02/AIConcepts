@@ -1,0 +1,832 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Chapter 3: Deep Learning" 
+  description="Comprehensive guide to Deep Learning architectures, training techniques, and applications"
+  currentPage="/chapters/03-deep-learning"
+>
+  <article>
+    <h1>Chapter 3: Deep Learning</h1>
+    
+    <div class="callout info">
+      <div class="callout-title">📚 Chapter Overview</div>
+      <p>This chapter explores Deep Learning, the foundation of modern AI breakthroughs. We'll cover neural network architectures, training techniques, optimization strategies, and practical applications.</p>
+    </div>
+
+    <h2>Introduction to Deep Learning</h2>
+    
+    <p>Deep Learning represents a paradigm shift in machine learning, using artificial neural networks with multiple layers to automatically learn hierarchical representations of data. Unlike traditional machine learning, deep learning can automatically discover the representations needed for feature detection or classification from raw data.</p>
+
+    <h3>Why "Deep" Learning?</h3>
+    
+    <p>The term "deep" refers to the number of layers through which data is transformed. Deep learning models typically have multiple hidden layers (often 10-100+ layers) compared to shallow networks (1-2 layers). This depth allows the network to learn increasingly abstract representations:</p>
+    
+    <ul>
+      <li><strong>Layer 1:</strong> Detects edges and basic patterns</li>
+      <li><strong>Layer 2-3:</strong> Combines edges into shapes and textures</li>
+      <li><strong>Layer 4-5:</strong> Recognizes object parts</li>
+      <li><strong>Later layers:</strong> Identifies complete objects and concepts</li>
+    </ul>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Raw Input<br/>Pixels] --> B[Layer 1<br/>Edges/Lines]
+    B --> C[Layer 2<br/>Shapes/Textures]
+    C --> D[Layer 3<br/>Object Parts]
+    D --> E[Layer 4<br/>Objects]
+    E --> F[Output<br/>Classification]
+    
+    style A fill:#e1f5ff
+    style F fill:#d4edda
+    style B fill:#fff3cd
+    style C fill:#fff3cd
+    style D fill:#fff3cd
+    style E fill:#fff3cd
+      `} />
+    </div>
+
+    <h2>Neural Network Fundamentals</h2>
+
+    <h3>The Artificial Neuron</h3>
+    
+    <p>At the core of deep learning is the artificial neuron, inspired by biological neurons:</p>
+
+    <div class="diagram-container">
+      <pre class="ascii-diagram">
+    Input Layer     Hidden Layer    Output Layer
+        x₁ ─────┐
+                ├──> ⊕ ────> σ ────┐
+        x₂ ─────┤    w₁              │
+                │                     ├──> ⊕ ────> σ ────> ŷ
+        x₃ ─────┤                     │
+                ├──> ⊕ ────> σ ────┘
+        x₄ ─────┘    w₂
+
+    ⊕ = Weighted Sum    σ = Activation Function
+      </pre>
+    </div>
+
+    <p>Mathematical formula for a single neuron:</p>
+    
+    <pre set:html={`<code>y = σ(Σ(wᵢ × xᵢ) + b)
+
+Where:
+- xᵢ = input features
+- wᵢ = weights
+- b = bias term
+- σ = activation function</code>`} />
+
+    <h3>Activation Functions</h3>
+    
+    <p>Activation functions introduce non-linearity, enabling networks to learn complex patterns:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Function</th>
+          <th>Formula</th>
+          <th>Range</th>
+          <th>Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ReLU</strong></td>
+          <td>f(x) = max(0, x)</td>
+          <td>[0, ∞)</td>
+          <td>Default for hidden layers</td>
+        </tr>
+        <tr>
+          <td><strong>Sigmoid</strong></td>
+          <td>f(x) = 1/(1+e⁻ˣ)</td>
+          <td>(0, 1)</td>
+          <td>Binary classification output</td>
+        </tr>
+        <tr>
+          <td><strong>Tanh</strong></td>
+          <td>f(x) = (eˣ-e⁻ˣ)/(eˣ+e⁻ˣ)</td>
+          <td>(-1, 1)</td>
+          <td>Hidden layers (zero-centered)</td>
+        </tr>
+        <tr>
+          <td><strong>Softmax</strong></td>
+          <td>f(xᵢ) = eˣⁱ/Σeˣʲ</td>
+          <td>(0, 1), Σ=1</td>
+          <td>Multi-class classification</td>
+        </tr>
+        <tr>
+          <td><strong>Leaky ReLU</strong></td>
+          <td>f(x) = max(0.01x, x)</td>
+          <td>(-∞, ∞)</td>
+          <td>Avoid dying ReLU problem</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠️ Dying ReLU Problem</div>
+      <p>Standard ReLU neurons can sometimes "die" during training, getting stuck outputting zero for all inputs. Leaky ReLU and variants like PReLU (Parametric ReLU) help mitigate this issue by allowing small negative values.</p>
+    </div>
+
+    <h2>Deep Learning Architectures</h2>
+
+    <h3>1. Feedforward Neural Networks (FNN)</h3>
+    
+    <p>The simplest deep learning architecture where information flows in one direction:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    I1[Input 1] --> H11[Hidden<br/>Layer 1]
+    I2[Input 2] --> H11
+    I3[Input 3] --> H11
+    I4[Input 4] --> H11
+    
+    H11 --> H21[Hidden<br/>Layer 2]
+    H11 --> H22[Hidden<br/>Layer 2]
+    H11 --> H23[Hidden<br/>Layer 2]
+    
+    H21 --> H31[Hidden<br/>Layer 3]
+    H22 --> H31
+    H23 --> H31
+    H21 --> H32[Hidden<br/>Layer 3]
+    H22 --> H32
+    H23 --> H32
+    
+    H31 --> O[Output]
+    H32 --> O
+    
+    style I1 fill:#e1f5ff
+    style I2 fill:#e1f5ff
+    style I3 fill:#e1f5ff
+    style I4 fill:#e1f5ff
+    style O fill:#d4edda
+      `} />
+    </div>
+
+    <p><strong>Characteristics:</strong></p>
+    <ul>
+      <li>Fully connected layers (each neuron connects to all neurons in next layer)</li>
+      <li>No cycles or loops</li>
+      <li>Information flows forward only</li>
+      <li>Used for: tabular data, classification, regression</li>
+    </ul>
+
+    <h3>2. Convolutional Neural Networks (CNN)</h3>
+    
+    <p>Specialized for processing grid-like data (images, video, time series):</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Input Image<br/>224×224×3] --> B[Conv Layer<br/>+ ReLU]
+    B --> C[Pooling<br/>Layer]
+    C --> D[Conv Layer<br/>+ ReLU]
+    D --> E[Pooling<br/>Layer]
+    E --> F[Flatten]
+    F --> G[Fully<br/>Connected]
+    G --> H[Output<br/>Classes]
+    
+    style A fill:#e1f5ff
+    style H fill:#d4edda
+      `} />
+    </div>
+
+    <p><strong>Key Components:</strong></p>
+    
+    <ul>
+      <li><strong>Convolutional Layers:</strong> Apply filters to detect features (edges, textures, patterns)</li>
+      <li><strong>Pooling Layers:</strong> Reduce spatial dimensions (max pooling, average pooling)</li>
+      <li><strong>Fully Connected Layers:</strong> Final classification based on extracted features</li>
+    </ul>
+
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span>🔍 Deep Dive: How Convolution Works</span>
+        <span class="collapsible-icon">▼</span>
+      </div>
+      <div class="collapsible-content">
+        <p>Convolution applies a kernel (small matrix) across the input:</p>
+        
+        <pre set:html={`<code>Input Image (5×5):          Kernel (3×3):        Output (3×3):
+┌─────────────┐             ┌───────┐            ┌─────────┐
+│ 1 2 3 4 5  │             │ 1 0 -1│            │ -8  -8  -8│
+│ 6 7 8 9 10 │   ⊛         │ 1 0 -1│     =      │-8  -8  -8│
+│11 12 13 14 15│            │ 1 0 -1│            │-8  -8  -8│
+│16 17 18 19 20│            └───────┘            └─────────┘
+│21 22 23 24 25│
+└─────────────┘
+
+Computation for top-left output:
+(1×1) + (2×0) + (3×-1) +
+(6×1) + (7×0) + (8×-1) +
+(11×1)+ (12×0)+ (13×-1) = -8</code>`} />
+
+        <p><strong>Key Parameters:</strong></p>
+        <ul>
+          <li><strong>Stride:</strong> How many pixels to shift the kernel (typically 1 or 2)</li>
+          <li><strong>Padding:</strong> Adding borders to maintain spatial dimensions</li>
+          <li><strong>Kernel Size:</strong> Filter dimensions (e.g., 3×3, 5×5, 7×7)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>3. Recurrent Neural Networks (RNN)</h3>
+    
+    <p>Designed for sequential data with temporal dependencies:</p>
+
+    <div class="diagram-container">
+      <pre class="ascii-diagram">
+Time:    t=1        t=2        t=3        t=4
+         ┌──┐       ┌──┐       ┌──┐       ┌──┐
+x₁ ───> │RNN│───> │RNN│───> │RNN│───> │RNN│
+         └─┬┘       └─┬┘       └─┬┘       └─┬┘
+           │          │          │          │
+         ŷ₁         ŷ₂         ŷ₃         ŷ₄
+           
+    Hidden state flows through time →
+      </pre>
+    </div>
+
+    <p><strong>RNN Variants:</strong></p>
+    
+    <ul>
+      <li><strong>LSTM (Long Short-Term Memory):</strong> Addresses vanishing gradient problem with gates</li>
+      <li><strong>GRU (Gated Recurrent Unit):</strong> Simplified LSTM with fewer parameters</li>
+      <li><strong>Bidirectional RNN:</strong> Processes sequences in both directions</li>
+    </ul>
+
+    <h3>4. Autoencoders</h3>
+    
+    <p>Unsupervised networks that learn compressed representations:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph LR
+    A[Input<br/>High Dim] --> B[Encoder<br/>Layer 1]
+    B --> C[Encoder<br/>Layer 2]
+    C --> D[Latent Space<br/>Bottleneck]
+    D --> E[Decoder<br/>Layer 1]
+    E --> F[Decoder<br/>Layer 2]
+    F --> G[Output<br/>Reconstructed]
+    
+    style A fill:#e1f5ff
+    style D fill:#fff3cd
+    style G fill:#d4edda
+      `} />
+    </div>
+
+    <p><strong>Applications:</strong></p>
+    <ul>
+      <li>Dimensionality reduction</li>
+      <li>Anomaly detection</li>
+      <li>Denoising</li>
+      <li>Feature learning</li>
+      <li>Image generation (Variational Autoencoders)</li>
+    </ul>
+
+    <h2>Training Deep Networks</h2>
+
+    <h3>Forward Propagation</h3>
+    
+    <p>Data flows through the network to generate predictions:</p>
+
+    <pre set:html={`<code>1. Input → Layer 1: z₁ = W₁x + b₁; a₁ = σ(z₁)
+2. Layer 1 → Layer 2: z₂ = W₂a₁ + b₂; a₂ = σ(z₂)
+3. ...continue through all layers...
+4. Final layer → Output: ŷ = σ(zₗ)</code>`} />
+
+    <h3>Backpropagation</h3>
+    
+    <p>The algorithm that enables training by computing gradients:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph RL
+    A[Loss Function<br/>L = f(y, ŷ)] --> B[∂L/∂W₃<br/>Output Gradient]
+    B --> C[∂L/∂W₂<br/>Hidden Layer 2]
+    C --> D[∂L/∂W₁<br/>Hidden Layer 1]
+    D --> E[Update Weights<br/>W := W - η∇W]
+    
+    style A fill:#ffebee
+    style E fill:#d4edda
+      `} />
+    </div>
+
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <li>Compute loss: L = Loss(y_true, y_pred)</li>
+      <li>Calculate gradients: ∂L/∂W for each layer (chain rule)</li>
+      <li>Update weights: W := W - learning_rate × ∂L/∂W</li>
+      <li>Repeat for all training samples</li>
+    </ol>
+
+    <h3>Optimization Algorithms</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Algorithm</th>
+          <th>Description</th>
+          <th>Pros</th>
+          <th>Cons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SGD</strong></td>
+          <td>Stochastic Gradient Descent</td>
+          <td>Simple, well-understood</td>
+          <td>Slow, sensitive to learning rate</td>
+        </tr>
+        <tr>
+          <td><strong>Momentum</strong></td>
+          <td>SGD with velocity term</td>
+          <td>Faster convergence</td>
+          <td>Extra hyperparameter</td>
+        </tr>
+        <tr>
+          <td><strong>Adam</strong></td>
+          <td>Adaptive moment estimation</td>
+          <td>Fast, adaptive rates</td>
+          <td>Can overfit, memory intensive</td>
+        </tr>
+        <tr>
+          <td><strong>RMSprop</strong></td>
+          <td>Root mean square propagation</td>
+          <td>Good for RNNs</td>
+          <td>Can diverge</td>
+        </tr>
+        <tr>
+          <td><strong>AdamW</strong></td>
+          <td>Adam with weight decay</td>
+          <td>Better generalization</td>
+          <td>More hyperparameters</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Regularization Techniques</h2>
+
+    <h3>1. Dropout</h3>
+    
+    <p>Randomly "drops" neurons during training to prevent overfitting:</p>
+
+    <div class="diagram-container">
+      <pre class="ascii-diagram">
+Training Time:                   Test Time:
+  ○───○───○                       ●───●───●
+  │ ╲ │ ╱ │                       │ ╲ │ ╱ │
+  ○───✗───○  (50% dropout)        ●───●───●  (all active)
+  │ ╱   ╲ │                       │ ╱ │ ╲ │
+  ○───────✗                       ●───────●
+
+  ✗ = Dropped neuron
+      </pre>
+    </div>
+
+    <p><strong>Benefits:</strong></p>
+    <ul>
+      <li>Prevents co-adaptation of neurons</li>
+      <li>Creates ensemble effect</li>
+      <li>Typical rate: 0.2-0.5 (20-50%)</li>
+    </ul>
+
+    <h3>2. Batch Normalization</h3>
+    
+    <p>Normalizes layer inputs to stabilize training:</p>
+
+    <pre set:html={`<code>For each mini-batch:
+1. μ = mean(batch)
+2. σ² = variance(batch)
+3. x̂ = (x - μ) / sqrt(σ² + ε)
+4. y = γx̂ + β  (learnable scale & shift)</code>`} />
+
+    <p><strong>Benefits:</strong></p>
+    <ul>
+      <li>Faster training (higher learning rates)</li>
+      <li>Reduces internal covariate shift</li>
+      <li>Acts as regularization</li>
+      <li>Less sensitive to initialization</li>
+    </ul>
+
+    <h3>3. Other Regularization Methods</h3>
+
+    <ul>
+      <li><strong>L1/L2 Regularization:</strong> Adds penalty to loss function
+        <ul>
+          <li>L1: Promotes sparsity (many zero weights)</li>
+          <li>L2: Promotes small weights (weight decay)</li>
+        </ul>
+      </li>
+      <li><strong>Data Augmentation:</strong> Artificially expand training data
+        <ul>
+          <li>Images: rotation, flipping, cropping, color jittering</li>
+          <li>Text: back-translation, synonym replacement</li>
+        </ul>
+      </li>
+      <li><strong>Early Stopping:</strong> Stop training when validation loss stops improving</li>
+      <li><strong>Label Smoothing:</strong> Soften one-hot labels to prevent overconfidence</li>
+    </ul>
+
+    <h2>Loss Functions</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Loss Function</th>
+          <th>Formula</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Binary Classification</td>
+          <td>Binary Cross-Entropy</td>
+          <td>-[y log(ŷ) + (1-y) log(1-ŷ)]</td>
+        </tr>
+        <tr>
+          <td>Multi-class Classification</td>
+          <td>Categorical Cross-Entropy</td>
+          <td>-Σ yᵢ log(ŷᵢ)</td>
+        </tr>
+        <tr>
+          <td>Regression</td>
+          <td>Mean Squared Error (MSE)</td>
+          <td>(1/n)Σ(y - ŷ)²</td>
+        </tr>
+        <tr>
+          <td>Regression (robust)</td>
+          <td>Mean Absolute Error (MAE)</td>
+          <td>(1/n)Σ|y - ŷ|</td>
+        </tr>
+        <tr>
+          <td>Regression (smooth)</td>
+          <td>Huber Loss</td>
+          <td>Quadratic for small errors, linear for large</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Advanced Training Techniques</h2>
+
+    <h3>Learning Rate Schedules</h3>
+    
+    <p>Adjust learning rate during training for better convergence:</p>
+
+    <ul>
+      <li><strong>Step Decay:</strong> Reduce LR by factor every N epochs</li>
+      <li><strong>Exponential Decay:</strong> lr = lr₀ × e^(-kt)</li>
+      <li><strong>Cosine Annealing:</strong> Smooth reduction following cosine curve</li>
+      <li><strong>One Cycle Policy:</strong> Increase then decrease LR</li>
+      <li><strong>ReduceLROnPlateau:</strong> Reduce when metric stops improving</li>
+    </ul>
+
+    <h3>Transfer Learning</h3>
+    
+    <p>Leverage pre-trained models for new tasks:</p>
+
+    <div class="diagram-container">
+      <pre class="mermaid" set:html={`graph TB
+    A[Pre-trained Model<br/>ImageNet, 1M images] --> B{Transfer Strategy}
+    B --> C[Feature Extraction<br/>Freeze base, train head]
+    B --> D[Fine-tuning<br/>Unfreeze & train all]
+    B --> E[Domain Adaptation<br/>Adapt to new domain]
+    
+    C --> F[Use Case:<br/>Small dataset]
+    D --> G[Use Case:<br/>Medium dataset]
+    E --> H[Use Case:<br/>Different domain]
+    
+    style A fill:#e1f5ff
+    style F fill:#d4edda
+    style G fill:#d4edda
+    style H fill:#d4edda
+      `} />
+    </div>
+
+    <h3>Mixed Precision Training</h3>
+    
+    <p>Use FP16 (16-bit float) for faster training with lower memory:</p>
+
+    <ul>
+      <li>2× faster computation on modern GPUs</li>
+      <li>50% memory reduction</li>
+      <li>Requires loss scaling to prevent underflow</li>
+      <li>Critical for large models</li>
+    </ul>
+
+    <h2>Common Challenges</h2>
+
+    <h3>1. Vanishing/Exploding Gradients</h3>
+    
+    <div class="callout warning">
+      <div class="callout-title">⚠️ Problem</div>
+      <p>In very deep networks, gradients can become extremely small (vanishing) or large (exploding) during backpropagation.</p>
+    </div>
+
+    <p><strong>Solutions:</strong></p>
+    <ul>
+      <li>Proper weight initialization (Xavier, He initialization)</li>
+      <li>Batch normalization</li>
+      <li>Residual connections (ResNet)</li>
+      <li>Gradient clipping (for exploding gradients)</li>
+      <li>LSTM/GRU for sequential data</li>
+    </ul>
+
+    <h3>2. Overfitting</h3>
+    
+    <p>Model learns training data too well, fails to generalize:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Symptom</th>
+          <th>Solution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>High training accuracy, low validation accuracy</td>
+          <td>Add regularization (dropout, L2)</td>
+        </tr>
+        <tr>
+          <td>Model memorizes training data</td>
+          <td>Get more data or use augmentation</td>
+        </tr>
+        <tr>
+          <td>Too many parameters</td>
+          <td>Reduce model complexity</td>
+        </tr>
+        <tr>
+          <td>Training too long</td>
+          <td>Early stopping</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>3. Underfitting</h3>
+    
+    <p>Model is too simple to capture patterns:</p>
+
+    <p><strong>Solutions:</strong></p>
+    <ul>
+      <li>Increase model complexity (more layers/neurons)</li>
+      <li>Train longer</li>
+      <li>Reduce regularization</li>
+      <li>Better feature engineering</li>
+    </ul>
+
+    <h2>Modern Architectures</h2>
+
+    <h3>ResNet (Residual Networks)</h3>
+    
+    <p>Introduces skip connections to enable very deep networks:</p>
+
+    <div class="diagram-container">
+      <pre class="ascii-diagram">
+        ┌─────────────────────┐
+        │                     │
+     x──┴──> Conv → BN → ReLU │
+        │                     ↓
+        │    Conv → BN ────> (+) → ReLU → output
+        │                     ↑
+        └─────────────────────┘
+         Skip Connection (Identity)
+      </pre>
+    </div>
+
+    <p><strong>Key Innovation:</strong> F(x) + x instead of just F(x)</p>
+
+    <h3>DenseNet</h3>
+    
+    <p>Each layer connects to all previous layers:</p>
+
+    <pre set:html={`<code>Layer 1 output → Layers 2, 3, 4, 5, ...
+Layer 2 output → Layers 3, 4, 5, ...
+Layer 3 output → Layers 4, 5, ...
+...</code>`} />
+
+    <p><strong>Benefits:</strong></p>
+    <ul>
+      <li>Alleviates vanishing gradient</li>
+      <li>Feature reuse</li>
+      <li>Fewer parameters than ResNet</li>
+    </ul>
+
+    <h3>EfficientNet</h3>
+    
+    <p>Systematically scales depth, width, and resolution:</p>
+
+    <pre set:html={`<code>depth = α^φ
+width = β^φ  
+resolution = γ^φ
+
+where α·β²·γ² ≈ 2 and φ is compound coefficient</code>`} />
+
+    <h2>Practical Implementation</h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span>💻 Code Example: Building a CNN in PyTorch</span>
+        <span class="collapsible-icon">▼</span>
+      </div>
+      <div class="collapsible-content">
+        <pre set:html={`<code>import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class SimpleCNN(nn.Module):
+    def __init__(self, num_classes=10):
+        super(SimpleCNN, self).__init__()
+        
+        # Convolutional layers
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
+        self.bn1 = nn.BatchNorm2d(32)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
+        self.bn2 = nn.BatchNorm2d(64)
+        self.conv3 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
+        self.bn3 = nn.BatchNorm2d(128)
+        
+        # Pooling and dropout
+        self.pool = nn.MaxPool2d(2, 2)
+        self.dropout = nn.Dropout(0.3)
+        
+        # Fully connected layers
+        self.fc1 = nn.Linear(128 * 4 * 4, 512)
+        self.fc2 = nn.Linear(512, num_classes)
+        
+        self.relu = nn.ReLU()
+        
+    def forward(self, x):
+        # Block 1
+        x = self.relu(self.bn1(self.conv1(x)))
+        x = self.pool(x)  # 32x32 → 16x16
+        
+        # Block 2
+        x = self.relu(self.bn2(self.conv2(x)))
+        x = self.pool(x)  # 16x16 → 8x8
+        
+        # Block 3
+        x = self.relu(self.bn3(self.conv3(x)))
+        x = self.pool(x)  # 8x8 → 4x4
+        
+        # Flatten
+        x = x.view(x.size(0), -1)
+        x = self.dropout(x)
+        
+        # Fully connected
+        x = self.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = self.fc2(x)
+        
+        return x
+
+# Training setup
+model = SimpleCNN(num_classes=10)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+    optimizer, mode='min', patience=5
+)
+
+# Training loop
+def train_epoch(model, dataloader, criterion, optimizer, device):
+    model.train()
+    total_loss = 0
+    correct = 0
+    total = 0
+    
+    for images, labels in dataloader:
+        images, labels = images.to(device), labels.to(device)
+        
+        # Forward pass
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+        
+        # Backward pass
+        loss.backward()
+        optimizer.step()
+        
+        # Statistics
+        total_loss += loss.item()
+        _, predicted = outputs.max(1)
+        total += labels.size(0)
+        correct += predicted.eq(labels).sum().item()
+    
+    avg_loss = total_loss / len(dataloader)
+    accuracy = 100. * correct / total
+    
+    return avg_loss, accuracy</code>`} />
+      </div>
+    </div>
+
+    <h2>Applications</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">🖼️ Computer Vision</div>
+        <div class="card-description">
+          Image classification, object detection, segmentation, facial recognition, medical imaging
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🗣️ Natural Language Processing</div>
+        <div class="card-description">
+          Text classification, sentiment analysis, machine translation, question answering
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎵 Audio Processing</div>
+        <div class="card-description">
+          Speech recognition, music generation, audio classification, voice cloning
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎮 Reinforcement Learning</div>
+        <div class="card-description">
+          Game playing, robotics control, autonomous vehicles, resource optimization
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔬 Scientific Research</div>
+        <div class="card-description">
+          Protein folding, drug discovery, climate modeling, particle physics
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💰 Finance</div>
+        <div class="card-description">
+          Fraud detection, algorithmic trading, credit scoring, risk assessment
+        </div>
+      </div>
+    </div>
+
+    <h2>Best Practices</h2>
+
+    <div class="callout success">
+      <div class="callout-title">✅ Training Tips</div>
+      <ul>
+        <li><strong>Start simple:</strong> Begin with baseline model, add complexity gradually</li>
+        <li><strong>Monitor metrics:</strong> Track both training and validation loss</li>
+        <li><strong>Use callbacks:</strong> Early stopping, model checkpointing, learning rate scheduling</li>
+        <li><strong>Visualize:</strong> Plot learning curves, confusion matrices, feature maps</li>
+        <li><strong>Experiment tracking:</strong> Use tools like Weights & Biases, TensorBoard</li>
+        <li><strong>Reproducibility:</strong> Set random seeds, version datasets and code</li>
+      </ul>
+    </div>
+
+    <h2>Summary</h2>
+
+    <p>Deep Learning has revolutionized AI by automatically learning hierarchical representations from raw data. Key takeaways:</p>
+
+    <ul>
+      <li>Neural networks with multiple layers learn increasingly abstract features</li>
+      <li>Different architectures excel at different tasks (CNNs for images, RNNs for sequences)</li>
+      <li>Proper training requires careful consideration of optimization, regularization, and hyperparameters</li>
+      <li>Transfer learning and pre-trained models accelerate development</li>
+      <li>Modern innovations (ResNet, attention mechanisms) enable training very deep networks</li>
+    </ul>
+
+    <h2>Review Questions</h2>
+
+    <ol>
+      <li>What are the advantages of deep networks over shallow networks?</li>
+      <li>Why is backpropagation critical for training neural networks?</li>
+      <li>How do CNNs differ from standard feedforward networks?</li>
+      <li>What problems do skip connections solve in very deep networks?</li>
+      <li>When should you use dropout vs. batch normalization?</li>
+      <li>What is the difference between feature extraction and fine-tuning in transfer learning?</li>
+    </ol>
+
+    <h2>Practical Exercises</h2>
+
+    <ol>
+      <li>Implement a CNN for CIFAR-10 image classification using PyTorch or TensorFlow</li>
+      <li>Experiment with different activation functions and observe their effects</li>
+      <li>Apply data augmentation and measure its impact on generalization</li>
+      <li>Use transfer learning with a pre-trained ResNet for a custom image classification task</li>
+      <li>Visualize learned filters and feature maps in your CNN</li>
+      <li>Implement and compare different optimization algorithms (SGD, Adam, AdamW)</li>
+    </ol>
+
+    <div class="callout info">
+      <div class="callout-title">📚 Further Reading</div>
+      <ul>
+        <li>"Deep Learning" by Goodfellow, Bengio, and Courville</li>
+        <li>"Neural Networks and Deep Learning" by Michael Nielsen</li>
+        <li>Stanford CS231n: Convolutional Neural Networks</li>
+        <li>PyTorch and TensorFlow official tutorials</li>
+        <li>Papers: ResNet, DenseNet, EfficientNet</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--color-border); display: flex; justify-content: space-between;">
+      <a href="/chapters/02-machine-learning" class="btn btn-secondary">← Previous: Machine Learning</a>
+      <a href="/chapters/04-transformers" class="btn btn-primary">Next: Transformers →</a>
+    </div>
+  </article>
+</BaseLayout>
