@@ -1,119 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AI Tutorial Hub is the premier open-source educational portal for mastering Artificial Intelligence, Machine Learning (ML), Deep Learning, and Large Language Models (LLMs). Start your free AI course today." />
-    <meta name="keywords" content="Artificial Intelligence Course, Machine Learning Tutorial, Deep Learning, LLM, RAG, Transformers, Neural Networks, AI Education, Vector Databases, Python for AI, Generative AI, Prompt Engineering, Model Context Protocol" />
-    <meta name="author" content="AI Tutorial Hub" />
-    <meta name="robots" content="index, follow" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A comprehensive educational portal for learning Artificial Intelligence, Machine Learning, Deep Learning, and Generative AI concepts.">
+    <meta name="keywords" content="AI, Artificial Intelligence, Machine Learning, Deep Learning, Generative AI, LLM, Transformers, RAG, Fine-tuning">
+    <meta name="author" content="AI Tutorial For Everyone">
+    <title>AI Tutorial For Everyone - Comprehensive AI Learning Portal</title>
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="AI Tutorial Hub | Master Artificial Intelligence & Machine Learning" />
-    <meta property="og:description" content="Free comprehensive course on AI, ML, Transformers, and RAG. Master the modern AI stack from foundations to Enterprise Agents." />
-    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=AI+Tutorial+Hub" />
-    <meta property="og:url" content="https://ai-tutorial-hub.com" />
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="AI Tutorial Hub | Master Artificial Intelligence & Machine Learning" />
-    <meta property="twitter:description" content="Free comprehensive course on AI, ML, Transformers, and RAG. Master the modern AI stack from foundations to Enterprise Agents." />
-    <meta property="twitter:image" content="https://via.placeholder.com/1200x630?text=AI+Tutorial+Hub" />
-
-    <link rel="canonical" href="https://ai-tutorial-hub.com" />
-
-    <title>AI Tutorial Hub | Comprehensive AI Learning Portal</title>
-    
-    <!-- Schema.org JSON-LD for Website & Organization -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebSite",
-            "name": "AI Tutorial Hub",
-            "url": "https://ai-tutorial-hub.com",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://ai-tutorial-hub.com/?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          },
-          {
-            "@type": "Organization",
-            "name": "AI Tutorial Hub",
-            "url": "https://ai-tutorial-hub.com",
-            "logo": "https://via.placeholder.com/150?text=AI+Tutorial+Hub",
-            "sameAs": [
-              "https://github.com/ai-tutorial-hub"
-            ]
-          }
-        ]
-      }
-    </script>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                500: '#0ea5e9',
-                600: '#0284c7',
-                700: '#0369a1',
-                900: '#0c4a6e',
-              },
-              slate: {
-                850: '#1e293b',
-                950: '#020617',
-              }
-            },
-            typography: (theme) => ({
-              DEFAULT: {
-                css: {
-                  maxWidth: '65ch',
-                }
-              }
-            })
-          }
-        }
-      }
-    </script>
-    <style>
-      /* Custom Scrollbar for Sidebar */
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #cbd5e1;
-        border-radius: 20px;
-      }
-      .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #334155;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
-    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "mermaid": "https://aistudiocdn.com/mermaid@^11.12.1"
-  }
-}
-</script>
+    <!-- Mermaid.js for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
-  <body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased">
-    <div id="root"></div>
-  </body>
+<body>
+    <div class="site-wrapper">
+        <!-- Header -->
+        <header class="site-header">
+            <div class="header-content">
+                <div class="site-logo">
+                    <h1><a href="index.html">AI <span>Tutorial</span></a></h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="chapters/chapter1.html">Chapters</a></li>
+                        <li><a href="chapters/chapter15.html">Glossary</a></li>
+                        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button></li>
+                    </ul>
+                </nav>
+                <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content-wrapper">
+            <div class="main-content" style="max-width: 1200px; margin: 0 auto;">
+                
+                <!-- Hero Section -->
+                <section class="hero-section">
+                    <h1>Welcome to AI Tutorial For Everyone</h1>
+                    <p>
+                        A comprehensive, interactive learning portal that explores the complete landscape of 
+                        Artificial Intelligence—from foundational concepts to cutting-edge Generative AI systems.
+                    </p>
+                </section>
+
+                <!-- Introduction -->
+                <section>
+                    <h2>About This Portal</h2>
+                    <p>
+                        This educational resource is designed for learners at all levels—whether you're a student, 
+                        developer, researcher, or business professional seeking to understand AI. Our multi-page 
+                        knowledge portal provides:
+                    </p>
+                    <ul>
+                        <li><strong>15 Comprehensive Chapters</strong> covering all major AI concepts</li>
+                        <li><strong>Interactive Diagrams</strong> using Mermaid.js for visual learning</li>
+                        <li><strong>Deep Dive Sections</strong> for rigorous technical details</li>
+                        <li><strong>Practical Exercises</strong> to apply your knowledge</li>
+                        <li><strong>Review Questions</strong> to test your understanding</li>
+                        <li><strong>Dark/Light Mode</strong> for comfortable reading</li>
+                        <li><strong>Mobile-Responsive Design</strong> for learning anywhere</li>
+                    </ul>
+                </section>
+
+                <!-- Learning Path Diagram -->
+                <section>
+                    <h2>Your Learning Journey</h2>
+                    <div class="diagram-container">
+                        <div class="diagram-title">AI Learning Roadmap</div>
+                        <pre class="mermaid">
+graph TD
+    A[Start: AI Foundations] --> B[Machine Learning Basics]
+    B --> C[Deep Learning & Neural Networks]
+    C --> D[Transformers Architecture]
+    D --> E[Large Language Models]
+    E --> F{Specialization Paths}
+    F --> G[Generative AI]
+    F --> H[Embeddings & Vector DBs]
+    F --> I[RAG Systems]
+    G --> J[Advanced Topics]
+    H --> J
+    I --> J
+    J --> K[Fine-Tuning]
+    J --> L[Multimodal AI]
+    J --> M[AI Agents & MCP]
+    K --> N[Production Systems]
+    L --> N
+    M --> N
+    N --> O[Tooling & Infrastructure]
+    O --> P[System Design]
+    P --> Q[Master AI Engineer]
+    
+    style A fill:#4d94ff,stroke:#333,stroke-width:2px,color:#fff
+    style Q fill:#28a745,stroke:#333,stroke-width:2px,color:#fff
+                        </pre>
+                    </div>
+                </section>
+
+                <!-- Chapters Grid -->
+                <section>
+                    <h2>Explore All Chapters</h2>
+                    <div class="chapters-grid">
+                        
+                        <div class="chapter-card">
+                            <h3>Chapter 1: AI Foundations</h3>
+                            <p>
+                                Explore the history, core concepts, and fundamental approaches that define 
+                                modern Artificial Intelligence.
+                            </p>
+                            <a href="chapters/chapter1.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 2: Machine Learning</h3>
+                            <p>
+                                Understand supervised, unsupervised, and reinforcement learning paradigms 
+                                with practical algorithms.
+                            </p>
+                            <a href="chapters/chapter2.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 3: Deep Learning</h3>
+                            <p>
+                                Dive into neural networks, backpropagation, CNNs, RNNs, and the revolution 
+                                in pattern recognition.
+                            </p>
+                            <a href="chapters/chapter3.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 4: Transformers</h3>
+                            <p>
+                                Master the attention mechanism and transformer architecture that powers 
+                                modern NLP and beyond.
+                            </p>
+                            <a href="chapters/chapter4.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 5: Large Language Models</h3>
+                            <p>
+                                Explore GPT, BERT, T5, and the engineering behind billion-parameter models 
+                                that understand language.
+                            </p>
+                            <a href="chapters/chapter5.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 6: Generative AI</h3>
+                            <p>
+                                Learn about GANs, VAEs, diffusion models, and how AI creates novel content 
+                                across domains.
+                            </p>
+                            <a href="chapters/chapter6.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 7: Embeddings & Vector Databases</h3>
+                            <p>
+                                Understand semantic representations, vector spaces, and specialized databases 
+                                for similarity search.
+                            </p>
+                            <a href="chapters/chapter7.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 8: Retrieval-Augmented Generation (RAG)</h3>
+                            <p>
+                                Combine retrieval systems with generative models to ground AI outputs in 
+                                factual knowledge.
+                            </p>
+                            <a href="chapters/chapter8.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 9: Fine-Tuning</h3>
+                            <p>
+                                Learn transfer learning, LoRA, QLoRA, and techniques to adapt pre-trained 
+                                models to specific tasks.
+                            </p>
+                            <a href="chapters/chapter9.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 10: Multimodal AI</h3>
+                            <p>
+                                Explore systems that process text, images, audio, and video together like 
+                                CLIP, Flamingo, and GPT-4V.
+                            </p>
+                            <a href="chapters/chapter10.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 11: Agents & Model Context Protocol</h3>
+                            <p>
+                                Understand autonomous AI agents, tool use, planning, and the emerging MCP 
+                                standard for AI interaction.
+                            </p>
+                            <a href="chapters/chapter11.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 12: Tooling & AI Ecosystems</h3>
+                            <p>
+                                Discover frameworks, libraries, APIs, and platforms that power modern AI 
+                                development workflows.
+                            </p>
+                            <a href="chapters/chapter12.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 13: AI Infrastructure</h3>
+                            <p>
+                                Learn about compute, storage, orchestration, and the infrastructure needed 
+                                to train and deploy AI at scale.
+                            </p>
+                            <a href="chapters/chapter13.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 14: System Design for AI Products</h3>
+                            <p>
+                                Apply system design principles to build production-ready, scalable, and 
+                                reliable AI-enabled applications.
+                            </p>
+                            <a href="chapters/chapter14.html">Start Learning →</a>
+                        </div>
+
+                        <div class="chapter-card">
+                            <h3>Chapter 15: Full Glossary</h3>
+                            <p>
+                                A comprehensive reference of all AI terms, acronyms, and concepts covered 
+                                throughout this portal.
+                            </p>
+                            <a href="chapters/chapter15.html">View Glossary →</a>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Features Overview -->
+                <section>
+                    <h2>Portal Features</h2>
+                    
+                    <div class="callout callout-note">
+                        <div class="callout-title">📚 Comprehensive Content</div>
+                        <p>
+                            Each chapter includes theory, diagrams, examples, key terms, review questions, 
+                            and hands-on exercises to reinforce learning.
+                        </p>
+                    </div>
+
+                    <div class="callout callout-success">
+                        <div class="callout-title">🎨 Interactive Learning</div>
+                        <p>
+                            Expandable "Deep Dive" sections provide rigorous technical details for advanced 
+                            learners without overwhelming beginners.
+                        </p>
+                    </div>
+
+                    <div class="callout callout-warning">
+                        <div class="callout-title">🔧 Production-Ready Code</div>
+                        <p>
+                            Pure HTML, CSS, and JavaScript—no build steps required. Perfect for GitHub Pages 
+                            and compatible with future AI integrations.
+                        </p>
+                    </div>
+
+                    <div class="callout callout-note">
+                        <div class="callout-title">🌙 Dark Mode Support</div>
+                        <p>
+                            Toggle between light and dark themes for comfortable reading in any environment. 
+                            Your preference is saved automatically.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- AI Studio Integration Placeholder -->
+                <section>
+                    <h2>Future: AI-Powered Learning Assistant</h2>
+                    <p>
+                        This portal is designed to integrate with Google AI Studio or custom AI chat interfaces. 
+                        The floating AI widget (bottom-right) serves as a placeholder for future interactive 
+                        learning features, including:
+                    </p>
+                    <ul>
+                        <li>Real-time question answering about AI concepts</li>
+                        <li>Personalized learning path recommendations</li>
+                        <li>Interactive code explanations and debugging</li>
+                        <li>Practice problem generation and feedback</li>
+                    </ul>
+                    <p>
+                        See the README for integration instructions when you're ready to add AI chat capabilities.
+                    </p>
+                </section>
+
+                <!-- Getting Started -->
+                <section>
+                    <h2>Getting Started</h2>
+                    <ol>
+                        <li>
+                            <strong>Begin with Chapter 1</strong> if you're new to AI, or jump to any chapter 
+                            that interests you.
+                        </li>
+                        <li>
+                            <strong>Use the sidebar navigation</strong> to quickly move between chapters and 
+                            track your progress.
+                        </li>
+                        <li>
+                            <strong>Expand "Deep Dive" sections</strong> when you want rigorous technical 
+                            explanations.
+                        </li>
+                        <li>
+                            <strong>Complete exercises and review questions</strong> at the end of each chapter 
+                            to solidify your understanding.
+                        </li>
+                        <li>
+                            <strong>Toggle dark mode</strong> using the moon/sun icon in the header for 
+                            comfortable reading.
+                        </li>
+                    </ol>
+                    
+                    <div style="text-align: center; margin: 3rem 0;">
+                        <a href="chapters/chapter1.html" class="nav-button">
+                            Start Your AI Journey →
+                        </a>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <p>&copy; 2025 AI Tutorial For Everyone. An educational resource for learning Artificial Intelligence.</p>
+            <p>
+                <a href="https://github.com" target="_blank" rel="noopener">GitHub</a> | 
+                <a href="#top">Back to Top</a>
+            </p>
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                Built with pure HTML, CSS, and JavaScript. Optimized for GitHub Pages.
+            </p>
+        </footer>
+    </div>
+
+    <!-- AI Chat Widget Placeholder -->
+    <div id="ai-chat-widget-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/darkmode.js"></script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
 </html>

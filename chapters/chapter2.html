@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chapter 2: Machine Learning - Supervised, unsupervised, and reinforcement learning">
+    <title>Chapter 2: Machine Learning | AI Tutorial</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/theme.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <div class="site-wrapper">
+        <header class="site-header">
+            <div class="header-content">
+                <div class="site-logo">
+                    <h1><a href="../index.html">AI <span>Tutorial</span></a></h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="chapter1.html" class="active">Chapters</a></li>
+                        <li><a href="chapter15.html">Glossary</a></li>
+                        <li><button id="theme-toggle" class="theme-toggle">🌙</button></li>
+                    </ul>
+                </nav>
+                <button id="mobile-menu-toggle" class="mobile-menu-toggle">☰</button>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h3>Chapters</h3>
+                <ul class="toc-list">
+                    <li><a href="../index.html">🏠 Home</a></li>
+                    <li><a href="chapter1.html">Ch 1: AI Foundations</a></li>
+                    <li><a href="chapter2.html" class="active">Ch 2: Machine Learning</a></li>
+                    <li><a href="chapter3.html">Ch 3: Deep Learning</a></li>
+                    <li><a href="chapter4.html">Ch 4: Transformers</a></li>
+                    <li><a href="chapter5.html">Ch 5: LLMs</a></li>
+                    <li><a href="chapter6.html">Ch 6: Generative AI</a></li>
+                    <li><a href="chapter7.html">Ch 7: Embeddings</a></li>
+                    <li><a href="chapter8.html">Ch 8: RAG</a></li>
+                    <li><a href="chapter9.html">Ch 9: Fine-Tuning</a></li>
+                    <li><a href="chapter10.html">Ch 10: Multimodal AI</a></li>
+                    <li><a href="chapter11.html">Ch 11: Agents & MCP</a></li>
+                    <li><a href="chapter12.html">Ch 12: Tooling</a></li>
+                    <li><a href="chapter13.html">Ch 13: Infrastructure</a></li>
+                    <li><a href="chapter14.html">Ch 14: System Design</a></li>
+                    <li><a href="chapter15.html">Ch 15: Glossary</a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <h1>Chapter 2: Machine Learning</h1>
+                
+                <p class="chapter-intro">
+                    Machine Learning is the cornerstone of modern AI, enabling systems to learn from data without 
+                    explicit programming. This chapter explores the three main paradigms—supervised, unsupervised, 
+                    and reinforcement learning—along with foundational algorithms, evaluation techniques, and 
+                    practical considerations for building ML systems.
+                </p>
+
+                <h2 id="what-is-ml">What is Machine Learning?</h2>
+                
+                <p>
+                    Machine Learning (ML) is a subset of AI that focuses on algorithms that improve automatically 
+                    through experience. Instead of following explicitly programmed instructions, ML systems identify 
+                    patterns in data and make data-driven predictions or decisions.
+                </p>
+
+                <div class="callout callout-note">
+                    <div class="callout-title">💡 Tom Mitchell's Definition (1997)</div>
+                    <p>
+                        "A computer program is said to learn from experience E with respect to some class of tasks T 
+                        and performance measure P, if its performance at tasks in T, as measured by P, improves with 
+                        experience E."
+                    </p>
+                </div>
+
+                <h3>ML vs. Traditional Programming</h3>
+                <div class="diagram-container">
+                    <pre class="ascii-diagram">
+Traditional Programming:
+Input Data + Program Rules  →  Output
+
+Machine Learning:
+Input Data + Output  →  Learned Model (Rules)
+
+Inference (Using the Model):
+New Input Data + Learned Model  →  Predictions
+                    </pre>
+                </div>
+
+                <h2 id="paradigms">Three Learning Paradigms</h2>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">Machine Learning Paradigms</div>
+                    <pre class="mermaid">
+graph TD
+    A[Machine Learning] --> B[Supervised Learning]
+    A --> C[Unsupervised Learning]
+    A --> D[Reinforcement Learning]
+    
+    B --> B1[Classification]
+    B --> B2[Regression]
+    
+    C --> C1[Clustering]
+    C --> C2[Dimensionality Reduction]
+    C --> C3[Anomaly Detection]
+    
+    D --> D1[Policy Learning]
+    D --> D2[Value-Based]
+    D --> D3[Model-Based]
+    
+    style A fill:#4d94ff,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#28a745,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#ffc107,stroke:#333,stroke-width:2px
+    style D fill:#dc3545,stroke:#333,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+
+                <h2 id="supervised">Supervised Learning</h2>
+                
+                <p>
+                    In supervised learning, the algorithm learns from labeled data—input-output pairs where the 
+                    correct answer is known. The goal is to learn a mapping function that can predict outputs for 
+                    new, unseen inputs.
+                </p>
+
+                <h3>Classification</h3>
+                <p>
+                    Classification predicts discrete categorical labels. Examples:
+                </p>
+                <ul>
+                    <li>Email spam detection (spam/not spam)</li>
+                    <li>Image recognition (cat/dog/bird)</li>
+                    <li>Medical diagnosis (disease present/absent)</li>
+                    <li>Sentiment analysis (positive/negative/neutral)</li>
+                </ul>
+
+                <h4>Popular Classification Algorithms</h4>
+                <ul>
+                    <li><strong>Logistic Regression:</strong> Linear model for binary classification</li>
+                    <li><strong>Decision Trees:</strong> Tree-based rules for splitting data</li>
+                    <li><strong>Random Forests:</strong> Ensemble of decision trees</li>
+                    <li><strong>Support Vector Machines (SVM):</strong> Find optimal decision boundaries</li>
+                    <li><strong>Naive Bayes:</strong> Probabilistic classifier based on Bayes' theorem</li>
+                    <li><strong>K-Nearest Neighbors (KNN):</strong> Classify based on proximity to training examples</li>
+                    <li><strong>Neural Networks:</strong> Deep learning models for complex patterns</li>
+                </ul>
+
+                <h3>Regression</h3>
+                <p>
+                    Regression predicts continuous numerical values. Examples:
+                </p>
+                <ul>
+                    <li>House price prediction</li>
+                    <li>Stock market forecasting</li>
+                    <li>Temperature prediction</li>
+                    <li>Sales forecasting</li>
+                </ul>
+
+                <h4>Popular Regression Algorithms</h4>
+                <ul>
+                    <li><strong>Linear Regression:</strong> Fits a line to data points</li>
+                    <li><strong>Polynomial Regression:</strong> Fits curves using polynomial features</li>
+                    <li><strong>Ridge/Lasso Regression:</strong> Regularized linear models</li>
+                    <li><strong>Support Vector Regression:</strong> SVM adapted for regression</li>
+                    <li><strong>Decision Tree Regression:</strong> Tree-based continuous prediction</li>
+                    <li><strong>Neural Networks:</strong> Deep models for complex relationships</li>
+                </ul>
+
+                <div class="deep-dive">
+                    <div class="deep-dive-header">
+                        <span>🔬 Deep Dive: Gradient Descent Optimization</span>
+                        <span class="deep-dive-icon">▼</span>
+                    </div>
+                    <div class="deep-dive-content">
+                        <div class="deep-dive-inner">
+                            <h3>How Models Learn: Gradient Descent</h3>
+                            <p>
+                                Most ML algorithms use gradient descent to minimize a loss function that measures 
+                                prediction error.
+                            </p>
+                            
+                            <h4>The Algorithm</h4>
+                            <ol>
+                                <li>Initialize model parameters (weights) randomly</li>
+                                <li>Compute predictions using current parameters</li>
+                                <li>Calculate loss (error) between predictions and true values</li>
+                                <li>Compute gradient of loss with respect to parameters</li>
+                                <li>Update parameters in the direction that reduces loss</li>
+                                <li>Repeat steps 2-5 until convergence</li>
+                            </ol>
+                            
+                            <h4>Update Rule</h4>
+                            <pre><code>θ := θ - α * ∇L(θ)
+
+Where:
+- θ = model parameters
+- α = learning rate (step size)
+- ∇L(θ) = gradient of loss function
+</code></pre>
+                            
+                            <h4>Variants</h4>
+                            <ul>
+                                <li><strong>Batch Gradient Descent:</strong> Uses entire dataset per update (slow but accurate)</li>
+                                <li><strong>Stochastic Gradient Descent (SGD):</strong> Uses one sample per update (fast but noisy)</li>
+                                <li><strong>Mini-Batch Gradient Descent:</strong> Uses small batches (good balance)</li>
+                                <li><strong>Adam:</strong> Adaptive learning rate optimization (popular default)</li>
+                                <li><strong>RMSprop:</strong> Adapts learning rates per parameter</li>
+                            </ul>
+                            
+                            <h4>Learning Rate Importance</h4>
+                            <ul>
+                                <li><strong>Too high:</strong> May overshoot minimum, diverge</li>
+                                <li><strong>Too low:</strong> Slow convergence, may get stuck in local minima</li>
+                                <li><strong>Just right:</strong> Efficient convergence to good solution</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 id="unsupervised">Unsupervised Learning</h2>
+                
+                <p>
+                    Unsupervised learning works with unlabeled data, discovering hidden patterns, structures, or 
+                    representations without explicit guidance.
+                </p>
+
+                <h3>Clustering</h3>
+                <p>
+                    Clustering groups similar data points together. Applications:
+                </p>
+                <ul>
+                    <li>Customer segmentation for marketing</li>
+                    <li>Document organization and topic modeling</li>
+                    <li>Image compression and segmentation</li>
+                    <li>Anomaly detection in security</li>
+                </ul>
+
+                <h4>Clustering Algorithms</h4>
+                <ul>
+                    <li><strong>K-Means:</strong> Partition data into K clusters around centroids</li>
+                    <li><strong>Hierarchical Clustering:</strong> Build tree of nested clusters</li>
+                    <li><strong>DBSCAN:</strong> Density-based spatial clustering</li>
+                    <li><strong>Gaussian Mixture Models (GMM):</strong> Probabilistic soft clustering</li>
+                </ul>
+
+                <h3>Dimensionality Reduction</h3>
+                <p>
+                    Reduces the number of features while preserving important information. Benefits:
+                </p>
+                <ul>
+                    <li>Visualization of high-dimensional data</li>
+                    <li>Noise reduction and feature extraction</li>
+                    <li>Computational efficiency</li>
+                    <li>Avoiding curse of dimensionality</li>
+                </ul>
+
+                <h4>Dimensionality Reduction Techniques</h4>
+                <ul>
+                    <li><strong>Principal Component Analysis (PCA):</strong> Linear projection to maximize variance</li>
+                    <li><strong>t-SNE:</strong> Nonlinear method for visualization</li>
+                    <li><strong>UMAP:</strong> Faster alternative to t-SNE, preserves global structure</li>
+                    <li><strong>Autoencoders:</strong> Neural networks for learning compressed representations</li>
+                </ul>
+
+                <h3>Anomaly Detection</h3>
+                <p>
+                    Identifies rare or unusual data points that deviate from normal patterns.
+                </p>
+                <ul>
+                    <li>Fraud detection in finance</li>
+                    <li>Network intrusion detection</li>
+                    <li>Manufacturing quality control</li>
+                    <li>Health monitoring systems</li>
+                </ul>
+
+                <h2 id="reinforcement">Reinforcement Learning</h2>
+                
+                <p>
+                    Reinforcement Learning (RL) trains agents to make sequential decisions by interacting with an 
+                    environment, receiving rewards or penalties based on their actions.
+                </p>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">Reinforcement Learning Loop</div>
+                    <pre class="mermaid">
+graph LR
+    A[Agent] -->|Action| B[Environment]
+    B -->|State + Reward| A
+    
+    style A fill:#4d94ff,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#28a745,stroke:#333,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+
+                <h3>Key RL Concepts</h3>
+                <ul>
+                    <li><strong>Agent:</strong> The learner/decision maker</li>
+                    <li><strong>Environment:</strong> The world the agent interacts with</li>
+                    <li><strong>State:</strong> Current situation of the agent</li>
+                    <li><strong>Action:</strong> Choices available to the agent</li>
+                    <li><strong>Reward:</strong> Feedback signal indicating action quality</li>
+                    <li><strong>Policy:</strong> Strategy mapping states to actions</li>
+                    <li><strong>Value Function:</strong> Expected future reward from a state</li>
+                </ul>
+
+                <h3>RL Algorithms</h3>
+                <ul>
+                    <li><strong>Q-Learning:</strong> Learn action-value function</li>
+                    <li><strong>Deep Q-Networks (DQN):</strong> Neural networks for Q-learning</li>
+                    <li><strong>Policy Gradient Methods:</strong> Directly optimize policy</li>
+                    <li><strong>Actor-Critic:</strong> Combine value and policy methods</li>
+                    <li><strong>Proximal Policy Optimization (PPO):</strong> Stable policy updates</li>
+                    <li><strong>AlphaGo/AlphaZero:</strong> Combine RL with tree search</li>
+                </ul>
+
+                <h3>Applications</h3>
+                <ul>
+                    <li>Game playing (Chess, Go, Atari games)</li>
+                    <li>Robotics control and navigation</li>
+                    <li>Autonomous vehicle decision-making</li>
+                    <li>Resource allocation and scheduling</li>
+                    <li>Recommendation systems optimization</li>
+                </ul>
+
+                <div class="deep-dive">
+                    <div class="deep-dive-header">
+                        <span>🔬 Deep Dive: The Bias-Variance Tradeoff</span>
+                        <span class="deep-dive-icon">▼</span>
+                    </div>
+                    <div class="deep-dive-content">
+                        <div class="deep-dive-inner">
+                            <h3>Understanding Model Error</h3>
+                            <p>
+                                Model error can be decomposed into three components:
+                            </p>
+                            <pre><code>Total Error = Bias² + Variance + Irreducible Error</code></pre>
+                            
+                            <h4>Bias</h4>
+                            <p>
+                                Bias measures how far the model's average predictions are from the true values. 
+                                High bias indicates <strong>underfitting</strong>:
+                            </p>
+                            <ul>
+                                <li>Model is too simple to capture data patterns</li>
+                                <li>Makes strong assumptions about data</li>
+                                <li>Poor performance on both training and test data</li>
+                            </ul>
+                            
+                            <h4>Variance</h4>
+                            <p>
+                                Variance measures how much predictions vary for different training sets. 
+                                High variance indicates <strong>overfitting</strong>:
+                            </p>
+                            <ul>
+                                <li>Model is too complex, memorizes training data</li>
+                                <li>Very sensitive to noise in training data</li>
+                                <li>Great training performance but poor test performance</li>
+                            </ul>
+                            
+                            <h4>The Tradeoff</h4>
+                            <p>
+                                Reducing bias typically increases variance and vice versa. The goal is finding the 
+                                optimal model complexity:
+                            </p>
+                            <ul>
+                                <li><strong>Too simple:</strong> High bias, low variance (underfitting)</li>
+                                <li><strong>Optimal:</strong> Balanced bias and variance</li>
+                                <li><strong>Too complex:</strong> Low bias, high variance (overfitting)</li>
+                            </ul>
+                            
+                            <h4>Solutions</h4>
+                            <ul>
+                                <li><strong>For High Bias:</strong> Use more complex models, add features, train longer</li>
+                                <li><strong>For High Variance:</strong> Get more data, use regularization, reduce model complexity</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 id="evaluation">Model Evaluation and Validation</h2>
+                
+                <h3>Train-Test Split</h3>
+                <p>
+                    Always split data into separate sets to avoid overfitting:
+                </p>
+                <ul>
+                    <li><strong>Training Set (60-80%):</strong> Used to train the model</li>
+                    <li><strong>Validation Set (10-20%):</strong> Used to tune hyperparameters</li>
+                    <li><strong>Test Set (10-20%):</strong> Used for final unbiased evaluation</li>
+                </ul>
+
+                <h3>Cross-Validation</h3>
+                <p>
+                    K-Fold Cross-Validation provides more robust evaluation by training and testing on different 
+                    data subsets multiple times.
+                </p>
+
+                <h3>Classification Metrics</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Formula</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Accuracy</strong></td>
+                            <td>(TP + TN) / Total</td>
+                            <td>Balanced classes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Precision</strong></td>
+                            <td>TP / (TP + FP)</td>
+                            <td>Minimize false positives</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Recall</strong></td>
+                            <td>TP / (TP + FN)</td>
+                            <td>Minimize false negatives</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F1-Score</strong></td>
+                            <td>2 * (Precision * Recall) / (Precision + Recall)</td>
+                            <td>Balance precision and recall</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ROC-AUC</strong></td>
+                            <td>Area under ROC curve</td>
+                            <td>Overall classification quality</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Regression Metrics</h3>
+                <ul>
+                    <li><strong>Mean Absolute Error (MAE):</strong> Average absolute difference</li>
+                    <li><strong>Mean Squared Error (MSE):</strong> Average squared difference</li>
+                    <li><strong>Root Mean Squared Error (RMSE):</strong> Square root of MSE</li>
+                    <li><strong>R² Score:</strong> Proportion of variance explained by model</li>
+                </ul>
+
+                <h2 id="practical">Practical Considerations</h2>
+
+                <div class="callout callout-warning">
+                    <div class="callout-title">⚠️ Data Quality is Critical</div>
+                    <p>
+                        The most sophisticated algorithms cannot overcome poor data quality. Common issues:
+                    </p>
+                    <ul>
+                        <li>Missing values</li>
+                        <li>Outliers and noise</li>
+                        <li>Class imbalance</li>
+                        <li>Data leakage</li>
+                        <li>Sampling bias</li>
+                    </ul>
+                </div>
+
+                <h3>Feature Engineering</h3>
+                <p>
+                    Creating effective features often matters more than algorithm choice:
+                </p>
+                <ul>
+                    <li>Domain knowledge drives feature creation</li>
+                    <li>Scaling and normalization improve convergence</li>
+                    <li>Encoding categorical variables appropriately</li>
+                    <li>Creating interaction and polynomial features</li>
+                    <li>Handling temporal and spatial features</li>
+                </ul>
+
+                <h3>Regularization Techniques</h3>
+                <ul>
+                    <li><strong>L1 (Lasso):</strong> Encourages sparsity, feature selection</li>
+                    <li><strong>L2 (Ridge):</strong> Penalizes large weights, reduces overfitting</li>
+                    <li><strong>Elastic Net:</strong> Combines L1 and L2</li>
+                    <li><strong>Dropout:</strong> Randomly deactivate neurons (neural networks)</li>
+                    <li><strong>Early Stopping:</strong> Stop training when validation error increases</li>
+                </ul>
+
+                <div class="key-terms">
+                    <h3>Key Terms</h3>
+                    <dl>
+                        <dt>Supervised Learning</dt>
+                        <dd>Learning from labeled input-output pairs</dd>
+                        
+                        <dt>Unsupervised Learning</dt>
+                        <dd>Finding patterns in unlabeled data</dd>
+                        
+                        <dt>Reinforcement Learning</dt>
+                        <dd>Learning through interaction with environment and rewards</dd>
+                        
+                        <dt>Overfitting</dt>
+                        <dd>Model performs well on training data but poorly on new data</dd>
+                        
+                        <dt>Underfitting</dt>
+                        <dd>Model is too simple to capture data patterns</dd>
+                        
+                        <dt>Gradient Descent</dt>
+                        <dd>Optimization algorithm that iteratively minimizes loss function</dd>
+                        
+                        <dt>Feature Engineering</dt>
+                        <dd>Creating meaningful input variables from raw data</dd>
+                        
+                        <dt>Cross-Validation</dt>
+                        <dd>Technique for assessing model generalization using multiple train-test splits</dd>
+                    </dl>
+                </div>
+
+                <div class="review-questions">
+                    <h3>Review Questions</h3>
+                    <ol>
+                        <li>What distinguishes supervised from unsupervised learning?</li>
+                        <li>Explain the bias-variance tradeoff and its implications for model selection.</li>
+                        <li>When would you use classification vs. regression?</li>
+                        <li>How does reinforcement learning differ from supervised learning?</li>
+                        <li>Why is train-test splitting essential?</li>
+                        <li>What metrics would you use to evaluate a medical diagnosis classifier, and why?</li>
+                        <li>Describe gradient descent and its role in ML training.</li>
+                        <li>What is regularization and why is it important?</li>
+                    </ol>
+                </div>
+
+                <div class="exercises">
+                    <h3>Practical Exercises</h3>
+                    <ol>
+                        <li>
+                            <strong>Dataset Analysis:</strong> Find a public dataset (e.g., from Kaggle, UCI ML Repository). 
+                            Identify the task type (classification/regression), evaluate data quality, and propose 
+                            appropriate algorithms.
+                        </li>
+                        <li>
+                            <strong>Algorithm Comparison:</strong> For a simple problem (e.g., iris classification), 
+                            compare 3+ algorithms. Plot learning curves and discuss bias-variance characteristics.
+                        </li>
+                        <li>
+                            <strong>Feature Engineering:</strong> Take a raw dataset and create 5-10 engineered features 
+                            based on domain knowledge. Measure impact on model performance.
+                        </li>
+                        <li>
+                            <strong>Hyperparameter Tuning:</strong> Implement grid search or random search to optimize 
+                            hyperparameters for a chosen algorithm.
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="chapter-navigation">
+                    <a href="chapter1.html" class="nav-button prev">← Chapter 1: AI Foundations</a>
+                    <a href="chapter3.html" class="nav-button next">Next: Deep Learning →</a>
+                </div>
+
+            </main>
+        </div>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 AI Tutorial For Everyone</p>
+        </footer>
+    </div>
+
+    <div id="ai-chat-widget-placeholder"></div>
+    
+    <script src="../assets/js/darkmode.js"></script>
+    <script src="../assets/js/nav.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

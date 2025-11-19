@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chapter 1: Foundations of Artificial Intelligence - History, core concepts, and fundamental approaches">
+    <title>Chapter 1: AI Foundations | AI Tutorial</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/theme.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- Header -->
+        <header class="site-header">
+            <div class="header-content">
+                <div class="site-logo">
+                    <h1><a href="../index.html">AI <span>Tutorial</span></a></h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="chapter1.html" class="active">Chapters</a></li>
+                        <li><a href="chapter15.html">Glossary</a></li>
+                        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button></li>
+                    </ul>
+                </nav>
+                <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h3>Chapters</h3>
+                <ul class="toc-list">
+                    <li><a href="../index.html">🏠 Home</a></li>
+                    <li><a href="chapter1.html" class="active">Ch 1: AI Foundations</a></li>
+                    <li><a href="chapter2.html">Ch 2: Machine Learning</a></li>
+                    <li><a href="chapter3.html">Ch 3: Deep Learning</a></li>
+                    <li><a href="chapter4.html">Ch 4: Transformers</a></li>
+                    <li><a href="chapter5.html">Ch 5: LLMs</a></li>
+                    <li><a href="chapter6.html">Ch 6: Generative AI</a></li>
+                    <li><a href="chapter7.html">Ch 7: Embeddings</a></li>
+                    <li><a href="chapter8.html">Ch 8: RAG</a></li>
+                    <li><a href="chapter9.html">Ch 9: Fine-Tuning</a></li>
+                    <li><a href="chapter10.html">Ch 10: Multimodal AI</a></li>
+                    <li><a href="chapter11.html">Ch 11: Agents & MCP</a></li>
+                    <li><a href="chapter12.html">Ch 12: Tooling</a></li>
+                    <li><a href="chapter13.html">Ch 13: Infrastructure</a></li>
+                    <li><a href="chapter14.html">Ch 14: System Design</a></li>
+                    <li><a href="chapter15.html">Ch 15: Glossary</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <h1>Chapter 1: Foundations of Artificial Intelligence</h1>
+                
+                <p class="chapter-intro">
+                    Artificial Intelligence represents one of humanity's most ambitious technological pursuits: 
+                    creating machines that can perceive, reason, learn, and act intelligently. This chapter 
+                    explores the historical context, core concepts, philosophical questions, and fundamental 
+                    approaches that define modern AI.
+                </p>
+
+                <!-- Section: What is AI? -->
+                <h2 id="what-is-ai">What is Artificial Intelligence?</h2>
+                
+                <p>
+                    Artificial Intelligence is the field of computer science dedicated to creating systems capable 
+                    of performing tasks that typically require human intelligence. These tasks include:
+                </p>
+                
+                <ul>
+                    <li><strong>Perception:</strong> Understanding images, speech, and text</li>
+                    <li><strong>Reasoning:</strong> Drawing logical conclusions from data</li>
+                    <li><strong>Learning:</strong> Improving performance through experience</li>
+                    <li><strong>Problem Solving:</strong> Finding solutions to complex challenges</li>
+                    <li><strong>Natural Language Understanding:</strong> Comprehending and generating human language</li>
+                    <li><strong>Decision Making:</strong> Choosing optimal actions under uncertainty</li>
+                </ul>
+
+                <div class="callout callout-note">
+                    <div class="callout-title">💡 Key Insight</div>
+                    <p>
+                        AI is not a single technology but a diverse field encompassing multiple approaches, 
+                        algorithms, and paradigms—each suited to different types of problems and domains.
+                    </p>
+                </div>
+
+                <!-- AI Classification Diagram -->
+                <div class="diagram-container">
+                    <div class="diagram-title">Classification of AI Systems</div>
+                    <pre class="mermaid">
+graph TD
+    A[Artificial Intelligence] --> B[Narrow AI<br/>ANI]
+    A --> C[General AI<br/>AGI]
+    A --> D[Super AI<br/>ASI]
+    B --> E[Task-Specific Systems]
+    E --> F[Image Recognition]
+    E --> G[Speech Recognition]
+    E --> H[Game Playing]
+    E --> I[Recommendation Systems]
+    C --> J[Human-Level Intelligence<br/>Theoretical]
+    D --> K[Superhuman Intelligence<br/>Speculative]
+    
+    style A fill:#4d94ff,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#28a745,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#ffc107,stroke:#333,stroke-width:2px
+    style D fill:#dc3545,stroke:#333,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+
+                <!-- Deep Dive: Defining Intelligence -->
+                <div class="deep-dive">
+                    <div class="deep-dive-header">
+                        <span>🔬 Deep Dive: What is "Intelligence"?</span>
+                        <span class="deep-dive-icon">▼</span>
+                    </div>
+                    <div class="deep-dive-content">
+                        <div class="deep-dive-inner">
+                            <h3>The Challenge of Defining Intelligence</h3>
+                            <p>
+                                Defining intelligence is surprisingly difficult. Traditional definitions have focused 
+                                on problem-solving, reasoning, and adaptation, but modern AI challenges these assumptions.
+                            </p>
+                            
+                            <h4>Multiple Intelligence Theories</h4>
+                            <ul>
+                                <li><strong>Logical-Mathematical:</strong> Reasoning and problem solving</li>
+                                <li><strong>Linguistic:</strong> Language comprehension and expression</li>
+                                <li><strong>Spatial:</strong> Visual and spatial reasoning</li>
+                                <li><strong>Social:</strong> Understanding social contexts and emotions</li>
+                                <li><strong>Creative:</strong> Generating novel, valuable ideas</li>
+                            </ul>
+                            
+                            <h4>The Turing Test</h4>
+                            <p>
+                                Proposed by Alan Turing in 1950, the Turing Test suggests that a machine exhibits 
+                                intelligence if a human evaluator cannot distinguish its responses from those of a human. 
+                                While influential, it has limitations:
+                            </p>
+                            <ul>
+                                <li>Focuses only on conversational ability</li>
+                                <li>Can be "passed" through deception rather than true understanding</li>
+                                <li>Doesn't measure other forms of intelligence (e.g., visual, motor)</li>
+                            </ul>
+                            
+                            <h4>Modern Perspectives</h4>
+                            <p>
+                                Today, AI researchers recognize multiple forms of machine intelligence, from narrow 
+                                task-specific capabilities to hypothetical general intelligence. The focus has shifted 
+                                from replicating human intelligence to creating useful, reliable systems that augment 
+                                human capabilities.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Historical Context -->
+                <h2 id="history">Historical Evolution of AI</h2>
+                
+                <p>
+                    The journey of AI spans seven decades, marked by periods of intense optimism, disappointing 
+                    setbacks, and remarkable breakthroughs.
+                </p>
+
+                <h3>Timeline of Major Milestones</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Era</th>
+                            <th>Period</th>
+                            <th>Key Developments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Birth of AI</strong></td>
+                            <td>1950-1956</td>
+                            <td>Turing Test proposed; Dartmouth Conference coins "Artificial Intelligence"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Early Enthusiasm</strong></td>
+                            <td>1956-1974</td>
+                            <td>First AI programs (Logic Theorist, ELIZA); Early neural networks (Perceptron)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>First AI Winter</strong></td>
+                            <td>1974-1980</td>
+                            <td>Funding cuts due to unmet expectations; Limitations of perceptrons exposed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Expert Systems</strong></td>
+                            <td>1980-1987</td>
+                            <td>Rule-based systems flourish; Commercial AI applications emerge</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Second AI Winter</strong></td>
+                            <td>1987-1993</td>
+                            <td>Expert systems prove brittle; Market collapse of AI-focused companies</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Machine Learning Era</strong></td>
+                            <td>1993-2010</td>
+                            <td>Statistical approaches dominate; Support Vector Machines, Random Forests</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Deep Learning Revolution</strong></td>
+                            <td>2010-2017</td>
+                            <td>ImageNet breakthrough; AlphaGo defeats world champion; CNNs and RNNs mature</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transformer Era</strong></td>
+                            <td>2017-2022</td>
+                            <td>Attention mechanism; BERT, GPT series; Transformers dominate NLP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Generative AI Boom</strong></td>
+                            <td>2022-Present</td>
+                            <td>ChatGPT; Stable Diffusion; Widespread adoption of LLMs and generative models</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-warning">
+                    <div class="callout-title">⚠️ Learning from History</div>
+                    <p>
+                        The two "AI Winters" teach us important lessons about hype cycles, realistic expectations, 
+                        and the importance of fundamental research. Today's rapid progress builds on decades of 
+                        theoretical groundwork and technological advancement.
+                    </p>
+                </div>
+
+                <!-- Section: Approaches to AI -->
+                <h2 id="approaches">Fundamental Approaches to AI</h2>
+                
+                <p>
+                    AI systems can be categorized by their underlying methodologies. Modern systems often combine 
+                    multiple approaches.
+                </p>
+
+                <h3>1. Symbolic AI (Good Old-Fashioned AI - GOFAI)</h3>
+                <p>
+                    Symbolic AI represents knowledge using explicit symbols and rules. It dominated early AI research 
+                    and remains relevant for certain applications.
+                </p>
+                <ul>
+                    <li><strong>Representation:</strong> Knowledge encoded as symbols, logic, and rules</li>
+                    <li><strong>Reasoning:</strong> Formal logic, theorem proving, search algorithms</li>
+                    <li><strong>Examples:</strong> Expert systems, logic programming, knowledge graphs</li>
+                    <li><strong>Strengths:</strong> Interpretable, explainable, works with small data</li>
+                    <li><strong>Weaknesses:</strong> Brittle, difficult to scale, requires manual knowledge engineering</li>
+                </ul>
+
+                <h3>2. Statistical/Machine Learning AI</h3>
+                <p>
+                    Statistical AI learns patterns from data rather than relying on hand-coded rules. This approach 
+                    has dominated modern AI since the 1990s.
+                </p>
+                <ul>
+                    <li><strong>Representation:</strong> Statistical models, feature vectors, probability distributions</li>
+                    <li><strong>Learning:</strong> Optimization algorithms that adjust model parameters based on data</li>
+                    <li><strong>Examples:</strong> Linear regression, decision trees, SVMs, neural networks</li>
+                    <li><strong>Strengths:</strong> Learns from data, handles noise, generalizes to new situations</li>
+                    <li><strong>Weaknesses:</strong> Requires large datasets, often not interpretable, can overfit</li>
+                </ul>
+
+                <h3>3. Connectionist/Neural AI</h3>
+                <p>
+                    Inspired by biological neural networks, this approach uses interconnected artificial neurons 
+                    to process information.
+                </p>
+                <ul>
+                    <li><strong>Representation:</strong> Distributed representations across neural network weights</li>
+                    <li><strong>Learning:</strong> Backpropagation and gradient descent</li>
+                    <li><strong>Examples:</strong> Perceptrons, CNNs, RNNs, Transformers, Deep Learning</li>
+                    <li><strong>Strengths:</strong> Powerful pattern recognition, scalable with data and compute</li>
+                    <li><strong>Weaknesses:</strong> Black box behavior, requires massive computational resources</li>
+                </ul>
+
+                <h3>4. Evolutionary/Genetic AI</h3>
+                <p>
+                    Inspired by biological evolution, these algorithms evolve solutions through processes of selection, 
+                    mutation, and recombination.
+                </p>
+                <ul>
+                    <li><strong>Representation:</strong> Population of candidate solutions</li>
+                    <li><strong>Optimization:</strong> Fitness functions, genetic operators (crossover, mutation)</li>
+                    <li><strong>Examples:</strong> Genetic algorithms, genetic programming, neuroevolution</li>
+                    <li><strong>Strengths:</strong> Handles complex search spaces, discovers creative solutions</li>
+                    <li><strong>Weaknesses:</strong> Computationally expensive, requires careful fitness function design</li>
+                </ul>
+
+                <!-- Approaches Comparison Diagram -->
+                <div class="diagram-container">
+                    <div class="diagram-title">AI Approaches Comparison</div>
+                    <pre class="mermaid">
+graph LR
+    A[AI Problem] --> B[Symbolic AI]
+    A --> C[Statistical ML]
+    A --> D[Neural Networks]
+    A --> E[Evolutionary]
+    
+    B --> F[Rules & Logic]
+    C --> G[Pattern Learning]
+    D --> H[Deep Representations]
+    E --> I[Evolution-based]
+    
+    F --> J[Solution]
+    G --> J
+    H --> J
+    I --> J
+    
+    style A fill:#4d94ff,stroke:#333,stroke-width:2px,color:#fff
+    style J fill:#28a745,stroke:#333,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+
+                <!-- Section: Key Concepts -->
+                <h2 id="key-concepts">Core AI Concepts</h2>
+
+                <h3>Intelligence vs. Automation</h3>
+                <p>
+                    Not all automation is AI. True AI systems exhibit:
+                </p>
+                <ul>
+                    <li><strong>Adaptability:</strong> Adjusting behavior based on new information</li>
+                    <li><strong>Generalization:</strong> Applying learned knowledge to novel situations</li>
+                    <li><strong>Autonomy:</strong> Operating without constant human intervention</li>
+                    <li><strong>Uncertainty Handling:</strong> Making decisions despite incomplete information</li>
+                </ul>
+
+                <h3>Data, Learning, and Knowledge</h3>
+                <div class="diagram-container">
+                    <pre class="ascii-diagram">
+    Raw Data  →  Information  →  Knowledge  →  Wisdom
+        │              │              │           │
+    Observations   Patterns      Models      Insight
+    Measurements   Structure    Understanding  Judgment
+    Examples       Context       Reasoning     Expertise
+                    </pre>
+                </div>
+
+                <h3>The AI Pipeline</h3>
+                <p>
+                    Most AI applications follow a standard pipeline:
+                </p>
+                <ol>
+                    <li><strong>Data Collection:</strong> Gathering relevant data from various sources</li>
+                    <li><strong>Data Preprocessing:</strong> Cleaning, normalizing, and transforming data</li>
+                    <li><strong>Feature Engineering:</strong> Extracting meaningful representations</li>
+                    <li><strong>Model Training:</strong> Learning patterns from data using algorithms</li>
+                    <li><strong>Evaluation:</strong> Testing model performance on unseen data</li>
+                    <li><strong>Deployment:</strong> Integrating the model into production systems</li>
+                    <li><strong>Monitoring:</strong> Tracking performance and detecting drift over time</li>
+                </ol>
+
+                <!-- Deep Dive: The Frame Problem -->
+                <div class="deep-dive">
+                    <div class="deep-dive-header">
+                        <span>🔬 Deep Dive: The Frame Problem and Common Sense</span>
+                        <span class="deep-dive-icon">▼</span>
+                    </div>
+                    <div class="deep-dive-content">
+                        <div class="deep-dive-inner">
+                            <h3>The Frame Problem</h3>
+                            <p>
+                                Identified by philosopher John McCarthy, the frame problem asks: How does an AI 
+                                system determine which aspects of a situation remain unchanged after an action?
+                            </p>
+                            
+                            <h4>Example</h4>
+                            <p>
+                                If a robot picks up a cup from a table, we humans automatically know:
+                            </p>
+                            <ul>
+                                <li>✓ The cup's location changes</li>
+                                <li>✓ The robot's hand is now occupied</li>
+                                <li>✓ The table's surface is now clear of the cup</li>
+                                <li>✓ But the color of the walls doesn't change</li>
+                                <li>✓ The time of day doesn't change</li>
+                                <li>✓ Other objects on the table don't move</li>
+                            </ul>
+                            
+                            <p>
+                                Humans have vast common-sense knowledge about what does and doesn't change. 
+                                Encoding this in symbolic AI systems proved extraordinarily difficult.
+                            </p>
+                            
+                            <h4>Modern Approaches</h4>
+                            <p>
+                                Deep learning models implicitly learn some common-sense knowledge from massive 
+                                datasets, but they still struggle with reasoning about physical causality, 
+                                counterfactuals, and edge cases. Research on "common sense AI" remains an 
+                                active area, with projects like:
+                            </p>
+                            <ul>
+                                <li><strong>CYC:</strong> A long-running project to encode common-sense knowledge</li>
+                                <li><strong>ConceptNet:</strong> A semantic network of everyday concepts</li>
+                                <li><strong>ATOMIC:</strong> A knowledge base of inferential knowledge about events</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Ethical Considerations -->
+                <h2 id="ethics">Ethical Foundations</h2>
+                
+                <p>
+                    As AI systems become more powerful and pervasive, ethical considerations become paramount.
+                </p>
+
+                <h3>Key Ethical Principles</h3>
+                <ul>
+                    <li><strong>Fairness:</strong> Avoiding bias and discrimination in AI decisions</li>
+                    <li><strong>Transparency:</strong> Making AI systems interpretable and explainable</li>
+                    <li><strong>Privacy:</strong> Protecting individual data rights and preventing misuse</li>
+                    <li><strong>Accountability:</strong> Establishing clear responsibility for AI outcomes</li>
+                    <li><strong>Safety:</strong> Ensuring AI systems are robust and secure</li>
+                    <li><strong>Beneficence:</strong> Designing AI to benefit humanity</li>
+                </ul>
+
+                <div class="callout callout-danger">
+                    <div class="callout-title">⚠️ Critical Challenges</div>
+                    <p>
+                        <strong>Bias Amplification:</strong> AI trained on biased historical data can perpetuate 
+                        and amplify societal biases in hiring, lending, criminal justice, and healthcare.
+                    </p>
+                    <p>
+                        <strong>Opacity:</strong> Complex deep learning models often function as "black boxes," 
+                        making it difficult to understand or challenge their decisions.
+                    </p>
+                    <p>
+                        <strong>Dual Use:</strong> Technologies designed for beneficial purposes can be misused 
+                        for surveillance, manipulation, or autonomous weapons.
+                    </p>
+                </div>
+
+                <!-- Key Terms -->
+                <div class="key-terms">
+                    <h3>Key Terms</h3>
+                    <dl>
+                        <dt>Artificial Intelligence (AI)</dt>
+                        <dd>The field focused on creating machines capable of intelligent behavior</dd>
+                        
+                        <dt>Narrow AI (ANI)</dt>
+                        <dd>AI systems designed for specific tasks; all current AI is narrow AI</dd>
+                        
+                        <dt>Artificial General Intelligence (AGI)</dt>
+                        <dd>Hypothetical AI with human-level cognitive abilities across all domains</dd>
+                        
+                        <dt>Turing Test</dt>
+                        <dd>A test of machine intelligence based on indistinguishability from human responses</dd>
+                        
+                        <dt>Symbolic AI</dt>
+                        <dd>AI approach using explicit symbols, rules, and logic to represent knowledge</dd>
+                        
+                        <dt>Machine Learning</dt>
+                        <dd>Subset of AI where systems learn patterns from data without explicit programming</dd>
+                        
+                        <dt>Neural Network</dt>
+                        <dd>Computing system inspired by biological brains, composed of interconnected nodes</dd>
+                        
+                        <dt>Algorithm</dt>
+                        <dd>A step-by-step procedure for solving a problem or performing a computation</dd>
+                        
+                        <dt>Bias</dt>
+                        <dd>Systematic errors in AI predictions caused by flawed training data or design</dd>
+                    </dl>
+                </div>
+
+                <!-- Review Questions -->
+                <div class="review-questions">
+                    <h3>Review Questions</h3>
+                    <ol>
+                        <li>What distinguishes Narrow AI from Artificial General Intelligence?</li>
+                        <li>Explain the difference between symbolic AI and statistical machine learning approaches.</li>
+                        <li>What were the main causes of the two "AI Winters"?</li>
+                        <li>Why is the Frame Problem significant for AI development?</li>
+                        <li>What ethical concerns arise from deploying AI systems at scale?</li>
+                        <li>Describe the typical stages of an AI development pipeline.</li>
+                        <li>How does the Turing Test attempt to measure machine intelligence, and what are its limitations?</li>
+                        <li>What role does data play in modern AI systems?</li>
+                    </ol>
+                </div>
+
+                <!-- Exercises -->
+                <div class="exercises">
+                    <h3>Practical Exercises</h3>
+                    <ol>
+                        <li>
+                            <strong>Research Exercise:</strong> Identify three real-world AI applications you interact 
+                            with daily. Classify each as primarily symbolic, statistical, or neural in approach.
+                        </li>
+                        <li>
+                            <strong>Critical Thinking:</strong> Choose a recent AI breakthrough (e.g., ChatGPT, 
+                            AlphaFold, DALL-E). Research its history, underlying approach, and societal impact.
+                        </li>
+                        <li>
+                            <strong>Ethics Scenario:</strong> An AI hiring system is found to disadvantage candidates 
+                            from certain demographic groups. List stakeholders affected and propose evaluation criteria 
+                            to prevent this bias.
+                        </li>
+                        <li>
+                            <strong>Conceptual Design:</strong> Design a simple rule-based AI system (symbolic approach) 
+                            for a specific task (e.g., diagnosing computer problems, recommending recipes). List your 
+                            rules and identify where they might fail.
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Chapter Navigation -->
+                <div class="chapter-navigation">
+                    <a href="../index.html" class="nav-button prev">← Home</a>
+                    <a href="chapter2.html" class="nav-button next">Next: Machine Learning →</a>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <p>&copy; 2025 AI Tutorial For Everyone</p>
+        </footer>
+    </div>
+
+    <div id="ai-chat-widget-placeholder"></div>
+    
+    <script src="../assets/js/darkmode.js"></script>
+    <script src="../assets/js/nav.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
