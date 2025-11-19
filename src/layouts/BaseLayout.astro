@@ -7,6 +7,8 @@ interface Props {
 
 const { title, description = "Comprehensive guide to Artificial Intelligence and Machine Learning", currentPage = "" } = Astro.props;
 
+const base = import.meta.env.BASE_URL;
+
 const chapters = [
   { title: "Foundations of AI", path: "/chapters/01-foundations" },
   { title: "Machine Learning", path: "/chapters/02-machine-learning" },
@@ -75,8 +77,8 @@ const chapters = [
     });
   </script>
   
-  <link rel="stylesheet" href="/styles/global.css">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href={`${base.endsWith('/') ? base : base + '/'}styles/global.css`}>
+  <link rel="icon" type="image/svg+xml" href={`${base.endsWith('/') ? base : base + '/'}favicon.svg`}>
 </head>
 <body>
   <div class="app-container">
@@ -84,7 +86,7 @@ const chapters = [
     <header class="main-header">
       <div class="header-content">
         <div class="logo">
-          <a href="/">
+          <a href={base}>
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
               <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
               <path d="M16 8L22 12V20L16 24L10 20V12L16 8Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
@@ -101,8 +103,8 @@ const chapters = [
         </div>
         
         <nav class="main-nav">
-          <a href="/" class={currentPage === "" ? "active" : ""}>Home</a>
-          <a href="/chapters/01-foundations" class={currentPage.startsWith("/chapters") ? "active" : ""}>Chapters</a>
+          <a href={base} class={currentPage === "" ? "active" : ""}>Home</a>
+          <a href={`${base.endsWith('/') ? base : base + '/'}chapters/01-foundations`} class={currentPage.startsWith("/chapters") ? "active" : ""}>Chapters</a>
           <a href="https://github.com/nchand02/AIConcepts" target="_blank" rel="noopener">GitHub</a>
         </nav>
         
@@ -156,7 +158,7 @@ const chapters = [
           <nav class="chapter-nav">
             {chapters.map((chapter, index) => (
               <a 
-                href={chapter.path} 
+                href={`${base.endsWith('/') ? base : base + '/'}${chapter.path.startsWith('/') ? chapter.path.slice(1) : chapter.path}`} 
                 class={currentPage === chapter.path ? "active" : ""}
               >
                 <span class="chapter-number">{String(index + 1).padStart(2, '0')}</span>
@@ -189,7 +191,7 @@ const chapters = [
   </div>
 
   <!-- Scripts -->
-  <script is:inline src="/scripts/main.js"></script>
+  <script is:inline src={`${base.endsWith('/') ? base : base + '/'}scripts/main.js`}></script>
   <script is:inline>
     // Initialize theme
     const theme = localStorage.getItem('theme') || 'light';
