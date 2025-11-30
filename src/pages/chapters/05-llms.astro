@@ -15,6 +15,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Large Language Models represent the culmination of Transformer technology at massive scale. This chapter explores how models like GPT-4, Claude, and Llama achieve remarkable capabilities through scale, training techniques, and emergent abilities.</p>
     </div>
 
+    <div class="callout info">
+      <div class="callout-title">🌟 The LLM Revolution (2020-2025)</div>
+      <p>The release of <strong>GPT-3 in May 2020</strong> (175B parameters, trained on 300B tokens, $4.6M estimated training cost) marked a watershed moment, demonstrating that massive scale enables <em>few-shot learning</em>—adapting to new tasks with just 3-5 examples in the prompt, no gradient updates required. This capability appeared suddenly around 13B parameters (GPT-2 1.5B couldn't, GPT-3 175B could), exemplifying <strong>emergent abilities</strong> that arise unpredictably at sufficient scale.</p>
+      <p><strong>ChatGPT</strong> (November 2022) brought LLMs to mainstream consciousness with 100M users in 2 months, the fastest-growing consumer application in history. Built from GPT-3.5 fine-tuned with <em>Reinforcement Learning from Human Feedback (RLHF)</em>, it demonstrated how alignment techniques make models helpful, harmless, and honest. RLHF (introduced by Christiano et al. 2017, refined by OpenAI in InstructGPT 2022) uses human preference rankings to train a reward model, then optimizes the LLM via Proximal Policy Optimization (PPO) to maximize this reward while staying close to the supervised fine-tuned baseline.</p>
+      <p>By 2023-2025, the field exploded: <strong>GPT-4</strong> (March 2023, estimated ~1.7T parameters mixture of experts, multimodal text+images, 32K-128K context, 90th percentile bar exam, 86% MMLU benchmark), <strong>Claude 3</strong> (March 2024, 200K context window, constitutional AI self-critiques using ethical principles), <strong>Llama 3</strong> (April 2024, 70B/405B open-weight models trained on 15T tokens, democratizing access with Apache 2.0 license), <strong>Gemini 1.5 Pro</strong> (February 2024, 1 million token context processing entire codebases/books), and reasoning models like <strong>OpenAI o1</strong> (September 2024, generates internal chain-of-thought before answering, 83% on International Math Olympiad qualifying vs. 13% for GPT-4o). The <strong>Chinchilla scaling laws</strong> (Hoffmann et al., DeepMind, March 2022) revealed most models were undertrained—optimal training requires D_opt ≈ 20×N parameters worth of tokens (e.g., 70B params needs 1.4T tokens, not 300B)—reshaping research toward compute-efficient training over pure parameter scaling.</p>
+      <p><a href="https://en.wikipedia.org/wiki/Large_language_model" target="_blank">Wikipedia: Large language models</a> | <a href="https://en.wikipedia.org/wiki/GPT-3" target="_blank">Wikipedia: GPT-3</a> | <a href="https://en.wikipedia.org/wiki/ChatGPT" target="_blank">Wikipedia: ChatGPT</a> | <a href="https://en.wikipedia.org/wiki/Chinchilla_AI" target="_blank">Wikipedia: Chinchilla scaling</a></p>
+    </div>
+
     <h2>What are Large Language Models?</h2>
     
     <p>LLMs are Transformer-based neural networks trained on massive text corpora to predict the next token in a sequence. Key characteristics:</p>
@@ -166,6 +174,22 @@ Training Compute:
 
 Cost: $2M - $100M+ per training run</code>`} />
 
+    <div class="callout info">
+      <div class="callout-title">📊 GPT-3 Training: Scale and Composition (May 2020)</div>
+      <p><strong>Dataset composition</strong> (300B tokens, 570GB total, weighted sampling with fuzzy deduplication via Apache Spark MinHash LSH):</p>
+      <ul>
+        <li><strong>CommonCrawl (filtered):</strong> 410B byte-pair-encoded tokens, 60% of weighted training mix, 2016-2019 web scrapes across 60M domains</li>
+        <li><strong>WebText2:</strong> 19B tokens, 22% weight, Reddit outbound links with ≥3 karma (quality filter)</li>
+        <li><strong>Books1:</strong> 12B tokens, 8% weight, diverse book corpus</li>
+        <li><strong>Books2:</strong> 55B tokens, 8% weight, additional book sources</li>
+        <li><strong>English Wikipedia:</strong> 3B tokens, 3% weight, high-quality factual text</li>
+      </ul>
+      <p><strong>Training infrastructure:</strong> Hypothetical single GPU training would require ~355 years and cost $4.6M (Lambdalabs 2020 estimate). Actual training used thousands of GPUs in parallel, completing in weeks. Model uses 175B parameters with 16-bit precision (float16), requiring 350GB storage (2 bytes × 175B). Context window: 2,048 tokens (~1,500 words), limiting long-document understanding.</p>
+      <p><strong>Key finding:</strong> GPT-3 achieved 52% accuracy on human vs. AI text detection (barely better than random 50%), indicating coherent human-like generation. Enabled few-shot learning across diverse tasks: translation, question answering, arithmetic, code generation (CSS, JSX, Python), article writing (The Guardian used it to write an essay about AI being harmless).</p>
+      <p><strong>Microsoft exclusive license</strong> (September 2020): Microsoft gained exclusive access to GPT-3's source code for embedding/modification, while OpenAI continues offering public API for text input/output without model download.</p>
+      <p><a href="https://en.wikipedia.org/wiki/GPT-3#Training_and_capabilities" target="_blank">Wikipedia: GPT-3 training details</a></p>
+    </div>
+
     <h3>Phase 2: Supervised Fine-Tuning (SFT)</h3>
     
     <p>Train on high-quality instruction-response pairs:</p>
@@ -205,6 +229,20 @@ Purpose: Align model to follow instructions</code>`} />
 
 Key challenge: Reward hacking (model exploits reward function)</code>`} />
 
+    <div class="callout info">
+      <div class="callout-title">🎓 RLHF: From Theory to ChatGPT</div>
+      <p><strong>Origins:</strong> Introduced by Christiano et al. (OpenAI, June 2017, "Deep Reinforcement Learning from Human Preferences") for Atari games and robotics. Adapted to language by Ouyang et al. (OpenAI, January 2022, "Training language models to follow instructions with human feedback") for InstructGPT, then refined into ChatGPT (November 2022).</p>
+      <p><strong>Detailed pipeline:</strong></p>
+      <ol>
+        <li><strong>Supervised Fine-Tuning (SFT):</strong> Train on ~13K high-quality human-written prompt-response pairs to establish helpful baseline behavior.</li>
+        <li><strong>Reward Model Training:</strong> Collect ~33K human preference comparisons (rank 4-9 model outputs per prompt). Train reward model (6B parameters, smaller than policy) to predict scalar reward matching human rankings. Accuracy: ~73% agreement with held-out human preferences.</li>
+        <li><strong>PPO Optimization:</strong> Use Proximal Policy Optimization (Schulman et al. 2017) to maximize reward model score while constraining KL divergence from SFT model (prevents mode collapse and reward hacking). Batch size ~512 prompts, 256 PPO epochs per batch. Key hyperparameter: KL penalty coefficient β balances reward vs. staying on-distribution.</li>
+      </ol>
+      <p><strong>Constitutional AI</strong> (Anthropic, Dec 2022): Alternative approach where AI assistant critiques and revises its own responses against ethical principles ("constitution"), reducing reliance on human feedback. Used in Claude models with 200K context windows.</p>
+      <p><strong>Modern variants:</strong> <em>Direct Preference Optimization (DPO)</em> (Rafailov et al., May 2023) bypasses explicit reward model, optimizing policy directly from preferences. <em>Reinforcement Learning from AI Feedback (RLAIF)</em> uses LLMs instead of humans to generate preference labels, scaling feedback collection.</p>
+      <p><a href="https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback" target="_blank">Wikipedia: RLHF</a></p>
+    </div>
+
     <h2>Scaling Laws</h2>
 
     <h3>Chinchilla Scaling Laws</h3>
@@ -235,6 +273,20 @@ Implication: Training data is as important as model size</code>`} />
       <li><strong>Multi-step reasoning:</strong> Solve problems requiring multiple inferential steps</li>
       <li><strong>Instruction following:</strong> Understand and execute complex instructions</li>
     </ul>
+
+    <div class="callout info">
+      <div class="callout-title">🎯 Emergent Abilities: Discontinuous Phase Transitions</div>
+      <p><strong>Definition:</strong> Abilities that are not present in smaller models but appear suddenly at a specific scale, creating a "break" in the scaling curve where performance jumps discontinuously (Wei et al. 2022, "Emergent Abilities of Large Language Models"). These transitions appear on log-linear plots as sharp kinks rather than smooth extrapolations.</p>
+      <p><strong>Examples with thresholds:</strong></p>
+      <ul>
+        <li><strong>Few-shot in-context learning</strong> (GPT-3, May 2020): Emerged around 13B parameters. GPT-2 (1.5B) couldn't adapt from prompt examples, GPT-3 (175B) could perform arithmetic, phonetic alphabet decoding, word unscrambling, and spatial reasoning purely from context.</li>
+        <li><strong>Chain-of-thought prompting</strong> (Wei et al., Jan 2022): Only improved performance for models ≥62B parameters. Smaller models performed better with direct answers. Enables breaking down math word problems: "Roger has 5 tennis balls..." → step-by-step arithmetic → "Answer: 11 balls."</li>
+        <li><strong>Advanced reasoning</strong>: Multi-hop reasoning (connecting facts across sentences), arithmetic beyond memorization, logical deduction, and compositional generalization all show discontinuous emergence at different scales.</li>
+        <li><strong>Multilingual tasks</strong>: Ability to translate between languages never explicitly paired in training data, generating Kiswahili proverb equivalents in English, or detecting offensive content in code-mixed Hinglish.</li>
+      </ul>
+      <p><strong>Debate:</strong> Schaeffer et al. (2023) argue emergent abilities may be measurement artifacts—when metrics use step functions (e.g., exact match accuracy) rather than continuous measures (e.g., token probability), smooth improvements appear as sudden jumps. However, true qualitative shifts in capability (like compositional reasoning) remain compelling evidence for emergence.</p>
+      <p><a href="https://en.wikipedia.org/wiki/Large_language_model#Emergent_abilities" target="_blank">Wikipedia: Emergent abilities</a></p>
+    </div>
 
     <h2>Prompting Techniques</h2>
 
