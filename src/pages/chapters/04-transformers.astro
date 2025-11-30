@@ -86,6 +86,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <h2>Self-Attention Mechanism</h2>
 
+    <div class="callout info">
+      <div class="callout-title">📚 Historical Evolution of Attention (1992-2025)</div>
+      <p><strong>Early foundations (1992-2005):</strong> Fast weight controllers (Schmidhuber 1992) anticipated key-value mechanisms. Bilateral filtering (1998) introduced pairwise affinity matrices for image processing.</p>
+      <p><strong>RNN era (2014-2016):</strong> Bahdanau et al. (2014) introduced attention for seq2seq translation, solving the bottleneck of encoding entire sequences into fixed vectors. Attention extended to vision for image captioning (2015), then self-attention integrated into RNN models (2016).</p>
+      <p><strong>Transformer breakthrough (2017):</strong> "Attention Is All You Need" formalized scaled dot-product self-attention, eliminating recurrence entirely. This enabled parallel processing and became the foundation for BERT, GPT, T5, and all modern LLMs.</p>
+      <p><strong>Modern era (2019-2025):</strong> Efficient transformers (Reformer 2019, Linformer 2020, Performer 2020) addressed O(n²) complexity. Flash Attention (2022) revolutionized efficiency through memory-aware algorithms. Vision Transformers (ViT 2020) and AlphaFold (2021) demonstrated attention's power beyond NLP. By 2023-2025, attention mechanisms power virtually all state-of-the-art AI systems across modalities.</p>
+      <p><strong>Wikipedia reference:</strong> <a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)" target="_blank">Attention (machine learning)</a> - comprehensive timeline from 1950s cognitive science through 2025</p>
+    </div>
+
     <h3>The Core Innovation</h3>
     
     <p>Self-attention allows each token to attend to all other tokens in the sequence, computing relevance scores dynamically:</p>
@@ -437,9 +446,9 @@ smoothed_label = (1 - smoothing) × true_label + smoothing / num_classes
       </thead>
       <tbody>
         <tr>
-          <td><strong>BERT</strong></td>
-          <td>Bidirectional context</td>
-          <td>Masked language modeling + NSP</td>
+          <td><strong><a href="https://en.wikipedia.org/wiki/BERT_(language_model)" target="_blank">BERT</a></strong> (2018)</td>
+          <td>Bidirectional context, 110M-340M params</td>
+          <td>Masked language modeling (15% tokens) + Next Sentence Prediction. Google adopted for 70+ languages by Dec 2019, processing almost every English query by Oct 2020</td>
         </tr>
         <tr>
           <td><strong>RoBERTa</strong></td>
@@ -475,24 +484,29 @@ smoothed_label = (1 - smoothing) × true_label + smoothing / num_classes
       </thead>
       <tbody>
         <tr>
-          <td><strong>GPT</strong></td>
+          <td><strong>GPT</strong> (Jun 2018)</td>
           <td>117M</td>
-          <td>Unsupervised pre-training + fine-tuning</td>
+          <td>First decoder-only transformer demonstrating unsupervised pre-training + fine-tuning paradigm. Trained on BooksCorpus (7,000 unpublished books)</td>
         </tr>
         <tr>
-          <td><strong>GPT-2</strong></td>
-          <td>1.5B</td>
-          <td>Zero-shot task transfer</td>
+          <td><strong>GPT-2</strong> (Feb 2019)</td>
+          <td>1.5B (largest)</td>
+          <td>Zero-shot task transfer, initially held back due to concerns about misuse. 10× larger than GPT, trained on WebText (8M documents)</td>
         </tr>
         <tr>
-          <td><strong>GPT-3</strong></td>
+          <td><strong>GPT-3</strong> (May 2020)</td>
           <td>175B</td>
-          <td>In-context learning, few-shot prompting</td>
+          <td>In-context learning breakthrough - few-shot prompting without fine-tuning. 100× larger than GPT-2, trained on 570GB text (CommonCrawl, WebText2, Books, Wikipedia)</td>
         </tr>
         <tr>
-          <td><strong>GPT-4</strong></td>
-          <td>~1.7T</td>
-          <td>Multimodal, longer context, better reasoning</td>
+          <td><strong>GPT-4</strong> (Mar 2023)</td>
+          <td>Estimated 1.7T+ (mixture of experts)</td>
+          <td>Multimodal (text+images), 32K-128K context, human-level performance on many benchmarks. Passes bar exam (90th percentile), outperforms GPT-3.5 on complex reasoning</td>
+        </tr>
+        <tr>
+          <td><strong>GPT-4 Turbo/o1</strong> (2024-2025)</td>
+          <td>Optimized variants</td>
+          <td>GPT-4 Turbo: 128K context, cheaper, faster. o1 series: Advanced reasoning with "chain of thought" for complex problem-solving (2024-2025)</td>
         </tr>
       </tbody>
     </table>
@@ -551,7 +565,7 @@ smoothed_label = (1 - smoothing) × true_label + smoothing / num_classes
       <li><strong>Sparse Attention:</strong> Only attend to subset of positions</li>
       <li><strong>Linformer:</strong> Projects keys/values to lower dimension → O(n)</li>
       <li><strong>Performer:</strong> Approximates attention with kernels → O(n)</li>
-      <li><strong>Flash Attention:</strong> IO-aware algorithm, 2-4× faster</li>
+      <li><strong><a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)#Flash_attention" target="_blank">Flash Attention</a> (2022):</strong> IO-aware algorithm that partitions attention computation into smaller blocks fitting GPU on-chip memory, reducing memory usage while increasing efficiency 2-4× without sacrificing accuracy. Addresses the memory bottleneck of storing large intermediate attention matrices</li>
       <li><strong>Multi-Query Attention:</strong> Share keys/values across heads</li>
       <li><strong>Sliding Window:</strong> Local attention within fixed window</li>
     </ul>
@@ -622,13 +636,25 @@ import torch.nn as nn
 import math
 
 class MultiHeadAttention(nn.Module):
+    """
+    Multi-head attention from "Attention Is All You Need" (Vaswani et al., 2017).
+    
+    Core innovation: Multiple parallel attention heads capture different relationship types
+    (syntax, semantics, position, context) simultaneously. Each head operates on a reduced
+    dimension (d_k = d_model / num_heads), enabling efficient parallel computation while
+    maintaining expressiveness through the ensemble of heads.
+    
+    Args:
+        d_model: Model dimension (typically 512 or 768)
+        num_heads: Number of parallel attention heads (typically 8 or 12)
+    """
     def __init__(self, d_model, num_heads):
         super().__init__()
         assert d_model % num_heads == 0
         
         self.d_model = d_model
         self.num_heads = num_heads
-        self.d_k = d_model // num_heads
+        self.d_k = d_model // num_heads  # Per-head dimension
         
         self.W_q = nn.Linear(d_model, d_model)
         self.W_k = nn.Linear(d_model, d_model)
@@ -638,21 +664,29 @@ class MultiHeadAttention(nn.Module):
     def forward(self, Q, K, V, mask=None):
         batch_size = Q.size(0)
         
-        # Linear projections in batch from d_model => h x d_k
+        # Linear projections: Transform inputs to Query, Key, Value representations
+        # Then reshape to (batch, num_heads, seq_len, d_k) for parallel head processing
         Q = self.W_q(Q).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
         K = self.W_k(K).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
         V = self.W_v(V).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
         
-        # Attention(Q, K, V)
+        # Scaled dot-product attention: Attention(Q, K, V) = softmax(QK^T / sqrt(d_k)) V
+        # QK^T computes similarity scores between all query-key pairs (seq_len × seq_len matrix)
         scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
+        # Scaling by sqrt(d_k) prevents softmax saturation for large dimensions
         
         if mask is not None:
+            # Masking: Set illegal positions to -inf before softmax (becomes 0 after softmax)
+            # Used for causal/autoregressive decoding (prevent attending to future tokens)
             scores = scores.masked_fill(mask == 0, -1e9)
         
+        # Softmax converts scores to attention weights (probabilities summing to 1)
         attention = torch.softmax(scores, dim=-1)
+        # Weighted sum: Each output token is a weighted combination of all value vectors
         output = torch.matmul(attention, V)
         
-        # Concatenate heads
+        # Concatenate heads: Reshape from (batch, heads, seq_len, d_k) → (batch, seq_len, d_model)
+        # Then project through W_o to produce final output
         output = output.transpose(1, 2).contiguous().view(batch_size, -1, self.d_model)
         return self.W_o(output)
 
@@ -690,6 +724,13 @@ class TransformerBlock(nn.Module):
     </div>
 
     <h2>Practical Applications</h2>
+
+    <div class="callout success">
+      <div class="callout-title">🚀 Modern Transformers (2023-2025)</div>
+      <p>By 2023-2025, transformers have become the universal architecture for AI. <strong>Multimodal models</strong> like GPT-4, Gemini, and Claude 3 process text, images, audio, and video using unified transformer architectures. <strong>Constitutional AI and RLHF</strong> (Reinforcement Learning from Human Feedback) align models with human values and preferences. <strong>Scaling laws</strong> demonstrate predictable improvements with model size, leading to trillion-parameter models. <strong>Long-context transformers</strong> now handle 100K-1M+ token contexts, enabling entire codebases and books as input.</p>
+      <p>Transformers power Google Search (BERT since 2020), GitHub Copilot, ChatGPT, medical diagnosis systems, protein folding (AlphaFold Nobel Prize 2024), and creative applications (DALL-E, Midjourney, Stable Diffusion). The architecture has expanded beyond its NLP origins to dominate computer vision, speech, robotics, and scientific discovery.</p>
+      <p><strong>Wikipedia references:</strong> <a href="https://en.wikipedia.org/wiki/BERT_(language_model)" target="_blank">BERT</a>, <a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)" target="_blank">Attention mechanism</a></p>
+    </div>
 
     <div class="card-grid">
       <div class="card">
