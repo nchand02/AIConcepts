@@ -26,7 +26,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <p>
       <strong>Machine Learning (ML)</strong> is a subset of AI focused on building systems that learn from 
       data. Rather than being explicitly programmed with rules, ML systems improve their performance through 
-      experience.
+      experience. Modern ML (2023-2025) increasingly leverages <strong>foundation models</strong>, 
+      <strong>transfer learning</strong>, and <strong>self-supervised learning</strong> to achieve unprecedented 
+      capabilities across vision, language, and multimodal tasks.
     </p>
 
     <blockquote>
@@ -34,6 +36,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       performance measure P, if its performance at tasks in T, as measured by P, improves with experience E." 
       — Tom Mitchell
     </blockquote>
+
+    <div class="callout info">
+      <div class="callout-title">🚀 Modern ML Landscape (2023-2025)</div>
+      <ul>
+        <li><strong>Foundation Models:</strong> Pre-trained transformers (GPT-4, Claude, Gemini) transfer knowledge across tasks</li>
+        <li><strong>Self-Supervised Learning:</strong> Models learn representations from unlabeled data (e.g., BERT masking, contrastive learning)</li>
+        <li><strong>AutoML:</strong> Automated hyperparameter tuning, neural architecture search, and feature engineering</li>
+        <li><strong>Federated Learning:</strong> Train models across decentralized data without centralizing privacy-sensitive information</li>
+        <li><strong>Few-Shot Learning:</strong> Models generalize from minimal examples using meta-learning techniques</li>
+        <li><strong>Explainable AI (XAI):</strong> SHAP, LIME, attention visualization for model interpretability</li>
+      </ul>
+      <p><em>Source: Wikipedia Machine Learning article, November 2025</em></p>
+    </div>
 
     <pre class="mermaid" set:html={`graph TD
     A[Machine Learning] --> B[Supervised Learning]
@@ -124,6 +139,12 @@ print(classification_report(y_test, y_pred))</code>`} />
           <td>Less interpretable, computationally expensive</td>
         </tr>
         <tr>
+          <td>XGBoost/LightGBM</td>
+          <td>Gradient boosting with optimized tree ensembles</td>
+          <td>State-of-art tabular data, regularization built-in</td>
+          <td>Requires careful tuning, black-box</td>
+        </tr>
+        <tr>
           <td>SVM</td>
           <td>Finds optimal hyperplane separating classes</td>
           <td>Effective in high dimensions</td>
@@ -135,8 +156,31 @@ print(classification_report(y_test, y_pred))</code>`} />
           <td>Simple, no training phase</td>
           <td>Slow at inference, sensitive to scale</td>
         </tr>
+        <tr>
+          <td>Transformer Classifiers</td>
+          <td>Self-attention mechanisms capture long-range dependencies</td>
+          <td>SOTA for text/sequences, transfer learning via pre-training</td>
+          <td>Computationally expensive, requires large data</td>
+        </tr>
+        <tr>
+          <td>Vision Transformers (ViT)</td>
+          <td>Apply transformers to image patches</td>
+          <td>Surpass CNNs on large datasets (ImageNet >99% top-5)</td>
+          <td>Needs substantial data/compute, less efficient than CNNs on small datasets</td>
+        </tr>
       </tbody>
     </table>
+
+    <div class="callout success">
+      <div class="callout-title">📊 Modern Classification Benchmarks (2023-2025)</div>
+      <ul>
+        <li><strong>ImageNet (top-5 accuracy):</strong> Vision Transformers and CNNs now exceed 99% accuracy, surpassing human-level performance (~95%)</li>
+        <li><strong>GLUE/SuperGLUE (NLP):</strong> Transformer models (GPT-4, Claude, Gemini) achieve near-perfect scores on many language understanding tasks</li>
+        <li><strong>Kaggle Competitions:</strong> Gradient boosting (XGBoost, LightGBM) remains dominant for structured/tabular data</li>
+        <li><strong>Zero-Shot Classification:</strong> CLIP, GPT-4V enable classification without task-specific training data</li>
+      </ul>
+      <p><em>Source: Wikipedia Deep Learning & Machine Learning articles, November 2025</em></p>
+    </div>
 
     <h3>Regression</h3>
     
@@ -196,8 +240,22 @@ print(f"R² Score: {{model.score(X, y):.2f}}")</code>`} />
 
     <p>
       Unsupervised learning finds patterns in data without labeled outputs. The system must discover 
-      structure on its own.
+      structure on its own. Modern approaches (2023-2025) leverage <strong>self-supervised learning</strong> 
+      and <strong>contrastive methods</strong> to learn powerful representations from unlabeled data, powering 
+      foundation models like BERT, GPT, and CLIP.
     </p>
+
+    <div class="callout info">
+      <div class="callout-title">🧠 Modern Unsupervised Learning (2023-2025)</div>
+      <ul>
+        <li><strong>Self-Supervised Learning:</strong> Models predict missing/masked parts of data (e.g., BERT masked language modeling, MAE for images)</li>
+        <li><strong>Contrastive Learning:</strong> SimCLR, MoCo learn by contrasting similar vs. dissimilar examples</li>
+        <li><strong>Autoencoders:</strong> Variational autoencoders (VAEs) for generative modeling, denoising diffusion models</li>
+        <li><strong>Representation Learning:</strong> Pre-train on massive unlabeled data, fine-tune on specific tasks</li>
+        <li><strong>Anomaly Detection:</strong> Isolation forests, one-class SVMs, deep autoencoders for fraud detection, cybersecurity</li>
+      </ul>
+      <p><em>Source: Wikipedia Machine Learning article, November 2025</em></p>
+    </div>
 
     <h3>Clustering</h3>
     
@@ -269,8 +327,23 @@ print(f"Explained variance ratio: {{pca.explained_variance_ratio_}}")</code>`} /
     <p>
       Reinforcement Learning (RL) trains agents to make sequences of decisions by rewarding desired behaviors 
       and punishing undesired ones. The agent learns a policy—a mapping from states to actions—that maximizes 
-      cumulative reward.
+      cumulative reward. Modern RL (2023-2025) combines deep neural networks with RL algorithms (<strong>Deep RL</strong>) 
+      to achieve superhuman performance in complex domains like games (AlphaGo, AlphaZero, OpenAI Five), robotics, 
+      and autonomous systems.
     </p>
+
+    <div class="callout success">
+      <div class="callout-title">🎮 Modern RL Achievements (2023-2025)</div>
+      <ul>
+        <li><strong>AlphaZero (2017):</strong> Mastered chess, shogi, and Go through self-play RL without human knowledge</li>
+        <li><strong>AlphaFold 2 (2020):</strong> Solved protein folding using RL + structure prediction (2024 Nobel Prize in Chemistry)</li>
+        <li><strong>RLHF (2023-2025):</strong> Reinforcement Learning from Human Feedback trains LLMs (ChatGPT, Claude) to align with human preferences</li>
+        <li><strong>Robotics:</strong> Deep TAMER (U.S. Army, 2018), Covariant.ai (2017) use RL for real-world robot control</li>
+        <li><strong>Autonomous Vehicles:</strong> RL optimizes decision-making for Tesla FSD, Waymo, Cruise</li>
+        <li><strong>Game AI:</strong> OpenAI Five (Dota 2), MuZero (learned game rules from scratch), Agent57 (first superhuman Atari agent)</li>
+      </ul>
+      <p><em>Source: Wikipedia Deep Learning & Machine Learning articles, November 2025</em></p>
+    </div>
 
     <pre class="mermaid" set:html={`graph LR
     A[Environment] -->|State, Reward| B[Agent]
@@ -335,26 +408,32 @@ for episode in range(1000):
         <span class="collapsible-icon">▼</span>
       </div>
       <div class="collapsible-content">
-        <h4>Model-Free RL</h4>
+        <h4>Model-Free RL (Deep RL Era)</h4>
         <p>
           Learns directly from experience without building an explicit model of the environment.
         </p>
         <ul>
-          <li><strong>Q-Learning:</strong> Learns action-value function</li>
+          <li><strong>Q-Learning (DQN):</strong> Deep Q-Networks use neural nets to approximate Q-function (Atari breakthrough, 2013)</li>
           <li><strong>SARSA:</strong> On-policy TD learning</li>
-          <li><strong>Policy Gradient:</strong> Directly optimizes policy parameters</li>
-          <li><strong>Actor-Critic:</strong> Combines value and policy learning</li>
+          <li><strong>Policy Gradient (PPO, A3C):</strong> Proximal Policy Optimization (PPO) is widely used for robotics, games</li>
+          <li><strong>Actor-Critic (SAC, TD3):</strong> Soft Actor-Critic (SAC) achieves state-of-art continuous control</li>
+          <li><strong>Rainbow DQN:</strong> Combines multiple DQN improvements for superior Atari performance</li>
+          <li><strong>RLHF (2023-2025):</strong> Fine-tunes LLMs using human feedback for alignment (ChatGPT, Claude, Gemini)</li>
         </ul>
         
-        <h4>Model-Based RL</h4>
+        <h4>Model-Based RL (Planning + Learning)</h4>
         <p>
-          Builds a model of environment dynamics, then uses it for planning.
+          Builds a model of environment dynamics, then uses it for planning. More sample-efficient than model-free.
         </p>
         <ul>
-          <li><strong>Dyna-Q:</strong> Combines learning and planning</li>
-          <li><strong>AlphaZero:</strong> Monte Carlo Tree Search with learned value/policy</li>
-          <li><strong>MuZero:</strong> Learns model without knowing true dynamics</li>
+          <li><strong>Dyna-Q:</strong> Combines learning and planning by generating simulated experience</li>
+          <li><strong>AlphaGo/AlphaZero (2016-2017):</strong> Monte Carlo Tree Search with learned value/policy nets, mastered Go/Chess/Shogi</li>
+          <li><strong>MuZero (2019):</strong> Learns latent environment model without knowing true dynamics, plans in learned representation space</li>
+          <li><strong>Dreamer (2020-2023):</strong> World models for visual RL, achieves sample-efficient control from pixels</li>
+          <li><strong>Deep TAMER (2018):</strong> Learns from human demonstrations and evaluative feedback for robotics</li>
         </ul>
+        
+        <p><strong>Key Tradeoff:</strong> Model-free is simpler but requires more data; model-based is sample-efficient but requires accurate environment models.</p>
       </div>
     </div>
 
@@ -400,7 +479,7 @@ print(f"Mean: {{scores.mean():.3f}} (+/- {{scores.std() * 2:.3f}})")</code>`} />
       </thead>
       <tbody>
         <tr>
-          <td rowspan="4">Classification</td>
+          <td rowspan="5">Classification</td>
           <td>Accuracy</td>
           <td>% correct predictions</td>
           <td>Balanced classes</td>
@@ -421,7 +500,12 @@ print(f"Mean: {{scores.mean():.3f}} (+/- {{scores.std() * 2:.3f}})")</code>`} />
           <td>Balance P and R</td>
         </tr>
         <tr>
-          <td rowspan="3">Regression</td>
+          <td>AUC-ROC</td>
+          <td>Area under ROC curve</td>
+          <td>Compare models across thresholds, imbalanced classes</td>
+        </tr>
+        <tr>
+          <td rowspan="4">Regression</td>
           <td>MAE</td>
           <td>Mean absolute error</td>
           <td>Interpretable, robust to outliers</td>
@@ -432,12 +516,32 @@ print(f"Mean: {{scores.mean():.3f}} (+/- {{scores.std() * 2:.3f}})")</code>`} />
           <td>Penalizes large errors</td>
         </tr>
         <tr>
+          <td>RMSE</td>
+          <td>Root mean squared error</td>
+          <td>Same units as target, common in Kaggle</td>
+        </tr>
+        <tr>
           <td>R²</td>
           <td>Proportion of variance explained</td>
           <td>Model goodness-of-fit</td>
         </tr>
       </tbody>
     </table>
+
+    <div class="callout info">
+      <div class="callout-title">🛠️ Modern ML Tools & Frameworks (2023-2025)</div>
+      <ul>
+        <li><strong>PyTorch & TensorFlow:</strong> Dominant deep learning frameworks with automatic differentiation</li>
+        <li><strong>JAX:</strong> Google's high-performance ML library with composable transformations (grad, jit, vmap)</li>
+        <li><strong>scikit-learn:</strong> Standard library for classical ML algorithms (classification, regression, clustering)</li>
+        <li><strong>Hugging Face Transformers:</strong> Pre-trained models (BERT, GPT, T5) with easy fine-tuning APIs</li>
+        <li><strong>XGBoost/LightGBM:</strong> Gradient boosting libraries dominating Kaggle competitions for tabular data</li>
+        <li><strong>Ray/Tune:</strong> Distributed hyperparameter tuning and model training</li>
+        <li><strong>MLflow/Weights & Biases:</strong> Experiment tracking, model versioning, deployment</li>
+        <li><strong>AutoML (AutoGluon, H2O.ai):</strong> Automated model selection, hyperparameter tuning, feature engineering</li>
+      </ul>
+      <p><em>Source: Wikipedia Machine Learning & Deep Learning articles, November 2025</em></p>
+    </div>
 
     <h2>2.6 Key Concepts Summary</h2>
 
@@ -447,9 +551,13 @@ print(f"Mean: {{scores.mean():.3f}} (+/- {{scores.std() * 2:.3f}})")</code>`} />
         <li>Machine learning enables systems to learn from data without explicit programming</li>
         <li>Supervised learning requires labeled data; unsupervised finds patterns autonomously</li>
         <li>Reinforcement learning optimizes sequential decision-making through trial and error</li>
-        <li>Proper evaluation requires train-test splits and cross-validation</li>
-        <li>Choose metrics appropriate to your task and business objectives</li>
+        <li><strong>Modern ML (2023-2025):</strong> Foundation models, self-supervised learning, and transfer learning dominate</li>
+        <li><strong>Transformers:</strong> Surpass traditional algorithms for NLP, vision (ViT >99% ImageNet), and multimodal tasks</li>
+        <li><strong>Deep RL:</strong> Powers AlphaZero game mastery, AlphaFold protein folding (2024 Nobel), RLHF for LLM alignment</li>
+        <li><strong>AutoML & Tools:</strong> PyTorch, TensorFlow, JAX, Hugging Face, XGBoost simplify modern ML workflows</li>
+        <li>Proper evaluation requires train-test splits, cross-validation, and task-appropriate metrics (accuracy, AUC-ROC, F1, RMSE)</li>
       </ul>
+      <p><em>Source: Wikipedia Machine Learning & Deep Learning articles, November 2025</em></p>
     </div>
 
     <h2>Review Questions</h2>
