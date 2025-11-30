@@ -15,6 +15,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Generative AI encompasses models that create new content—images, text, audio, and more. This chapter covers GANs, VAEs, diffusion models, and the technologies behind DALL-E, Stable Diffusion, and Midjourney.</p>
     </div>
 
+    <div class="callout info">
+      <div class="callout-title">🎨 Generative AI Evolution (2014-2025)</div>
+      <p><strong>Generative AI revolutionized content creation from adversarial training to diffusion-based approaches dominating by 2024.</strong></p>
+      <ul>
+        <li><strong>GAN Era (2014-2021):</strong> June 2014 Goodfellow et al. introduced Generative Adversarial Networks at NeurIPS with generator-discriminator adversarial training → 2015 DCGAN (Radford et al.) stabilized training with convolutional architecture → 2016 WGAN (Arjovsky et al.) solved mode collapse using Wasserstein distance → 2017 Progressive GAN (Karras et al.) gradually increased resolution 4×4→1024×1024 → 2019 StyleGAN introduced style latent space with AdaIN → 2020 StyleGAN-2 solved blob artifacts → 2021 StyleGAN-3 eliminated texture sticking via Nyquist-Shannon theorem. Training challenges: unstable convergence, mode collapse, vanishing gradients.</li>
+        <li><strong>Diffusion Breakthrough (2015-2024):</strong> 2015 Sohl-Dickstein et al. introduced diffusion using non-equilibrium thermodynamics → June 2020 DDPM (Ho et al.) foundational work requiring ~1000 steps → October 2020 DDIM (Song et al.) enabled 10-50× faster sampling → 2021 classifier guidance (Dhariwal & Nichol) used CLIP for text conditioning → April 2022 Latent Diffusion (Rombach et al.) operated in VAE compressed space → July 2022 Classifier-Free Guidance (Ho & Salimans) eliminated separate classifier → 2023 Diffusion Transformers (DiT) replaced U-Net backbones.</li>
+        <li><strong>Text-to-Image Revolution (2021-2024):</strong> 2021 DALL-E original (12B autoregressive Transformer) → April 2022 DALL-E 2 (3.5B cascaded diffusion with unCLIP) → May 2022 Midjourney V1 → August 2022 Stable Diffusion (860M open-source democratizing access) → 2022 Imagen (Google T5-XXL + cascaded diffusion) → October 2023 DALL-E 3 → December 2023 Midjourney V6 → March 2024 Stable Diffusion 3 (DiT + rectified flow).</li>
+        <li><strong>Video Generation (2022-2024):</strong> September 2022 Make-A-Video (Meta) → March 2023 Runway Gen-2 → February 2024 Sora (OpenAI DiT) → October 2024 Movie Gen (Meta DiT series) → 2024 Veo (Google).</li>
+        <li><strong>Control & Fine-tuning (2023-2024):</strong> 2023 ControlNet added spatial conditioning for precise control → LoRA enabled fast fine-tuning with minimal parameters → 2023 Consistency Models (Song et al.) enabled 1-step generation → Rectified Flow (Liu et al. September 2022) learned straight-line trajectories.</li>
+      </ul>
+      <p><em>Sources: <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network" target="_blank">Wikipedia - Generative Adversarial Network</a>, <a href="https://en.wikipedia.org/wiki/Diffusion_model" target="_blank">Wikipedia - Diffusion Model</a></em></p>
+    </div>
+
     <h2>What is Generative AI?</h2>
     
     <p>Generative AI creates new content (images, text, audio, video) by learning patterns from training data. Unlike discriminative models that classify, generative models learn the underlying distribution of data to sample new instances.</p>
@@ -29,7 +42,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <h2>Generative Adversarial Networks (GANs)</h2>
 
-    <p>GANs consist of two networks competing in a minimax game:</p>
+    <p>GANs consist of two networks competing in a minimax game. <strong>Introduced by Ian Goodfellow et al. in June 2014</strong> at NeurIPS, GANs revolutionized generative modeling through adversarial training in a zero-sum game framework where the generator creates fake data while the discriminator tries to distinguish real from fake.</p>
+
+    <div class="callout info">
+      <div class="callout-title">🎯 GAN History & Challenges (2014-2021)</div>
+      <p><strong>GANs pioneered adversarial training but faced significant stability challenges before architectural innovations.</strong></p>
+      <ul>
+        <li><strong>Original Formulation (June 2014):</strong> Goodfellow et al. introduced min-max objective where generator G tries to fool discriminator D while D tries to distinguish real from fake: min_G max_D E[log D(x)] + E[log(1-D(G(z)))]. Zero-sum competition drives both networks to improve iteratively.</li>
+        <li><strong>Training Challenges:</strong> <em>Unstable convergence</em> from searching for Nash equilibrium in high-dimensional space → <em>Mode collapse</em> where generator produces limited variety ignoring parts of data distribution → <em>Vanishing gradient</em> when discriminator becomes too good, generator receives no useful signal → <em>Two Time-Scale Update Rule (TTUR)</em> helped stabilize by updating discriminator and generator at different rates.</li>
+        <li><strong>DCGAN (2015):</strong> Radford et al. made GANs practical using only convolutional layers (no fully connected), batch normalization, LeakyReLU, and specific architectural guidelines making training significantly more stable.</li>
+        <li><strong>WGAN (2016):</strong> Arjovsky et al. solved mode collapse by replacing Jensen-Shannon divergence with Wasserstein distance, enforcing 1-Lipschitz constraint via weight clipping (later improved with gradient penalty in WGAN-GP).</li>
+        <li><strong>Progressive GAN (2017):</strong> Karras et al. (Nvidia) gradually increased resolution from 4×4→8×8→16×16→...→1024×1024 with layer blending, enabling high-resolution face generation for first time.</li>
+        <li><strong>StyleGAN Series (2019-2021):</strong> StyleGAN-1 (2019) introduced style latent space mapping network z→w and Adaptive Instance Normalization (AdaIN) controlling image style at multiple scales → StyleGAN-2 (2020) improved by transforming convolution weights solving "blob problem" → StyleGAN-2-ADA used adaptive data augmentation → StyleGAN-3 (2021) solved texture sticking to pixel coordinates by applying Nyquist-Shannon sampling theorem with lowpass filters between layers for faithful continuous signal representation.</li>
+        <li><strong>Notable Applications:</strong> October 2018 "Edmond de Belamy" portrait (trained on 15K WikiArt paintings 14th-19th century) sold for $432,500 at auction → Video game texture upscaling to 4K → May 2020 Nvidia GameGAN recreated Pac-Man by watching gameplay → 2020 Artbreeder creative tool → Face aging, 3D reconstruction, artistic style transfer.</li>
+        <li><strong>Other Variants:</strong> CycleGAN (2017, Zhu et al.) unpaired image-to-image translation with cycle consistency → SAGAN (2019, Zhang et al.) self-attention mechanism → Conditional GANs controlling generation with class labels.</li>
+      </ul>
+      <p><em>Source: <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network" target="_blank">Wikipedia - Generative Adversarial Network</a></em></p>
+    </div>
 
     <div class="diagram-container">
       <pre class="mermaid" set:html={`graph LR
@@ -176,7 +205,24 @@ KL Divergence: Regularizes latent space to N(0,1)`}
 
     <h2>Diffusion Models</h2>
 
-    <p>Diffusion models generate data by learning to reverse a gradual noising process.</p>
+    <p>Diffusion models generate data by learning to reverse a gradual noising process. <strong>Introduced in 2015 by Sohl-Dickstein et al.</strong> using concepts from non-equilibrium thermodynamics, diffusion models have become the dominant approach for high-quality image generation by 2024, powering DALL-E 2, Stable Diffusion, Imagen, and Midjourney.</p>
+
+    <div class="callout info">
+      <div class="callout-title">🌊 Diffusion Model Evolution (2015-2024)</div>
+      <p><strong>Diffusion models evolved from slow 1000-step processes to fast transformer-based architectures dominating generative AI.</strong></p>
+      <ul>
+        <li><strong>Foundational Concept (2015):</strong> Sohl-Dickstein et al. introduced diffusion probabilistic models using non-equilibrium thermodynamics → Forward process gradually adds Gaussian noise q(x_t|x_{t-1}) over T steps until image becomes pure noise → Reverse denoising process p_θ(x_{t-1}|x_t) learns to remove noise iteratively recovering original data distribution → Trained using variational inference minimizing KL divergence.</li>
+        <li><strong>DDPM Breakthrough (June 2020):</strong> Ho et al. "Denoising Diffusion Probabilistic Models" made diffusion practical with simplified training objective minimizing L=E[||ε-ε_θ(x_t,t)||²] predicting noise at each step → Required ~1000 timesteps for high quality making generation slow (minutes per image) → U-Net backbone (originally for medical image segmentation) adapted for denoising with attention layers.</li>
+        <li><strong>DDIM Fast Sampling (October 2020):</strong> Song et al. "Denoising Diffusion Implicit Models" allowed non-Markovian process enabling skipping steps → Reduced sampling from 1000→50-100 steps achieving 10-50× speedup while maintaining quality → Deterministic sampling enabled image interpolation and editing.</li>
+        <li><strong>Conditional Generation (2021):</strong> Dhariwal & Nichol introduced classifier guidance using pretrained classifier gradients ∇_x log p(y|x) to steer generation toward desired class → CLIP text encoders enabled text-to-image by conditioning on text embeddings → Opened path to DALL-E 2 and Stable Diffusion.</li>
+        <li><strong>Classifier-Free Guidance (July 2022):</strong> Ho & Salimans eliminated separate classifier by training single conditional model → Mixed conditional and unconditional predictions weighted by guidance scale w typically 7-15: ε̃_θ = ε_θ(x_t|∅) + w·(ε_θ(x_t|c) - ε_θ(x_t|∅)) → Balanced quality vs diversity, became standard in Stable Diffusion/DALL-E.</li>
+        <li><strong>Latent Diffusion (April 2022):</strong> Rombach et al. "High-Resolution Image Synthesis with Latent Diffusion Models" operated in compressed latent space of pretrained VAE rather than pixel space → Reduced computational cost 4-8× enabling 512×512 and 1024×1024 generation on consumer GPUs → Foundation of Stable Diffusion's accessibility.</li>
+        <li><strong>Major Implementations:</strong> OpenAI: DALL-E original 2021 (actually autoregressive Transformer, not diffusion), GLIDE March 2022 (3.5B diffusion), DALL-E 2 April 2022 (3.5B cascaded diffusion with unCLIP inverting CLIP encoder: text→CLIP text embedding→prior model→CLIP image embedding→decoder→pixels), Sora February 2024 (DiT for video) → Stability AI: Stable Diffusion August 2022 (860M latent diffusion with U-Net, open-source democratizing access), SD 3 March 2024 (DiT + rectified flow) → Google: Imagen 2022 (T5-XXL encoder, cascaded: 2B 64×64 base + 650M 256×256 + 400M 1024×1024), Veo 2024 (video) → Meta: Make-A-Video 2022, Movie Gen October 2024 (DiT series).</li>
+        <li><strong>Architectural Evolution (2023-2024):</strong> Diffusion Transformers (DiT) replacing U-Net backbones with transformer architecture → Rectified Flow (Liu et al. September 2022) learning straight-line trajectories in probability space for faster sampling → Consistency Models (Song et al. July 2023) enabling 1-step generation → Progressive distillation iteratively reducing sampling steps → Noise schedulers evolved from linear to cosine and custom designs.</li>
+        <li><strong>Applications Beyond Images:</strong> Computer vision (inpainting, super-resolution, image-to-image translation, video generation) → NLP (discrete diffusion for text generation, summarization) → Audio synthesis (speech, music, sound effects) → Reinforcement learning (planning, policy learning) → 3D generation (novel view synthesis, 3D objects, motion).</li>
+      </ul>
+      <p><em>Source: <a href="https://en.wikipedia.org/wiki/Diffusion_model" target="_blank">Wikipedia - Diffusion Model</a></em></p>
+    </div>
 
     <h3>Forward Process (Noising)</h3>
     <pre><code>{`q(x_t | x_{t-1}) = N(x_t; √(1-β_t)·x_{t-1}, β_t·I)
@@ -218,28 +264,39 @@ Generate new samples by sampling x_T and denoising`}
           <th>Model</th>
           <th>Key Feature</th>
           <th>Speed</th>
+          <th>Year</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><strong>DDPM</strong></td>
-          <td>Original diffusion, 1000 steps</td>
-          <td>Slow</td>
+          <td>Original diffusion, 1000 steps (Ho et al.)</td>
+          <td>Slow (~minutes)</td>
+          <td>June 2020</td>
         </tr>
         <tr>
           <td><strong>DDIM</strong></td>
-          <td>Deterministic sampling, 50 steps</td>
-          <td>Fast</td>
+          <td>Deterministic sampling, 50 steps (Song et al.)</td>
+          <td>Fast (10-50× faster)</td>
+          <td>October 2020</td>
         </tr>
         <tr>
           <td><strong>Latent Diffusion</strong></td>
-          <td>Diffusion in latent space</td>
-          <td>Very fast</td>
+          <td>Diffusion in VAE latent space (Rombach et al.)</td>
+          <td>Very fast (4-8× savings)</td>
+          <td>April 2022</td>
         </tr>
         <tr>
           <td><strong>Consistency Models</strong></td>
-          <td>1-step generation</td>
-          <td>Ultra fast</td>
+          <td>1-step generation (Song et al.)</td>
+          <td>Ultra fast (~seconds)</td>
+          <td>July 2023</td>
+        </tr>
+        <tr>
+          <td><strong>Rectified Flow</strong></td>
+          <td>Straight-line trajectories (Liu et al.)</td>
+          <td>Very fast (fewer steps)</td>
+          <td>September 2022</td>
         </tr>
       </tbody>
     </table>
@@ -278,42 +335,79 @@ Generate new samples by sampling x_T and denoising`}
           <th>Model</th>
           <th>Company</th>
           <th>Architecture</th>
+          <th>Launch</th>
           <th>Strengths</th>
         </tr>
       </thead>
       <tbody>
         <tr>
+          <td><strong>DALL-E 2</strong></td>
+          <td>OpenAI</td>
+          <td>Cascaded Diffusion (3.5B, unCLIP)</td>
+          <td>April 2022</td>
+          <td>High quality, CLIP alignment</td>
+        </tr>
+        <tr>
           <td><strong>DALL-E 3</strong></td>
           <td>OpenAI</td>
-          <td>Diffusion</td>
+          <td>Diffusion (improved prompting)</td>
+          <td>October 2023</td>
           <td>Prompt following, text rendering</td>
         </tr>
         <tr>
           <td><strong>Stable Diffusion</strong></td>
           <td>Stability AI</td>
-          <td>Latent Diffusion</td>
-          <td>Open source, fast</td>
+          <td>Latent Diffusion (860M, U-Net)</td>
+          <td>August 2022</td>
+          <td>Open source, fast, customizable</td>
         </tr>
         <tr>
-          <td><strong>Midjourney</strong></td>
+          <td><strong>Stable Diffusion 3</strong></td>
+          <td>Stability AI</td>
+          <td>DiT + Rectified Flow</td>
+          <td>March 2024</td>
+          <td>Improved quality, faster sampling</td>
+        </tr>
+        <tr>
+          <td><strong>Midjourney V6</strong></td>
           <td>Midjourney</td>
-          <td>Proprietary</td>
-          <td>Artistic style, aesthetics</td>
+          <td>Proprietary (likely diffusion)</td>
+          <td>December 2023</td>
+          <td>Artistic style, aesthetics, consistency</td>
         </tr>
         <tr>
-          <td><strong>Imagen</strong></td>
+          <td><strong>Imagen 2</strong></td>
           <td>Google</td>
-          <td>Cascaded Diffusion</td>
-          <td>Photorealism</td>
+          <td>Cascaded Diffusion (T5-XXL)</td>
+          <td>December 2023</td>
+          <td>Photorealism, text+image prompts</td>
         </tr>
         <tr>
           <td><strong>Firefly</strong></td>
           <td>Adobe</td>
-          <td>Diffusion</td>
-          <td>Commercial safety</td>
+          <td>Diffusion (commercially trained)</td>
+          <td>March 2023</td>
+          <td>Commercial safety, Adobe integration</td>
         </tr>
       </tbody>
     </table>
+
+    <div class="callout info">
+      <div class="callout-title">🚀 Text-to-Image Timeline (2021-2024)</div>
+      <ul>
+        <li><strong>2021:</strong> DALL-E original (12B autoregressive Transformer, not diffusion) → 2021 CLIP enables text-image alignment</li>
+        <li><strong>March 2022:</strong> GLIDE (OpenAI 3.5B diffusion with classifier guidance)</li>
+        <li><strong>April 2022:</strong> DALL-E 2 (3.5B cascaded diffusion with unCLIP technique) → Latent Diffusion paper (Rombach et al.) foundation of Stable Diffusion</li>
+        <li><strong>May 2022:</strong> Midjourney V1 launched (Discord-based, artistic focus)</li>
+        <li><strong>August 2022:</strong> Stable Diffusion 1.4 released open-source (860M latent diffusion) democratizing text-to-image AI</li>
+        <li><strong>2022:</strong> Imagen (Google T5-XXL + cascaded diffusion: 2B+650M+400M)</li>
+        <li><strong>March 2023:</strong> Adobe Firefly (commercially safe training data), Midjourney V5</li>
+        <li><strong>October 2023:</strong> DALL-E 3 (improved prompt following, integrated with ChatGPT)</li>
+        <li><strong>December 2023:</strong> Midjourney V6 (enhanced photorealism), Imagen 2 (text+image prompts)</li>
+        <li><strong>March 2024:</strong> Stable Diffusion 3 (switched to DiT architecture with rectified flow for faster straight-line sampling)</li>
+        <li><strong>May 2024:</strong> Imagen 3 → <strong>2024:</strong> Diffusion Transformers (DiT) increasingly replace U-Net backbones across industry</li>
+      </ul>
+    </div>
 
     <h3>Prompt Engineering for Image Generation</h3>
     <pre><code>{`Basic Prompt:
