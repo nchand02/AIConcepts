@@ -33,16 +33,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     
     <p>
       Intelligence manifests in multiple forms. AI researchers typically focus on computational intelligence—the 
-      ability to acquire, process, and apply knowledge to solve problems. This encompasses:
+      ability to acquire, process, and apply knowledge to solve problems. Modern AI systems demonstrate these capabilities:
     </p>
 
     <ul>
-      <li><strong>Reasoning:</strong> Drawing logical conclusions from available information</li>
-      <li><strong>Learning:</strong> Improving performance through experience</li>
-      <li><strong>Perception:</strong> Interpreting sensory data</li>
-      <li><strong>Language Processing:</strong> Understanding and generating natural language</li>
-      <li><strong>Problem Solving:</strong> Finding solutions to complex challenges</li>
+      <li><strong>Reasoning:</strong> Drawing logical conclusions from available information (e.g., GPT-4 passing the bar exam with human-level scores)</li>
+      <li><strong>Learning:</strong> Improving performance through experience (e.g., AlphaGo Zero learning chess from self-play alone)</li>
+      <li><strong>Perception:</strong> Interpreting sensory data (e.g., computer vision models achieving >99% accuracy on ImageNet)</li>
+      <li><strong>Language Processing:</strong> Understanding and generating natural language (e.g., modern LLMs producing coherent, contextual responses)</li>
+      <li><strong>Problem Solving:</strong> Finding solutions to complex challenges (e.g., AlphaFold 2 solving protein folding in hours vs. months)</li>
+      <li><strong>Creativity:</strong> Generating novel content across text, images, video, and audio (e.g., DALL-E, Midjourney, Sora)</li>
     </ul>
+
+    <div class="callout info">
+      <div class="callout-title">💡 Modern AI Capabilities</div>
+      <p>
+        As of 2025, AI systems have achieved remarkable milestones: passing professional exams (law, medicine), 
+        creating original artwork, composing music, writing code, discovering new antibiotics, and assisting in 
+        scientific research. The line between "AI" and "just software" continues to blur—many capabilities once 
+        considered AI are now simply expected features.
+      </p>
+    </div>
 
     <pre class="mermaid" set:html={`mindmap
   root((Artificial Intelligence))
@@ -86,12 +97,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           Modern AI research has moved beyond the Turing Test to more nuanced measures:
         </p>
         <ul>
-          <li><strong>Task-Specific Benchmarks:</strong> ImageNet for vision, GLUE for NLP</li>
-          <li><strong>General Intelligence Tests:</strong> ARC (Abstraction and Reasoning Corpus)</li>
-          <li><strong>Efficiency Metrics:</strong> Performance relative to compute and data</li>
-          <li><strong>Robustness:</strong> Behavior under adversarial conditions</li>
-          <li><strong>Alignment:</strong> Following intended goals and values</li>
+          <li><strong>Task-Specific Benchmarks:</strong> ImageNet for vision, MMLU/HELM for LLMs, HumanEval for code generation</li>
+          <li><strong>General Intelligence Tests:</strong> ARC-AGI (François Chollet, 2019) - OpenAI o3 achieved 87.5%, surpassing the typical human score of 84% in 2024</li>
+          <li><strong>Professional Competency:</strong> Bar exam, USMLE medical boards, AP exams - GPT-4 achieves human-level or better performance</li>
+          <li><strong>Mathematical Reasoning:</strong> IMO (International Mathematical Olympiad) problems - Google's systems achieved gold medal standard in 2025</li>
+          <li><strong>Efficiency Metrics:</strong> Performance relative to compute, data, and energy consumption</li>
+          <li><strong>Robustness:</strong> Behavior under adversarial conditions, out-of-distribution generalization</li>
+          <li><strong>Alignment & Safety:</strong> Following intended goals, avoiding harmful outputs, truthfulness</li>
+          <li><strong>Scientific Discovery:</strong> Novel contributions to research (e.g., AlphaFold's protein structures, AI-discovered antibiotics)</li>
         </ul>
+        <p>
+          <em>Source: François Chollet states about ARC-AGI: "You'll know AGI is here when the exercise of creating 
+          tasks that are easy for regular humans but hard for AI becomes simply impossible."</em>
+        </p>
       </div>
     </div>
 
@@ -99,14 +117,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <pre class="mermaid" set:html={`timeline
     title Evolution of Artificial Intelligence
-    1950s : Birth of AI (Turing Test, Dartmouth Conference)
-    1960s : Early Optimism (Expert Systems, ELIZA)
-    1970s : First AI Winter (Funding cuts)
-    1980s : Expert Systems Renaissance
-    1990s : Statistical Methods Emerge
-    2000s : Big Data & Machine Learning
-    2010s : Deep Learning Revolution
-    2020s : LLMs & Generative AI Era
+    1950s : Birth of AI (Turing Test 1950, Dartmouth Conference 1956)
+    1960s : Early Optimism (Expert Systems, ELIZA chatbot)
+    1970s : First AI Winter (Lighthill Report 1973, funding cuts)
+    1980s : Expert Systems Renaissance (Cyc knowledge base)
+    1990s : Statistical Methods & Second AI Winter
+    2000s : Big Data & Machine Learning Renaissance
+    2010s : Deep Learning Revolution (AlexNet 2012, AlphaGo 2016)
+    2017-2019 : Transformer Era (Attention Is All You Need, GPT-2)
+    2020-2022 : LLM Breakthrough (GPT-3, ChatGPT launch Nov 2022)
+    2023-2025 : AI Boom (GPT-4, Nobel Prizes, $500B+ investments)
       `} />
 
     <h3>Key Milestones</h3>
@@ -153,7 +173,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <tr>
           <td>2022</td>
           <td>ChatGPT release</td>
-          <td>AI enters mainstream consciousness</td>
+          <td>AI enters mainstream consciousness, fastest-growing app (100M users in 2 months)</td>
+        </tr>
+        <tr>
+          <td>2023</td>
+          <td>GPT-4 passes bar exam</td>
+          <td>LLMs achieve human-level scores on professional tests</td>
+        </tr>
+        <tr>
+          <td>2024</td>
+          <td>Nobel Prizes for AI pioneers</td>
+          <td>Hinton, Hopfield (Physics); Hassabis, Jumper, Baker (Chemistry)</td>
+        </tr>
+        <tr>
+          <td>2024</td>
+          <td>OpenAI o3 model</td>
+          <td>87.5% on ARC-AGI benchmark, surpassing typical human score of 84%</td>
+        </tr>
+        <tr>
+          <td>2025</td>
+          <td>AI infrastructure boom</td>
+          <td>$500B+ investment in AI data centers and computing infrastructure</td>
         </tr>
       </tbody>
     </table>
@@ -198,16 +238,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </p>
 
     <pre set:html={`<code># Example: Simple rule-based expert system
+# Dominant AI paradigm 1960s-1980s, still used in specific domains (e.g., business rules)
 rules = [
     ("IF animal has feathers THEN animal is bird", 0.9),
     ("IF animal is bird AND animal swims THEN animal is waterfowl", 0.95),
     ("IF animal is waterfowl AND animal is white THEN animal is swan", 0.8)
 ]
 
+# Initial facts from observation
 facts = {{"has feathers": True, "swims": True, "is white": True}}
 
 def infer(rules, facts):
-    """Simple forward chaining inference"""
+    """Forward chaining inference engine
+    
+    This approach works well for well-defined domains but struggles with:
+    - Uncertainty and noisy data (addressed by probabilistic methods)
+    - Learning from examples (neural networks excel here)
+    - Common sense reasoning (still challenging as of 2025)
+    
+    Modern systems often combine symbolic reasoning with neural approaches.
+    """
     inferred = facts.copy()
     changed = True
     while changed:
@@ -219,7 +269,12 @@ def infer(rules, facts):
                 if conclusion not in inferred:
                     inferred[conclusion] = confidence
                     changed = True
-    return inferred</code>`} />
+    return inferred
+
+# Example inference:
+# Input: {{'has feathers': True, 'swims': True, 'is white': True}}
+# Output: {{'has feathers': True, 'swims': True, 'is white': True, 
+#          'is bird': 0.9, 'is waterfowl': 0.95, 'is swan': 0.8}}</code>`} />
 
     <div class="callout warning">
       <div class="callout-title">⚠️ Limitations of Symbolic AI</div>
@@ -262,13 +317,26 @@ def infer(rules, facts):
     <h3>Hybrid Approaches</h3>
     
     <p>
-      Modern AI often combines multiple paradigms. For example:
+      Modern AI often combines multiple paradigms. State-of-the-art systems in 2025 increasingly leverage hybrid architectures:
     </p>
     <ul>
-      <li><strong>Neural-Symbolic Integration:</strong> Combining neural learning with logical reasoning</li>
-      <li><strong>Differentiable Programming:</strong> Making symbolic operations compatible with gradient descent</li>
-      <li><strong>Foundation Models + Tools:</strong> LLMs calling external knowledge bases and APIs</li>
+      <li><strong>Neural-Symbolic Integration:</strong> Combining neural learning with logical reasoning (e.g., AlphaGeometry proving mathematical theorems)</li>
+      <li><strong>Differentiable Programming:</strong> Making symbolic operations compatible with gradient descent (e.g., neural module networks)</li>
+      <li><strong>Foundation Models + Tools:</strong> LLMs calling external knowledge bases, APIs, and specialized tools (e.g., ChatGPT with web browsing, code interpreter, DALL-E integration)</li>
+      <li><strong>Retrieval-Augmented Generation (RAG):</strong> Neural models accessing structured knowledge bases (covered in Chapter 8)</li>
+      <li><strong>Tree Search + Neural Networks:</strong> Combining classical search with learned heuristics (e.g., AlphaGo, AlphaZero, MuZero)</li>
+      <li><strong>Neurosymbolic Reasoning:</strong> LLMs enhanced with formal verification, constraint solvers, and knowledge graphs</li>
     </ul>
+    
+    <div class="callout success">
+      <div class="callout-title">✨ The Future is Hybrid</div>
+      <p>
+        The most powerful AI systems of the 2020s don't rely on a single approach. Instead, they combine the pattern 
+        recognition capabilities of neural networks with the precision of symbolic reasoning, the efficiency of 
+        algorithmic search, and the breadth of large-scale data. This "best of all worlds" strategy is likely to 
+        dominate AI development through the 2030s.
+      </p>
+    </div>
 
     <h2>1.4 Search and Problem Solving</h2>
 
@@ -335,15 +403,23 @@ def infer(rules, facts):
     </p>
 
     <pre set:html={`<code>def a_star_search(start, goal, h_func):
-    """A* search algorithm
+    """A* search algorithm - Optimal pathfinding since 1968
+    
+    Still widely used in 2025 for robotics, game AI, route planning,
+    and as a component in hybrid AI systems (e.g., combined with
+    neural networks for learned heuristics).
     
     Args:
         start: Initial state
-        goal: Goal state
-        h_func: Heuristic function estimating cost to goal
+        goal: Goal state  
+        h_func: Admissible heuristic function estimating cost to goal
     
     Returns:
-        Path from start to goal, or None if no path exists
+        Optimal path from start to goal, or None if no path exists
+    
+    Time Complexity: O(b^d) worst case, but efficient with good heuristic
+    Space Complexity: O(b^d) - stores all generated nodes
+    Optimality: Guaranteed if h is admissible and consistent
     """
     frontier = PriorityQueue()
     frontier.put((0, start))
@@ -361,11 +437,18 @@ def infer(rules, facts):
             
             if next_state not in cost_so_far or new_cost < cost_so_far[next_state]:
                 cost_so_far[next_state] = new_cost
+                # f(n) = g(n) + h(n): actual cost + estimated remaining
                 priority = new_cost + h_func(next_state, goal)
                 frontier.put((priority, next_state))
                 came_from[next_state] = current
     
-    return None  # No path found</code>`} />
+    return None  # No path found
+
+# Modern extensions:
+# - Anytime A*: Returns best solution found so far if interrupted
+# - Weighted A*: Trades optimality for speed (f = g + w*h, w > 1)
+# - Neural A*: Uses learned heuristics from deep networks
+# - Hierarchical A*: Multi-level pathfinding for large spaces</code>`} />
 
     <div class="collapsible">
       <div class="collapsible-header">
