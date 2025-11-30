@@ -18,6 +18,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2>Introduction to Deep Learning</h2>
     
     <p>Deep Learning represents a paradigm shift in machine learning, using artificial neural networks with multiple layers to automatically learn hierarchical representations of data. Unlike traditional machine learning, deep learning can automatically discover the representations needed for feature detection or classification from raw data.</p>
+    
+    <div class="callout info">
+      <div class="callout-title">🚀 Modern Deep Learning (2023-2025)</div>
+      <p>While Convolutional Neural Networks (CNNs) and Recurrent Neural Networks (RNNs) dominated computer vision and natural language processing for years, <strong>transformer architectures</strong> (introduced 2017 with "Attention Is All You Need") have revolutionized the field. Vision Transformers (ViT, 2020) now challenge CNN dominance in computer vision, achieving state-of-the-art results on ImageNet and other benchmarks. However, CNNs remain highly efficient for many applications, and hybrid architectures combining both approaches are increasingly common (<a href="https://en.wikipedia.org/wiki/Vision_transformer" target="_blank">Wikipedia: Vision Transformer</a>, <a href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)" target="_blank">Wikipedia: Transformer</a>).</p>
+    </div>
 
     <h3>Why "Deep" Learning?</h3>
     
@@ -80,7 +85,7 @@ Where:
 
     <h3>Activation Functions</h3>
     
-    <p>Activation functions introduce non-linearity, enabling networks to learn complex patterns:</p>
+    <p>Activation functions introduce non-linearity, enabling networks to learn complex patterns. A breakthrough came in 2011 when Glorot & Bengio demonstrated that <strong>ReLU (Rectified Linear Unit) activation</strong> enables training of significantly deeper networks compared to sigmoid/tanh, leading to the modern deep learning era (<a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" target="_blank">Wikipedia: CNN</a>):</p>
 
     <table>
       <thead>
@@ -175,7 +180,20 @@ Where:
 
     <h3>2. Convolutional Neural Networks (CNN)</h3>
     
-    <p>Specialized for processing grid-like data (images, video, time series):</p>
+    <p>Specialized for processing grid-like data (images, video, time series). CNNs dominated computer vision from 2012-2020, with the <strong>AlexNet ImageNet breakthrough in 2012</strong> serving as a "catalytic event" that launched the modern AI boom. Recent developments include Vision Transformers (ViT, 2020) challenging CNN dominance, though CNNs remain highly efficient for many applications.</p>
+    
+    <div class="callout success">
+      <div class="callout-title">🎯 Historical Milestones</div>
+      <ul>
+        <li><strong>1987:</strong> Time Delay Neural Network (TDNN) by Alex Waibel - first CNN with weight sharing and backpropagation</li>
+        <li><strong>1995:</strong> LeNet-5 by Yann LeCun - 7-level network for handwritten digit recognition</li>
+        <li><strong>2011:</strong> ReLU activation (Glorot & Bengio) enabled training of deeper networks</li>
+        <li><strong>2012:</strong> <strong>AlexNet ImageNet win - launched modern deep learning era</strong></li>
+        <li><strong>2012:</strong> CNNs achieved 0.23% error on MNIST dataset</li>
+        <li><strong>2020:</strong> Vision Transformers (ViT) began challenging CNN dominance</li>
+        <li><strong>2023:</strong> Google DeepMind's GNoME discovered 2.2M+ new materials using CNNs with 71% success rate (<a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" target="_blank">Wikipedia: CNN</a>)</li>
+      </ul>
+    </div>
 
     <div class="diagram-container">
       <pre class="mermaid" set:html={`graph LR
@@ -233,7 +251,20 @@ Computation for top-left output:
 
     <h3>3. Recurrent Neural Networks (RNN)</h3>
     
-    <p>Designed for sequential data with temporal dependencies:</p>
+    <p>Designed for sequential data with temporal dependencies. RNNs revolutionized sequence modeling throughout the 2000s-2010s, with LSTM-based systems achieving state-of-the-art results in speech recognition and machine translation before transformers emerged as the dominant architecture for many NLP applications.</p>
+    
+    <div class="callout success">
+      <div class="callout-title">📚 Historical Evolution</div>
+      <ul>
+        <li><strong>1993:</strong> Neural history compressor solved "Very Deep Learning" task with 1000+ layers, overcoming vanishing gradient</li>
+        <li><strong>1995:</strong> <strong>LSTM by Hochreiter & Schmidhuber</strong> - solved vanishing gradient problem, set accuracy records</li>
+        <li><strong>~2006:</strong> <strong>Bidirectional LSTM revolutionized speech recognition</strong> (Google voice search, Android dictation)</li>
+        <li><strong>2014:</strong> GRU (Gated Recurrent Unit) - simplified LSTM with fewer parameters but similar performance</li>
+        <li><strong>2014:</strong> <strong>Seq2seq encoder-decoder</strong> with attention became state-of-the-art for machine translation</li>
+        <li><strong>2017:</strong> Transformer architecture built on seq2seq concepts but eliminated recurrence, becoming instrumental in developing modern LLMs</li>
+        <li><strong>2023-2025:</strong> While transformers dominate NLP, RNNs remain relevant for efficient real-time processing and streaming data (<a href="https://en.wikipedia.org/wiki/Recurrent_neural_network" target="_blank">Wikipedia: RNN</a>)</li>
+      </ul>
+    </div>
 
     <div class="diagram-container">
       <pre class="ascii-diagram">
@@ -251,10 +282,14 @@ x₁ ───> │RNN│───> │RNN│───> │RNN│───> │R
     <p><strong>RNN Variants:</strong></p>
     
     <ul>
-      <li><strong>LSTM (Long Short-Term Memory):</strong> Addresses vanishing gradient problem with gates</li>
-      <li><strong>GRU (Gated Recurrent Unit):</strong> Simplified LSTM with fewer parameters</li>
-      <li><strong>Bidirectional RNN:</strong> Processes sequences in both directions</li>
+      <li><strong>LSTM (Long Short-Term Memory):</strong> Most widely used variant, addresses vanishing gradient problem with gates, can handle thousands/millions of time steps</li>
+      <li><strong>GRU (Gated Recurrent Unit):</strong> Simplified LSTM with fewer parameters, similar performance for many tasks</li>
+      <li><strong>Bidirectional RNN:</strong> Processes sequences in both forward and backward directions for better context understanding</li>
+      <li><strong>IndRNN (Independent RNN):</strong> Uses independent recurrent neurons to address gradient vanishing/exploding issues</li>
+      <li><strong>Seq2seq with Attention:</strong> Encoder-decoder architecture that revolutionized machine translation (2014-2017)</li>
     </ul>
+    
+    <p><strong>Training Algorithm:</strong> BPTT (Backpropagation Through Time) unrolls the recurrent network through time steps and applies standard backpropagation.</p>
 
     <h3>4. Autoencoders</h3>
     
@@ -634,12 +669,20 @@ import torch.nn as nn
 import torch.optim as optim
 
 class SimpleCNN(nn.Module):
+    """Modern CNN architecture with best practices from 2023-2025:
+    - BatchNorm after each conv layer (stabilizes training)
+    - ReLU activations (enabled deep networks, Glorot & Bengio 2011)
+    - MaxPool for spatial reduction
+    - Dropout for regularization
+    - Progressive channel expansion (32→64→128)
+    """
     def __init__(self, num_classes=10):
         super(SimpleCNN, self).__init__()
         
-        # Convolutional layers
+        # Convolutional blocks with Batch Normalization
+        # BatchNorm (2015) normalizes activations, enabling faster training
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
-        self.bn1 = nn.BatchNorm2d(32)
+        self.bn1 = nn.BatchNorm2d(32)  # Normalize after convolution
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.bn2 = nn.BatchNorm2d(64)
         self.conv3 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
