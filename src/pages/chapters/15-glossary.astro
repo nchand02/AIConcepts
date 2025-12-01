@@ -15,53 +15,317 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>A comprehensive glossary of terms, acronyms, and concepts used throughout AI and machine learning. Use this as a quick reference guide.</p>
     </div>
 
-    <div class=\"callout info\">\n      <p>Quick reference for AI/ML terminology. Terms link to relevant chapters for deeper exploration.</p>\n    </div>
+    <h2>A</h2>
+    <dl>
+      <dt><strong>Activation Function</strong></dt>
+      <dd>Non-linear function applied to neuron outputs (ReLU, sigmoid, tanh). Enables networks to learn complex patterns.</dd>
+      
+      <dt><strong>Adapter Layers</strong></dt>
+      <dd>Small trainable modules inserted into frozen models for parameter-efficient fine-tuning. → <em>Chapter 9</em></dd>
+      
+      <dt><strong>Agent</strong></dt>
+      <dd>Autonomous AI system that perceives environment, reasons, and takes actions to achieve goals. → <em>Chapter 11</em></dd>
+      
+      <dt><strong>Alignment</strong></dt>
+      <dd>Process of making AI systems behave according to human values and intentions (RLHF, DPO). → <em>Chapter 9</em></dd>
+      
+      <dt><strong>ANN (Approximate Nearest Neighbor)</strong></dt>
+      <dd>Algorithms for fast similarity search (HNSW, FAISS) that trade accuracy for speed. → <em>Chapter 7</em></dd>
+      
+      <dt><strong>Attention Mechanism</strong></dt>
+      <dd>Allows models to focus on relevant parts of input. Core component of Transformers. → <em>Chapter 4</em></dd>
+      
+      <dt><strong>AutoGPT</strong></dt>
+      <dd>Autonomous agent framework that breaks down goals and executes tasks with minimal human intervention. → <em>Chapter 11</em></dd>
+      
+      <dt><strong>AWQ (Activation-aware Weight Quantization)</strong></dt>
+      <dd>Quantization method that preserves important weights based on activation patterns. → <em>Chapter 13</em></dd>
+    </dl>
 
-    <h2>A</h2>\n    <dl>\n      <dt><strong>Activation Function</strong></dt>\n      <dd>Non-linear function applied to neuron outputs (ReLU, sigmoid, tanh). Enables networks to learn complex patterns.</dd>\n      \n      <dt><strong>Adapter Layers</strong></dt>\n      <dd>Small trainable modules inserted into frozen models for parameter-efficient fine-tuning. → <em>Chapter 9</em></dd>\n      \n      <dt><strong>Agent</strong></dt>\n      <dd>Autonomous AI system that perceives environment, reasons, and takes actions to achieve goals. → <em>Chapter 11</em></dd>\n      \n      <dt><strong>Alignment</strong></dt>\n      <dd>Process of making AI systems behave according to human values and intentions (RLHF, DPO). → <em>Chapter 9</em></dd>\n      \n      <dt><strong>ANN (Approximate Nearest Neighbor)</strong></dt>\n      <dd>Algorithms for fast similarity search (HNSW, FAISS) that trade accuracy for speed. → <em>Chapter 7</em></dd>\n      \n      <dt><strong>Attention Mechanism</strong></dt>\n      <dd>Allows models to focus on relevant parts of input. Core component of Transformers. → <em>Chapter 4</em></dd>\n      \n      <dt><strong>AutoGPT</strong></dt>\n      <dd>Autonomous agent framework that breaks down goals and executes tasks with minimal human intervention. → <em>Chapter 11</em></dd>\n      \n      <dt><strong>AWQ (Activation-aware Weight Quantization)</strong></dt>\n      <dd>Quantization method that preserves important weights based on activation patterns. → <em>Chapter 13</em></dd>\n    </dl>
+    <h2>B</h2>
+    <dl>
+      <dt><strong>Backpropagation</strong></dt>
+      <dd>Algorithm for computing gradients in neural networks by propagating errors backward through layers. → <em>Chapter 2</em></dd>
+      
+      <dt><strong>Batch Size</strong></dt>
+      <dd>Number of samples processed together during training. Larger batches = more stable gradients but more memory.</dd>
+      
+      <dt><strong>BERT (Bidirectional Encoder Representations from Transformers)</strong></dt>
+      <dd>Transformer model trained with masked language modeling for contextualized embeddings. → <em>Chapter 4</em></dd>
+      
+      <dt><strong>BLEU (Bilingual Evaluation Understudy)</strong></dt>
+      <dd>Metric for evaluating machine translation quality based on n-gram overlap with references.</dd>
+      
+      <dt><strong>BM25</strong></dt>
+      <dd>Ranking function for sparse retrieval based on term frequency and document length. → <em>Chapter 8</em></dd>
+    </dl>
 
-    <h2>B</h2>\n    <dl>\n      <dt><strong>Backpropagation</strong></dt>\n      <dd>Algorithm for computing gradients in neural networks by propagating errors backward through layers. → <em>Chapter 2</em></dd>\n      \n      <dt><strong>Batch Size</strong></dt>\n      <dd>Number of samples processed together during training. Larger batches = more stable gradients but more memory.</dd>\n      \n      <dt><strong>BERT (Bidirectional Encoder Representations from Transformers)</strong></dt>\n      <dd>Transformer model trained with masked language modeling for contextualized embeddings. → <em>Chapter 4</em></dd>\n      \n      <dt><strong>BLEU (Bilingual Evaluation Understudy)</strong></dt>\n      <dd>Metric for evaluating machine translation quality based on n-gram overlap with references.</dd>\n      \n      <dt><strong>BM25</strong></dt>\n      <dd>Ranking function for sparse retrieval based on term frequency and document length. → <em>Chapter 8</em></dd>\n    </dl>
+    <h2>C</h2>
+    <dl>
+      <dt><strong>Chain-of-Thought (CoT)</strong></dt>
+      <dd>Prompting technique where model explains reasoning step-by-step before answering. → <em>Chapter 5</em></dd>
+      
+      <dt><strong>CLIP (Contrastive Language-Image Pre-training)</strong></dt>
+      <dd>Vision-language model that learns joint embeddings for text and images. → <em>Chapter 10</em></dd>
+      
+      <dt><strong>CNN (Convolutional Neural Network)</strong></dt>
+      <dd>Neural network with convolutional layers, effective for image processing. → <em>Chapter 3</em></dd>
+      
+      <dt><strong>Context Window</strong></dt>
+      <dd>Maximum number of tokens an LLM can process at once (e.g., 4K, 32K, 128K). → <em>Chapter 5</em></dd>
+      
+      <dt><strong>Cosine Similarity</strong></dt>
+      <dd>Measure of similarity between vectors based on angle, range [-1, 1]. Standard for text embeddings. → <em>Chapter 7</em></dd>
+    </dl>
 
-    <h2>C</h2>\n    <dl>\n      <dt><strong>Chain-of-Thought (CoT)</strong></dt>\n      <dd>Prompting technique where model explains reasoning step-by-step before answering. → <em>Chapter 5</em></dd>\n      \n      <dt><strong>CLIP (Contrastive Language-Image Pre-training)</strong></dt>\n      <dd>Vision-language model that learns joint embeddings for text and images. → <em>Chapter 10</em></dd>\n      \n      <dt><strong>CNN (Convolutional Neural Network)</strong></dt>\n      <dd>Neural network with convolutional layers, effective for image processing. → <em>Chapter 3</em></dd>\n      \n      <dt><strong>Context Window</strong></dt>\n      <dd>Maximum number of tokens an LLM can process at once (e.g., 4K, 32K, 128K). → <em>Chapter 5</em></dd>\n      \n      <dt><strong>Cosine Similarity</strong></dt>\n      <dd>Measure of similarity between vectors based on angle, range [-1, 1]. Standard for text embeddings. → <em>Chapter 7</em></dd>\n    </dl>
+    <h2>D</h2>
+    <dl>
+      <dt><strong>DDPM (Denoising Diffusion Probabilistic Model)</strong></dt>
+      <dd>Generative model that learns to reverse noise-adding process. Foundation for Stable Diffusion. → <em>Chapter 6</em></dd>
+      
+      <dt><strong>DPO (Direct Preference Optimization)</strong></dt>
+      <dd>Simpler alternative to RLHF for aligning models with human preferences. → <em>Chapter 9</em></dd>
+      
+      <dt><strong>Dropout</strong></dt>
+      <dd>Regularization technique that randomly drops neurons during training to prevent overfitting.</dd>
+    </dl>
 
-    <h2>D</h2>\n    <dl>\n      <dt><strong>DDPM (Denoising Diffusion Probabilistic Model)</strong></dt>\n      <dd>Generative model that learns to reverse noise-adding process. Foundation for Stable Diffusion. → <em>Chapter 6</em></dd>\n      \n      <dt><strong>DPO (Direct Preference Optimization)</strong></dt>\n      <dd>Simpler alternative to RLHF for aligning models with human preferences. → <em>Chapter 9</em></dd>\n      \n      <dt><strong>Dropout</strong></dt>\n      <dd>Regularization technique that randomly drops neurons during training to prevent overfitting.</dd>\n    </dl>
+    <h2>E</h2>
+    <dl>
+      <dt><strong>Embedding</strong></dt>
+      <dd>Dense vector representation capturing semantic meaning of text, images, or other data. → <em>Chapter 7</em></dd>
+      
+      <dt><strong>Encoder-Decoder</strong></dt>
+      <dd>Architecture where encoder processes input and decoder generates output. Used in translation, summarization.</dd>
+      
+      <dt><strong>Epoch</strong></dt>
+      <dd>One complete pass through entire training dataset.</dd>
+    </dl>
 
-    <h2>E</h2>\n    <dl>\n      <dt><strong>Embedding</strong></dt>\n      <dd>Dense vector representation capturing semantic meaning of text, images, or other data. → <em>Chapter 7</em></dd>\n      \n      <dt><strong>Encoder-Decoder</strong></dt>\n      <dd>Architecture where encoder processes input and decoder generates output. Used in translation, summarization.</dd>\n      \n      <dt><strong>Epoch</strong></dt>\n      <dd>One complete pass through entire training dataset.</dd>\n    </dl>
+    <h2>F</h2>
+    <dl>
+      <dt><strong>FAISS</strong></dt>
+      <dd>Facebook AI Similarity Search library for efficient vector search at scale. → <em>Chapter 7</em></dd>
+      
+      <dt><strong>Few-Shot Learning</strong></dt>
+      <dd>Learning from small number of examples, often via in-context learning in LLMs. → <em>Chapter 5</em></dd>
+      
+      <dt><strong>Fine-Tuning</strong></dt>
+      <dd>Adapting pre-trained model to specific task or domain by continued training. → <em>Chapter 9</em></dd>
+      
+      <dt><strong>Function Calling</strong></dt>
+      <dd>LLM capability to invoke external tools/APIs based on user requests. → <em>Chapter 11</em></dd>
+    </dl>
 
-    <h2>F</h2>\n    <dl>\n      <dt><strong>FAISS</strong></dt>\n      <dd>Facebook AI Similarity Search library for efficient vector search at scale. → <em>Chapter 7</em></dd>\n      \n      <dt><strong>Few-Shot Learning</strong></dt>\n      <dd>Learning from small number of examples, often via in-context learning in LLMs. → <em>Chapter 5</em></dd>\n      \n      <dt><strong>Fine-Tuning</strong></dt>\n      <dd>Adapting pre-trained model to specific task or domain by continued training. → <em>Chapter 9</em></dd>\n      \n      <dt><strong>Function Calling</strong></dt>\n      <dd>LLM capability to invoke external tools/APIs based on user requests. → <em>Chapter 11</em></dd>\n    </dl>
+    <h2>G</h2>
+    <dl>
+      <dt><strong>GAN (Generative Adversarial Network)</strong></dt>
+      <dd>Generative model with generator and discriminator networks competing against each other. → <em>Chapter 6</em></dd>
+      
+      <dt><strong>GPU (Graphics Processing Unit)</strong></dt>
+      <dd>Specialized hardware for parallel computation, essential for training and running neural networks. → <em>Chapter 13</em></dd>
+      
+      <dt><strong>Gradient Descent</strong></dt>
+      <dd>Optimization algorithm that iteratively adjusts model parameters to minimize loss. → <em>Chapter 2</em></dd>
+      
+      <dt><strong>GPTQ</strong></dt>
+      <dd>Post-training quantization method for compressing LLMs to 4-bit precision. → <em>Chapter 13</em></dd>
+      
+      <dt><strong>Grounding</strong></dt>
+      <dd>Basing AI outputs on retrieved facts or provided context to reduce hallucinations. → <em>Chapter 8</em></dd>
+    </dl>
 
-    <h2>G</h2>\n    <dl>\n      <dt><strong>GAN (Generative Adversarial Network)</strong></dt>\n      <dd>Generative model with generator and discriminator networks competing against each other. → <em>Chapter 6</em></dd>\n      \n      <dt><strong>GPU (Graphics Processing Unit)</strong></dt>\n      <dd>Specialized hardware for parallel computation, essential for training and running neural networks. → <em>Chapter 13</em></dd>\n      \n      <dt><strong>Gradient Descent</strong></dt>\n      <dd>Optimization algorithm that iteratively adjusts model parameters to minimize loss. → <em>Chapter 2</em></dd>\n      \n      <dt><strong>GPTQ</strong></dt>\n      <dd>Post-training quantization method for compressing LLMs to 4-bit precision. → <em>Chapter 13</em></dd>\n      \n      <dt><strong>Grounding</strong></dt>\n      <dd>Basing AI outputs on retrieved facts or provided context to reduce hallucinations. → <em>Chapter 8</em></dd>\n    </dl>
+    <h2>H</h2>
+    <dl>
+      <dt><strong>Hallucination</strong></dt>
+      <dd>When AI model generates plausible but false or nonsensical information.</dd>
+      
+      <dt><strong>HNSW (Hierarchical Navigable Small World)</strong></dt>
+      <dd>Graph-based algorithm for approximate nearest neighbor search. State-of-the-art for vector DBs. → <em>Chapter 7</em></dd>
+      
+      <dt><strong>Hyperparameter</strong></dt>
+      <dd>Configuration setting for training (learning rate, batch size) not learned from data.</dd>
+    </dl>
 
-    <h2>H</h2>\n    <dl>\n      <dt><strong>Hallucination</strong></dt>\n      <dd>When AI model generates plausible but false or nonsensical information.</dd>\n      \n      <dt><strong>HNSW (Hierarchical Navigable Small World)</strong></dt>\n      <dd>Graph-based algorithm for approximate nearest neighbor search. State-of-the-art for vector DBs. → <em>Chapter 7</em></dd>\n      \n      <dt><strong>Hyperparameter</strong></dt>\n      <dd>Configuration setting for training (learning rate, batch size) not learned from data.</dd>\n    </dl>
+    <h2>I</h2>
+    <dl>
+      <dt><strong>Inference</strong></dt>
+      <dd>Running trained model to generate predictions on new data. → <em>Chapter 13</em></dd>
+      
+      <dt><strong>Instruction Tuning</strong></dt>
+      <dd>Fine-tuning models on instruction-response pairs to improve instruction-following. → <em>Chapter 9</em></dd>
+    </dl>
 
-    <h2>I</h2>\n    <dl>\n      <dt><strong>Inference</strong></dt>\n      <dd>Running trained model to generate predictions on new data. → <em>Chapter 13</em></dd>\n      \n      <dt><strong>Instruction Tuning</strong></dt>\n      <dd>Fine-tuning models on instruction-response pairs to improve instruction-following. → <em>Chapter 9</em></dd>\n    </dl>
+    <h2>K</h2>
+    <dl>
+      <dt><strong>KV Cache</strong></dt>
+      <dd>Cached key-value pairs from attention mechanism to speed up generation. → <em>Chapter 13</em></dd>
+    </dl>
 
-    <h2>K</h2>\n    <dl>\n      <dt><strong>KV Cache</strong></dt>\n      <dd>Cached key-value pairs from attention mechanism to speed up generation. → <em>Chapter 13</em></dd>\n    </dl>
+    <h2>L</h2>
+    <dl>
+      <dt><strong>Latency</strong></dt>
+      <dd>Time from request to response. Critical metric for production AI systems. → <em>Chapter 14</em></dd>
+      
+      <dt><strong>Learning Rate</strong></dt>
+      <dd>Hyperparameter controlling step size during gradient descent optimization.</dd>
+      
+      <dt><strong>LLM (Large Language Model)</strong></dt>
+      <dd>Neural network with billions of parameters trained on massive text corpora. → <em>Chapter 5</em></dd>
+      
+      <dt><strong>LoRA (Low-Rank Adaptation)</strong></dt>
+      <dd>PEFT method adding trainable low-rank matrices to frozen model weights. → <em>Chapter 9</em></dd>
+      
+      <dt><strong>Loss Function</strong></dt>
+      <dd>Measure of model error that optimization aims to minimize. → <em>Chapter 2</em></dd>
+    </dl>
 
-    <h2>L</h2>\n    <dl>\n      <dt><strong>Latency</strong></dt>\n      <dd>Time from request to response. Critical metric for production AI systems. → <em>Chapter 14</em></dd>\n      \n      <dt><strong>Learning Rate</strong></dt>\n      <dd>Hyperparameter controlling step size during gradient descent optimization.</dd>\n      \n      <dt><strong>LLM (Large Language Model)</strong></dt>\n      <dd>Neural network with billions of parameters trained on massive text corpora. → <em>Chapter 5</em></dd>\n      \n      <dt><strong>LoRA (Low-Rank Adaptation)</strong></dt>\n      <dd>PEFT method adding trainable low-rank matrices to frozen model weights. → <em>Chapter 9</em></dd>\n      \n      <dt><strong>Loss Function</strong></dt>\n      <dd>Measure of model error that optimization aims to minimize. → <em>Chapter 2</em></dd>\n    </dl>
+    <h2>M</h2>
+    <dl>
+      <dt><strong>MCP (Model Context Protocol)</strong></dt>
+      <dd>Open standard for connecting AI applications with data sources and tools. → <em>Chapter 11</em></dd>
+      
+      <dt><strong>MLP (Multi-Layer Perceptron)</strong></dt>
+      <dd>Feedforward neural network with multiple layers. Also refers to FFN in Transformers.</dd>
+      
+      <dt><strong>Multi-Head Attention</strong></dt>
+      <dd>Parallel attention mechanisms that capture different aspects of relationships. → <em>Chapter 4</em></dd>
+    </dl>
 
-    <h2>M</h2>\n    <dl>\n      <dt><strong>MCP (Model Context Protocol)</strong></dt>\n      <dd>Open standard for connecting AI applications with data sources and tools. → <em>Chapter 11</em></dd>\n      \n      <dt><strong>MLP (Multi-Layer Perceptron)</strong></dt>\n      <dd>Feedforward neural network with multiple layers. Also refers to FFN in Transformers.</dd>\n      \n      <dt><strong>Multi-Head Attention</strong></dt>\n      <dd>Parallel attention mechanisms that capture different aspects of relationships. → <em>Chapter 4</em></dd>\n    </dl>
+    <h2>N</h2>
+    <dl>
+      <dt><strong>Neural Network</strong></dt>
+      <dd>Computing system inspired by biological neurons, composed of interconnected layers. → <em>Chapter 1</em></dd>
+      
+      <dt><strong>NF4</strong></dt>
+      <dd>4-bit normalized float format optimized for neural network weights. Used in QLoRA. → <em>Chapter 13</em></dd>
+    </dl>
 
-    <h2>N</h2>\n    <dl>\n      <dt><strong>Neural Network</strong></dt>\n      <dd>Computing system inspired by biological neurons, composed of interconnected layers. → <em>Chapter 1</em></dd>\n      \n      <dt><strong>NF4</strong></dt>\n      <dd>4-bit normalized float format optimized for neural network weights. Used in QLoRA. → <em>Chapter 13</em></dd>\n    </dl>
+    <h2>O</h2>
+    <dl>
+      <dt><strong>Overfitting</strong></dt>
+      <dd>When model learns training data too well and fails to generalize to new data. → <em>Chapter 2</em></dd>
+    </dl>
 
-    <h2>O</h2>\n    <dl>\n      <dt><strong>Overfitting</strong></dt>\n      <dd>When model learns training data too well and fails to generalize to new data. → <em>Chapter 2</em></dd>\n    </dl>
+    <h2>P</h2>
+    <dl>
+      <dt><strong>PagedAttention</strong></dt>
+      <dd>Memory management technique for KV cache that enables higher throughput. → <em>Chapter 13</em></dd>
+      
+      <dt><strong>PEFT (Parameter-Efficient Fine-Tuning)</strong></dt>
+      <dd>Methods that update only small subset of parameters (LoRA, adapters, prefix tuning). → <em>Chapter 9</em></dd>
+      
+      <dt><strong>Perplexity</strong></dt>
+      <dd>Metric measuring how well model predicts text. Lower = better. Common for LLM evaluation.</dd>
+      
+      <dt><strong>Prompt Engineering</strong></dt>
+      <dd>Crafting inputs to guide LLM behavior and improve output quality. → <em>Chapter 5</em></dd>
+    </dl>
 
-    <h2>P</h2>\n    <dl>\n      <dt><strong>PagedAttention</strong></dt>\n      <dd>Memory management technique for KV cache that enables higher throughput. → <em>Chapter 13</em></dd>\n      \n      <dt><strong>PEFT (Parameter-Efficient Fine-Tuning)</strong></dt>\n      <dd>Methods that update only small subset of parameters (LoRA, adapters, prefix tuning). → <em>Chapter 9</em></dd>\n      \n      <dt><strong>Perplexity</strong></dt>\n      <dd>Metric measuring how well model predicts text. Lower = better. Common for LLM evaluation.</dd>\n      \n      <dt><strong>Prompt Engineering</strong></dt>\n      <dd>Crafting inputs to guide LLM behavior and improve output quality. → <em>Chapter 5</em></dd>\n    </dl>
+    <h2>Q</h2>
+    <dl>
+      <dt><strong>QLoRA</strong></dt>
+      <dd>Quantized LoRA - combines 4-bit quantization with LoRA for memory-efficient fine-tuning. → <em>Chapter 9</em></dd>
+      
+      <dt><strong>Quantization</strong></dt>
+      <dd>Reducing model precision (FP32→INT8) to decrease size and increase speed. → <em>Chapter 13</em></dd>
+    </dl>
 
-    <h2>Q</h2>\n    <dl>\n      <dt><strong>QLoRA</strong></dt>\n      <dd>Quantized LoRA - combines 4-bit quantization with LoRA for memory-efficient fine-tuning. → <em>Chapter 9</em></dd>\n      \n      <dt><strong>Quantization</strong></dt>\n      <dd>Reducing model precision (FP32→INT8) to decrease size and increase speed. → <em>Chapter 13</em></dd>\n    </dl>
+    <h2>R</h2>
+    <dl>
+      <dt><strong>RAG (Retrieval-Augmented Generation)</strong></dt>
+      <dd>Technique combining retrieval with generation for grounded, factual responses. → <em>Chapter 8</em></dd>
+      
+      <dt><strong>ReAct</strong></dt>
+      <dd>Pattern interleaving reasoning and acting for agent decision-making. → <em>Chapter 11</em></dd>
+      
+      <dt><strong>ReLU (Rectified Linear Unit)</strong></dt>
+      <dd>Activation function f(x) = max(0, x). Simple and effective for deep networks.</dd>
+      
+      <dt><strong>RLHF (Reinforcement Learning from Human Feedback)</strong></dt>
+      <dd>Technique for aligning models with human preferences using reward models. → <em>Chapter 9</em></dd>
+      
+      <dt><strong>RNN (Recurrent Neural Network)</strong></dt>
+      <dd>Neural network with loops for processing sequences. Largely replaced by Transformers. → <em>Chapter 3</em></dd>
+      
+      <dt><strong>ROUGE</strong></dt>
+      <dd>Metric for evaluating summarization quality based on n-gram overlap.</dd>
+    </dl>
 
-    <h2>R</h2>\n    <dl>\n      <dt><strong>RAG (Retrieval-Augmented Generation)</strong></dt>\n      <dd>Technique combining retrieval with generation for grounded, factual responses. → <em>Chapter 8</em></dd>\n      \n      <dt><strong>ReAct</strong></dt>\n      <dd>Pattern interleaving reasoning and acting for agent decision-making. → <em>Chapter 11</em></dd>\n      \n      <dt><strong>ReLU (Rectified Linear Unit)</strong></dt>\n      <dd>Activation function f(x) = max(0, x). Simple and effective for deep networks.</dd>\n      \n      <dt><strong>RLHF (Reinforcement Learning from Human Feedback)</strong></dt>\n      <dd>Technique for aligning models with human preferences using reward models. → <em>Chapter 9</em></dd>\n      \n      <dt><strong>RNN (Recurrent Neural Network)</strong></dt>\n      <dd>Neural network with loops for processing sequences. Largely replaced by Transformers. → <em>Chapter 3</em></dd>\n      \n      <dt><strong>ROUGE</strong></dt>\n      <dd>Metric for evaluating summarization quality based on n-gram overlap.</dd>\n    </dl>
+    <h2>S</h2>
+    <dl>
+      <dt><strong>Self-Attention</strong></dt>
+      <dd>Attention mechanism where sequence attends to itself. Core of Transformer architecture. → <em>Chapter 4</em></dd>
+      
+      <dt><strong>Semantic Search</strong></dt>
+      <dd>Search based on meaning rather than keywords, using embeddings. → <em>Chapter 7</em></dd>
+      
+      <dt><strong>SGD (Stochastic Gradient Descent)</strong></dt>
+      <dd>Optimization algorithm using random batches to approximate gradient. → <em>Chapter 2</em></dd>
+      
+      <dt><strong>Softmax</strong></dt>
+      <dd>Function converting logits to probability distribution. Used in output layers.</dd>
+      
+      <dt><strong>Supervised Learning</strong></dt>
+      <dd>Learning from labeled examples (input-output pairs). → <em>Chapter 2</em></dd>
+    </dl>
 
-    <h2>S</h2>\n    <dl>\n      <dt><strong>Self-Attention</strong></dt>\n      <dd>Attention mechanism where sequence attends to itself. Core of Transformer architecture. → <em>Chapter 4</em></dd>\n      \n      <dt><strong>Semantic Search</strong></dt>\n      <dd>Search based on meaning rather than keywords, using embeddings. → <em>Chapter 7</em></dd>\n      \n      <dt><strong>SGD (Stochastic Gradient Descent)</strong></dt>\n      <dd>Optimization algorithm using random batches to approximate gradient. → <em>Chapter 2</em></dd>\n      \n      <dt><strong>Softmax</strong></dt>\n      <dd>Function converting logits to probability distribution. Used in output layers.</dd>\n      \n      <dt><strong>Supervised Learning</strong></dt>\n      <dd>Learning from labeled examples (input-output pairs). → <em>Chapter 2</em></dd>\n    </dl>
+    <h2>T</h2>
+    <dl>
+      <dt><strong>Temperature</strong></dt>
+      <dd>Parameter controlling randomness in generation. Higher = more creative, lower = more focused. → <em>Chapter 5</em></dd>
+      
+      <dt><strong>Token</strong></dt>
+      <dd>Basic unit of text processed by LLMs. Can be word, subword, or character. → <em>Chapter 5</em></dd>
+      
+      <dt><strong>Tokenization</strong></dt>
+      <dd>Process of splitting text into tokens. BPE and WordPiece are common algorithms.</dd>
+      
+      <dt><strong>Top-K Sampling</strong></dt>
+      <dd>Sampling from K most likely tokens during generation. → <em>Chapter 5</em></dd>
+      
+      <dt><strong>Top-P (Nucleus) Sampling</strong></dt>
+      <dd>Sampling from smallest set of tokens with cumulative probability ≥ P. → <em>Chapter 5</em></dd>
+      
+      <dt><strong>Transfer Learning</strong></dt>
+      <dd>Using pre-trained model as starting point for new task. Foundation of modern AI. → <em>Chapter 2</em></dd>
+      
+      <dt><strong>Transformer</strong></dt>
+      <dd>Architecture based on self-attention, foundation for modern LLMs. → <em>Chapter 4</em></dd>
+    </dl>
 
-    <h2>T</h2>\n    <dl>\n      <dt><strong>Temperature</strong></dt>\n      <dd>Parameter controlling randomness in generation. Higher = more creative, lower = more focused. → <em>Chapter 5</em></dd>\n      \n      <dt><strong>Token</strong></dt>\n      <dd>Basic unit of text processed by LLMs. Can be word, subword, or character. → <em>Chapter 5</em></dd>\n      \n      <dt><strong>Tokenization</strong></dt>\n      <dd>Process of splitting text into tokens. BPE and WordPiece are common algorithms.</dd>\n      \n      <dt><strong>Top-K Sampling</strong></dt>\n      <dd>Sampling from K most likely tokens during generation. → <em>Chapter 5</em></dd>\n      \n      <dt><strong>Top-P (Nucleus) Sampling</strong></dt>\n      <dd>Sampling from smallest set of tokens with cumulative probability ≥ P. → <em>Chapter 5</em></dd>\n      \n      <dt><strong>Transfer Learning</strong></dt>\n      <dd>Using pre-trained model as starting point for new task. Foundation of modern AI. → <em>Chapter 2</em></dd>\n      \n      <dt><strong>Transformer</strong></dt>\n      <dd>Architecture based on self-attention, foundation for modern LLMs. → <em>Chapter 4</em></dd>\n    </dl>
+    <h2>U</h2>
+    <dl>
+      <dt><strong>Underfitting</strong></dt>
+      <dd>When model is too simple to capture patterns in data. → <em>Chapter 2</em></dd>
+    </dl>
 
-    <h2>U</h2>\n    <dl>\n      <dt><strong>Underfitting</strong></dt>\n      <dd>When model is too simple to capture patterns in data. → <em>Chapter 2</em></dd>\n    </dl>
+    <h2>V</h2>
+    <dl>
+      <dt><strong>VAE (Variational Autoencoder)</strong></dt>
+      <dd>Generative model learning latent representations with probabilistic encoder/decoder. → <em>Chapter 6</em></dd>
+      
+      <dt><strong>Vector Database</strong></dt>
+      <dd>Database optimized for storing and searching high-dimensional vectors. → <em>Chapter 7</em></dd>
+      
+      <dt><strong>vLLM</strong></dt>
+      <dd>High-throughput LLM inference server with PagedAttention and continuous batching. → <em>Chapter 13</em></dd>
+      
+      <dt><strong>VQA (Visual Question Answering)</strong></dt>
+      <dd>Task of answering questions about images using multimodal models. → <em>Chapter 10</em></dd>
+    </dl>
 
-    <h2>V</h2>\n    <dl>\n      <dt><strong>VAE (Variational Autoencoder)</strong></dt>\n      <dd>Generative model learning latent representations with probabilistic encoder/decoder. → <em>Chapter 6</em></dd>\n      \n      <dt><strong>Vector Database</strong></dt>\n      <dd>Database optimized for storing and searching high-dimensional vectors. → <em>Chapter 7</em></dd>\n      \n      <dt><strong>vLLM</strong></dt>\n      <dd>High-throughput LLM inference server with PagedAttention and continuous batching. → <em>Chapter 13</em></dd>\n      \n      <dt><strong>VQA (Visual Question Answering)</strong></dt>\n      <dd>Task of answering questions about images using multimodal models. → <em>Chapter 10</em></dd>\n    </dl>
+    <h2>Z</h2>
+    <dl>
+      <dt><strong>ZeRO (Zero Redundancy Optimizer)</strong></dt>
+      <dd>Memory optimization technique for distributed training by sharding optimizer states, gradients, and parameters. → <em>Chapter 13</em></dd>
+      
+      <dt><strong>Zero-Shot Learning</strong></dt>
+      <dd>Model performing task without specific training examples, using only task description. → <em>Chapter 5</em></dd>
+    </dl>
 
-    <h2>Z</h2>\n    <dl>\n      <dt><strong>ZeRO (Zero Redundancy Optimizer)</strong></dt>\n      <dd>Memory optimization technique for distributed training by sharding optimizer states, gradients, and parameters. → <em>Chapter 13</em></dd>\n      \n      <dt><strong>Zero-Shot Learning</strong></dt>\n      <dd>Model performing task without specific training examples, using only task description. → <em>Chapter 5</em></dd>\n    </dl>
-
-    <h2>Common Acronyms</h2>\n    <table>\n      <thead>\n        <tr>\n          <th>Acronym</th>\n          <th>Full Form</th>\n          <th>Chapter</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr><td>AI</td><td>Artificial Intelligence</td><td>1</td></tr>\n        <tr><td>ANN</td><td>Approximate Nearest Neighbor / Artificial Neural Network</td><td>7 / 1</td></tr>\n        <tr><td>API</td><td>Application Programming Interface</td><td>14</td></tr>\n        <tr><td>BERT</td><td>Bidirectional Encoder Representations from Transformers</td><td>4</td></tr>\n        <tr><td>BLEU</td><td>Bilingual Evaluation Understudy</td><td>-</td></tr>\n        <tr><td>CLIP</td><td>Contrastive Language-Image Pre-training</td><td>10</td></tr>\n        <tr><td>CNN</td><td>Convolutional Neural Network</td><td>3</td></tr>\n        <tr><td>CoT</td><td>Chain-of-Thought</td><td>5</td></tr>\n        <tr><td>DPO</td><td>Direct Preference Optimization</td><td>9</td></tr>\n        <tr><td>FAISS</td><td>Facebook AI Similarity Search</td><td>7</td></tr>\n        <tr><td>GAN</td><td>Generative Adversarial Network</td><td>6</td></tr>\n        <tr><td>GPU</td><td>Graphics Processing Unit</td><td>13</td></tr>\n        <tr><td>HNSW</td><td>Hierarchical Navigable Small World</td><td>7</td></tr>\n        <tr><td>LLM</td><td>Large Language Model</td><td>5</td></tr>\n        <tr><td>LoRA</td><td>Low-Rank Adaptation</td><td>9</td></tr>\n        <tr><td>MCP</td><td>Model Context Protocol</td><td>11</td></tr>\n        <tr><td>ML</td><td>Machine Learning</td><td>2</td></tr>\n        <tr><td>MLP</td><td>Multi-Layer Perceptron</td><td>1</td></tr>\n        <tr><td>NLP</td><td>Natural Language Processing</td><td>4</td></tr>\n        <tr><td>PEFT</td><td>Parameter-Efficient Fine-Tuning</td><td>9</td></tr>\n        <tr><td>RAG</td><td>Retrieval-Augmented Generation</td><td>8</td></tr>\n        <tr><td>ReLU</td><td>Rectified Linear Unit</td><td>3</td></tr>\n        <tr><td>RLHF</td><td>Reinforcement Learning from Human Feedback</td><td>9</td></tr>\n        <tr><td>RNN</td><td>Recurrent Neural Network</td><td>3</td></tr>\n        <tr><td>SGD</td><td>Stochastic Gradient Descent</td><td>2</td></tr>\n        <tr><td>VAE</td><td>Variational Autoencoder</td><td>6</td></tr>\n        <tr><td>VLM</td><td>Vision-Language Model</td><td>10</td></tr>\n        <tr><td>VQA</td><td>Visual Question Answering</td><td>10</td></tr>\n      </tbody>\n    </table>\n\n    <div class=\"callout info\">\n      <div class=\"callout-title\">💡 Using This Glossary</div>\n      <p>This glossary provides quick definitions. For comprehensive coverage of any topic, refer to the chapter indicated in italics.</p>\n    </div>
+    <h2>Common Acronyms</h2>
+    <table>\n      <thead>\n        <tr>\n          <th>Acronym</th>\n          <th>Full Form</th>\n          <th>Chapter</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr><td>AI</td><td>Artificial Intelligence</td><td>1</td></tr>\n        <tr><td>ANN</td><td>Approximate Nearest Neighbor / Artificial Neural Network</td><td>7 / 1</td></tr>\n        <tr><td>API</td><td>Application Programming Interface</td><td>14</td></tr>\n        <tr><td>BERT</td><td>Bidirectional Encoder Representations from Transformers</td><td>4</td></tr>\n        <tr><td>BLEU</td><td>Bilingual Evaluation Understudy</td><td>-</td></tr>\n        <tr><td>CLIP</td><td>Contrastive Language-Image Pre-training</td><td>10</td></tr>\n        <tr><td>CNN</td><td>Convolutional Neural Network</td><td>3</td></tr>\n        <tr><td>CoT</td><td>Chain-of-Thought</td><td>5</td></tr>\n        <tr><td>DPO</td><td>Direct Preference Optimization</td><td>9</td></tr>\n        <tr><td>FAISS</td><td>Facebook AI Similarity Search</td><td>7</td></tr>\n        <tr><td>GAN</td><td>Generative Adversarial Network</td><td>6</td></tr>\n        <tr><td>GPU</td><td>Graphics Processing Unit</td><td>13</td></tr>\n        <tr><td>HNSW</td><td>Hierarchical Navigable Small World</td><td>7</td></tr>\n        <tr><td>LLM</td><td>Large Language Model</td><td>5</td></tr>\n        <tr><td>LoRA</td><td>Low-Rank Adaptation</td><td>9</td></tr>\n        <tr><td>MCP</td><td>Model Context Protocol</td><td>11</td></tr>\n        <tr><td>ML</td><td>Machine Learning</td><td>2</td></tr>\n        <tr><td>MLP</td><td>Multi-Layer Perceptron</td><td>1</td></tr>\n        <tr><td>NLP</td><td>Natural Language Processing</td><td>4</td></tr>\n        <tr><td>PEFT</td><td>Parameter-Efficient Fine-Tuning</td><td>9</td></tr>\n        <tr><td>RAG</td><td>Retrieval-Augmented Generation</td><td>8</td></tr>\n        <tr><td>ReLU</td><td>Rectified Linear Unit</td><td>3</td></tr>\n        <tr><td>RLHF</td><td>Reinforcement Learning from Human Feedback</td><td>9</td></tr>\n        <tr><td>RNN</td><td>Recurrent Neural Network</td><td>3</td></tr>\n        <tr><td>SGD</td><td>Stochastic Gradient Descent</td><td>2</td></tr>\n        <tr><td>VAE</td><td>Variational Autoencoder</td><td>6</td></tr>\n        <tr><td>VLM</td><td>Vision-Language Model</td><td>10</td></tr>\n        <tr><td>VQA</td><td>Visual Question Answering</td><td>10</td></tr>\n      </tbody>\n    </table>\n\n    <div class=\"callout info\">\n      <div class=\"callout-title\">💡 Using This Glossary</div>\n      <p>This glossary provides quick definitions. For comprehensive coverage of any topic, refer to the chapter indicated in italics.</p>\n    </div>
 
   </article>
 </BaseLayout>
