@@ -40,40 +40,62 @@ const chapters = [
   <!-- Mermaid.js for diagrams -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ 
-      startOnLoad: true,
+    
+    const lightTheme = {
       theme: 'base',
       themeVariables: {
-        primaryColor: '#3b82f6',
+        primaryColor: '#dbeafe',
         primaryTextColor: '#1e293b',
-        primaryBorderColor: '#60a5fa',
+        primaryBorderColor: '#3b82f6',
         lineColor: '#64748b',
-        secondaryColor: '#8b5cf6',
-        tertiaryColor: '#ec4899'
+        secondaryColor: '#ede9fe',
+        tertiaryColor: '#fce7f3',
+        mainBkg: '#ffffff',
+        secondBkg: '#f8fafc',
+        textColor: '#1e293b',
+        border1: '#cbd5e1',
+        border2: '#94a3b8'
       }
+    };
+    
+    const darkTheme = {
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#1e3a8a',
+        primaryTextColor: '#f1f5f9',
+        primaryBorderColor: '#60a5fa',
+        lineColor: '#cbd5e1',
+        secondaryColor: '#4c1d95',
+        tertiaryColor: '#831843',
+        mainBkg: '#334155',
+        secondBkg: '#475569',
+        textColor: '#f1f5f9',
+        border1: '#64748b',
+        border2: '#475569'
+      }
+    };
+    
+    // Initialize with light theme by default
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    mermaid.initialize({ 
+      startOnLoad: true,
+      ...(currentTheme === 'dark' ? darkTheme : lightTheme)
     });
     
     // Update mermaid theme on theme change
     window.addEventListener('themechange', (e) => {
       const isDark = e.detail.theme === 'dark';
       mermaid.initialize({
-        theme: isDark ? 'dark' : 'base',
-        themeVariables: isDark ? {
-          primaryColor: '#3b82f6',
-          primaryTextColor: '#e2e8f0',
-          primaryBorderColor: '#60a5fa',
-          lineColor: '#94a3b8',
-          secondaryColor: '#8b5cf6',
-          tertiaryColor: '#ec4899'
-        } : {
-          primaryColor: '#3b82f6',
-          primaryTextColor: '#1e293b',
-          primaryBorderColor: '#60a5fa',
-          lineColor: '#64748b',
-          secondaryColor: '#8b5cf6',
-          tertiaryColor: '#ec4899'
-        }
+        startOnLoad: true,
+        ...(isDark ? darkTheme : lightTheme)
       });
+      // Re-render all diagrams
+      document.querySelectorAll('.mermaid').forEach(el => {
+        const code = el.textContent;
+        el.removeAttribute('data-processed');
+        el.innerHTML = code;
+      });
+      mermaid.run();
     });
   </script>
   
