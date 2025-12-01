@@ -155,9 +155,13 @@ const chapters = [
       logLevel: 'error',
     });
     
-    // Add ARIA labels to diagrams for accessibility
+    // Store original diagram source and add ARIA labels
     window.addEventListener('load', () => {
       document.querySelectorAll('.mermaid').forEach((el, index) => {
+        // Store original source before Mermaid processes it
+        if (!el.dataset.diagramSource) {
+          el.dataset.diagramSource = el.textContent.trim();
+        }
         if (!el.hasAttribute('role')) {
           el.setAttribute('role', 'img');
           el.setAttribute('aria-label', `Diagram ${index + 1}: Interactive concept visualization`);
@@ -177,11 +181,13 @@ const chapters = [
         logLevel: 'error',
       });
       
-      // Re-render all diagrams
+      // Re-render all diagrams using stored source
       document.querySelectorAll('.mermaid').forEach(el => {
-        const code = el.textContent;
-        el.removeAttribute('data-processed');
-        el.innerHTML = code;
+        const originalSource = el.dataset.diagramSource;
+        if (originalSource) {
+          el.removeAttribute('data-processed');
+          el.textContent = originalSource;
+        }
       });
       mermaid.run();
     });

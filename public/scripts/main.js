@@ -26,21 +26,8 @@
       detail: { theme: newTheme } 
     }));
     
-    // Reload mermaid diagrams if present
-    if (typeof mermaid !== 'undefined') {
-      setTimeout(() => {
-        const diagrams = document.querySelectorAll('.mermaid');
-        diagrams.forEach(diagram => {
-          const svg = diagram.querySelector('svg');
-          if (svg) {
-            // Re-render mermaid with new theme
-            mermaid.render(`mermaid-${Date.now()}`, diagram.textContent).then(result => {
-              diagram.innerHTML = result.svg;
-            });
-          }
-        });
-      }, 100);
-    }
+    // Note: Diagram re-rendering is handled by BaseLayout.astro's themechange listener
+    // which uses the stored original source (el.dataset.diagramSource) instead of textContent
   });
 
   // ======================

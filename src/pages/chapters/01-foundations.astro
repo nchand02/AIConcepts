@@ -57,7 +57,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <div class="diagram-container">
       <p class="diagram-title">Core Domains of Artificial Intelligence</p>
-      <pre class="mermaid" role="img" aria-label="Mindmap showing five core domains of AI: Reasoning, Learning, Perception, Language, and Problem Solving with their subdisciplines" set:html={`mindmap
+      <pre class="mermaid" role="img" aria-label="Mindmap showing five core domains of AI: Reasoning, Learning, Perception, Language, and Problem Solving with their subdisciplines" set:html={`%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#dbeafe','primaryTextColor':'#1e293b','primaryBorderColor':'#3b82f6','lineColor':'#3b82f6','secondaryColor':'#ede9fe','tertiaryColor':'#d1fae5'}}}%%
+mindmap
   root((Artificial Intelligence))
     Reasoning
       Logic
@@ -120,18 +121,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <div class="diagram-container">
       <p class="diagram-title">Timeline: Evolution of Artificial Intelligence (1950-2025)</p>
-      <pre class="mermaid" role="img" aria-label="Timeline showing the evolution of AI from the 1950s Turing Test through the 2020s AI boom, including key milestones and AI winters" set:html={`timeline
-    title Evolution of Artificial Intelligence
-    1950s : Birth of AI (Turing Test 1950, Dartmouth Conference 1956)
-    1960s : Early Optimism (Expert Systems, ELIZA chatbot)
-    1970s : First AI Winter (Lighthill Report 1973, funding cuts)
-    1980s : Expert Systems Renaissance (Cyc knowledge base)
-    1990s : Statistical Methods & Second AI Winter
-    2000s : Big Data & Machine Learning Renaissance
-    2010s : Deep Learning Revolution (AlexNet 2012, AlphaGo 2016)
-    2017-2019 : Transformer Era (Attention Is All You Need, GPT-2)
-    2020-2022 : LLM Breakthrough (GPT-3, ChatGPT launch Nov 2022)
-    2023-2025 : AI Boom (GPT-4, Nobel Prizes, $500B+ investments)
+      <pre class="mermaid" role="img" aria-label="Vertical timeline showing AI evolution from 1950s to 2025" set:html={`graph TD
+    A["📅 1950s<br/><b>Birth of AI</b><br/>• Turing Test 1950<br/>• Dartmouth Conference 1956"] --> B["📅 1960s<br/><b>Early Optimism</b><br/>• Expert Systems<br/>• ELIZA chatbot"]
+    B --> C["❄️ 1970s<br/><b>First AI Winter</b><br/>• Lighthill Report 1973<br/>• Funding cuts"]
+    C --> D["📈 1980s<br/><b>Expert Systems Era</b><br/>• Cyc knowledge base<br/>• Commercial applications"]
+    D --> E["❄️ 1990s<br/><b>Statistical Methods</b><br/>• Second AI Winter<br/>• Web emergence"]
+    E --> F["📈 2000s<br/><b>ML Renaissance</b><br/>• Big Data era begins<br/>• Cloud computing"]
+    F --> G["🚀 2010s<br/><b>Deep Learning Revolution</b><br/>• AlexNet 2012<br/>• AlphaGo 2016"]
+    G --> H["🤖 2017-2019<br/><b>Transformer Era</b><br/>• Attention Is All You Need<br/>• GPT-2 released"]
+    H --> I["💡 2020-2022<br/><b>LLM Breakthrough</b><br/>• GPT-3 launch<br/>• ChatGPT Nov 2022"]
+    I --> J["🌟 2023-2025<br/><b>AI Boom</b><br/>• GPT-4, Nobel Prizes<br/>• $500B+ investments"]
+    
+    classDef early fill:#ede9fe,stroke:#8b5cf6,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
+    classDef winter fill:#fecaca,stroke:#ef4444,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
+    classDef renaissance fill:#d1fae5,stroke:#10b981,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
+    classDef modern fill:#dbeafe,stroke:#3b82f6,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
+    classDef boom fill:#fef3c7,stroke:#f59e0b,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
+    
+    class A,B early
+    class C,E winter
+    class D,F renaissance
+    class G,H modern
+    class I,J boom
       `} />
     </div>
 
