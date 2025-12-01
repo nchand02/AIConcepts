@@ -200,28 +200,49 @@ const base = import.meta.env.BASE_URL;
 
   <section class="learning-path">
     <h2>🎯 Recommended Learning Path</h2>
+    <p class="section-subtitle">Follow this structured progression through AI concepts from fundamentals to advanced applications</p>
     
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph TD
-    A[Start: Foundations of AI] --> B[Machine Learning Basics]
-    B --> C[Deep Learning & Neural Networks]
-    C --> D[Transformers Architecture]
+      <pre class="mermaid" role="img" aria-label="AI Learning Path: A flowchart showing the recommended progression through AI topics from foundations to production systems" set:html={`graph TD
+    %% Foundation Layer
+    A[Foundations of AI] --> B[Machine Learning]
+    B --> C[Deep Learning]
+    
+    %% Core Architecture Layer
+    C --> D[Transformers]
     D --> E[Large Language Models]
-    E --> F[Choose Your Path]
-    F -->|Creative AI| G[Generative AI]
-    F -->|Applied AI| H[RAG & Embeddings]
-    F -->|Specialization| I[Fine-Tuning]
+    
+    %% Specialization Paths
+    E --> F[Choose Specialization]
+    F -->|Creative Applications| G[Generative AI]
+    F -->|Knowledge Systems| H[RAG & Embeddings]
+    F -->|Custom Models| I[Fine-Tuning]
+    
+    %% Advanced Integration
     G --> J[Multimodal AI]
     H --> J
     I --> J
-    J --> K[AI Agents & MCP]
-    K --> L[Production Systems]
-    L --> M[Complete Glossary Reference]
     
-    style A fill:#3b82f6,stroke:#2563eb,color:#fff
-    style E fill:#8b5cf6,stroke:#7c3aed,color:#fff
-    style J fill:#ec4899,stroke:#db2777,color:#fff
-    style L fill:#10b981,stroke:#059669,color:#fff
+    %% Production & Reference
+    J --> K[AI Agents & MCP]
+    K --> L[System Design]
+    L --> M[Tooling & Infrastructure]
+    M --> N[Glossary Reference]
+    
+    %% Semantic Styling - Foundation (Blue)
+    classDef foundation fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef core fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef specialization fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef advanced fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef production fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    
+    class A,B,C foundation
+    class D,E core
+    class F decision
+    class G,H,I specialization
+    class J advanced
+    class K,L,M,N production
       `} />
     </div>
     

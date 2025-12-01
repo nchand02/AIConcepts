@@ -50,7 +50,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p><em>Source: Wikipedia Machine Learning article, November 2025</em></p>
     </div>
 
-    <pre class="mermaid" set:html={`graph TD
+    <div class="diagram-container">
+      <p class="diagram-title">Taxonomy of Machine Learning Approaches</p>
+      <pre class="mermaid" role="img" aria-label="Hierarchical diagram showing machine learning divided into supervised, unsupervised, reinforcement, and semi-supervised learning, with their respective subcategories" set:html={`graph TD
     A[Machine Learning] --> B[Supervised Learning]
     A --> C[Unsupervised Learning]
     A --> D[Reinforcement Learning]
@@ -66,11 +68,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     D --> D1[Model-Free]
     D --> D2[Model-Based]
     
-    style A fill:#3b82f6,stroke:#2563eb,color:#fff
-    style B fill:#8b5cf6,stroke:#7c3aed,color:#fff
-    style C fill:#ec4899,stroke:#db2777,color:#fff
-    style D fill:#10b981,stroke:#059669,color:#fff
+    %% Semantic color classes
+    classDef root fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef supervised fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef unsupervised fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef reinforcement fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    classDef semi fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef subtask fill:#f3f4f6,stroke:#6b7280,stroke-width:1.5px,color:#1e293b
+    
+    class A root
+    class B,B1,B2 supervised
+    class C,C1,C2,C3 unsupervised
+    class D,D1,D2 reinforcement
+    class E semi
       `} />
+    </div>
 
     <h2>2.2 Supervised Learning</h2>
 
@@ -278,19 +290,27 @@ print(f"Cluster labels: {{labels}}")
 print(f"Cluster centers:\n{{centers}}")
 print(f"Inertia (within-cluster sum of squares): {{kmeans.inertia_:.2f}}")</code>`} />
 
-    <pre class="mermaid" set:html={`graph LR
+    <div class="diagram-container">
+      <p class="diagram-title">Clustering Process: Grouping Unlabeled Data</p>
+      <pre class="mermaid" role="img" aria-label="Flow diagram showing how unlabeled data is processed by a clustering algorithm using similarity measures to form three distinct clusters" set:html={`graph LR
     A[Unlabeled Data] --> B[Clustering Algorithm]
     B --> C{Similarity Measure}
-    C --> D[Cluster 1]
-    C --> E[Cluster 2]
-    C --> F[Cluster 3]
+    C -->|Similar Items| D[Cluster 1]
+    C -->|Similar Items| E[Cluster 2]
+    C -->|Similar Items| F[Cluster 3]
     
-    style A fill:#3b82f6,color:#fff
-    style B fill:#8b5cf6,color:#fff
-    style D fill:#10b981,color:#fff
-    style E fill:#10b981,color:#fff
-    style F fill:#10b981,color:#fff
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef process fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A input
+    class B process
+    class C decision
+    class D,E,F output
       `} />
+    </div>
 
     <h4>Common Clustering Algorithms</h4>
 
@@ -345,16 +365,25 @@ print(f"Explained variance ratio: {{pca.explained_variance_ratio_}}")</code>`} /
       <p><em>Source: Wikipedia Deep Learning & Machine Learning articles, November 2025</em></p>
     </div>
 
-    <pre class="mermaid" set:html={`graph LR
-    A[Environment] -->|State, Reward| B[Agent]
-    B -->|Action| A
-    B -->|Updates| C[Policy π]
-    C -->|Guides| B
+    <div class="diagram-container">
+      <p class="diagram-title">Reinforcement Learning Loop</p>
+      <pre class="mermaid" role="img" aria-label="Reinforcement learning feedback loop showing environment sending state and reward to agent, agent taking actions, and updating its policy" set:html={`graph LR
+    A[Environment] -->|State s, Reward r| B[Agent]
+    B -->|Action a| A
+    B -.->|Learn| C[Policy π]
+    C -.->|Guide Decisions| B
     
-    style A fill:#3b82f6,color:#fff
-    style B fill:#8b5cf6,color:#fff
-    style C fill:#ec4899,color:#fff
+    %% Semantic color classes
+    classDef environment fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef agent fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef policy fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    
+    class A environment
+    class B agent
+    class C policy
       `} />
+      <p class="diagram-caption"><em>The agent observes states and rewards, takes actions, and continuously updates its policy to maximize cumulative reward</em></p>
+    </div>
 
     <h3>Key Concepts</h3>
 

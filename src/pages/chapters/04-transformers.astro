@@ -30,7 +30,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2>Core Architecture</h2>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph TB
+      <p class="diagram-title">Transformer Architecture Overview</p>
+      <pre class="mermaid" role="img" aria-label="Transformer architecture showing input tokens flowing through embeddings, positional encoding, encoder stack, decoder stack, and linear softmax to output probabilities" set:html={`graph TB
     A[Input Tokens] --> B[Input Embeddings]
     B --> C[Positional Encoding]
     C --> D[Encoder Stack<br/>N × layers]
@@ -38,10 +39,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     E --> F[Linear + Softmax]
     F --> G[Output Probabilities]
     
-    style A fill:#e1f5ff
-    style D fill:#fff3cd
-    style E fill:#ffe4e1
-    style G fill:#d4edda
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef encoder fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef decoder fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A,B,C input
+    class D encoder
+    class E decoder
+    class F,G output
       `} />
     </div>
 
@@ -190,7 +197,8 @@ output_I = 0.42×V_I + 0.38×V_love + 0.20×V_AI</code>`} />
     <p>Instead of single attention, use multiple "heads" to capture different relationships:</p>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph TB
+      <p class="diagram-title">Multi-Head Attention Mechanism</p>
+      <pre class="mermaid" role="img" aria-label="Multi-head attention showing input embeddings split across 8 heads focusing on syntax, semantics, position, and context, then concatenated and projected to output" set:html={`graph TB
     A[Input Embeddings] --> B1[Head 1<br/>Syntax focus]
     A --> B2[Head 2<br/>Semantics focus]
     A --> B3[Head 3<br/>Position focus]
@@ -204,9 +212,18 @@ output_I = 0.42×V_I + 0.38×V_love + 0.20×V_AI</code>`} />
     C --> D[Linear Projection]
     D --> E[Output]
     
-    style A fill:#e1f5ff
-    style E fill:#d4edda
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef head fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef combine fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A input
+    class B1,B2,B3,B4 head
+    class C,D combine
+    class E output
       `} />
+      <p class="diagram-caption"><em>Each attention head learns different aspects of relationships between tokens</em></p>
     </div>
 
     <p><strong>Formula:</strong></p>
@@ -279,7 +296,8 @@ combined = token_embeddings + position_embeddings(positions)</code>`} />
     <p>The encoder processes input to create contextual representations:</p>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph TB
+      <p class="diagram-title">Encoder Layer Structure</p>
+      <pre class="mermaid" role="img" aria-label="Encoder layer showing input with positional encoding through multi-head self-attention, add-and-norm, feed-forward network, and another add-and-norm, repeated N times" set:html={`graph TB
     A[Input + Positional Encoding] --> B[Multi-Head<br/>Self-Attention]
     B --> C[Add & Norm]
     C --> D[Feed-Forward<br/>Network]
@@ -288,8 +306,20 @@ combined = token_embeddings + position_embeddings(positions)</code>`} />
     F -->|Yes| B
     F -->|No| G[Encoder Output]
     
-    style A fill:#e1f5ff
-    style G fill:#d4edda
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef attention fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef norm fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef ff fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A input
+    class B attention
+    class C,E norm
+    class D ff
+    class F decision
+    class G output
       `} />
     </div>
 
@@ -326,7 +356,8 @@ class FeedForward:
     <p>The decoder generates output autoregressively (one token at a time):</p>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph TB
+      <p class="diagram-title">Decoder Layer Structure with Cross-Attention</p>
+      <pre class="mermaid" role="img" aria-label="Decoder layer with masked self-attention, encoder-decoder cross-attention, feed-forward network, and add-and-norm layers, repeated N times" set:html={`graph TB
     A[Output Tokens<br/>+ Positional Encoding] --> B[Masked Multi-Head<br/>Self-Attention]
     B --> C[Add & Norm]
     C --> D[Encoder-Decoder<br/>Cross-Attention]
@@ -339,10 +370,23 @@ class FeedForward:
     
     J[Encoder Output] --> D
     
-    style A fill:#e1f5ff
-    style I fill:#d4edda
-    style J fill:#fff3cd
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef attention fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef cross fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef norm fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A,J input
+    class B attention
+    class D cross
+    class C,E,G norm
+    class F cross
+    class H decision
+    class I output
       `} />
+      <p class="diagram-caption"><em>Cross-attention allows the decoder to attend to encoder outputs at every layer</em></p>
     </div>
 
     <h3>Masked Self-Attention</h3>
@@ -600,20 +644,34 @@ Grouped:      8 heads × Q, 2 groups × (K, V) = 12 projections
     <p>Conditional computation - activate subset of parameters:</p>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph TB
+      <p class="diagram-title">Mixture of Experts (MoE) Architecture</p>
+      <pre class="mermaid" role="img" aria-label="Mixture of experts showing input routed to top-K experts among 8 specialists, with weighted combination of expert outputs" set:html={`graph TB
     A[Input] --> B[Routing Network]
-    B --> C{Top-K Experts}
-    C --> D1[Expert 1]
-    C --> D2[Expert 2]
-    C --> D3[Expert 8]
+    B --> C{Top-K Expert Selection}
+    C -->|Weight w1| D1[Expert 1]
+    C -->|Weight w2| D2[Expert 2]
+    C -->|Weight w8| D3[Expert 8]
     D1 --> E[Weighted Combine]
     D2 --> E
     D3 --> E
     E --> F[Output]
     
-    style A fill:#e1f5ff
-    style F fill:#d4edda
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef router fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef expert fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef combine fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A input
+    class B router
+    class C decision
+    class D1,D2,D3 expert
+    class E combine
+    class F output
       `} />
+      <p class="diagram-caption"><em>Only a subset of experts are activated per input, enabling efficient parameter scaling</em></p>
     </div>
 
     <p><strong>Benefits:</strong></p>

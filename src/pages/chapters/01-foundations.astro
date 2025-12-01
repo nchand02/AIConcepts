@@ -55,7 +55,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </p>
     </div>
 
-    <pre class="mermaid" set:html={`mindmap
+    <div class="diagram-container">
+      <p class="diagram-title">Core Domains of Artificial Intelligence</p>
+      <pre class="mermaid" role="img" aria-label="Mindmap showing five core domains of AI: Reasoning, Learning, Perception, Language, and Problem Solving with their subdisciplines" set:html={`mindmap
   root((Artificial Intelligence))
     Reasoning
       Logic
@@ -78,6 +80,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       Planning
       Optimization
       `} />
+    </div>
 
     <h3>The Turing Test</h3>
     
@@ -115,7 +118,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <h2>1.2 History of AI</h2>
 
-    <pre class="mermaid" set:html={`timeline
+    <div class="diagram-container">
+      <p class="diagram-title">Timeline: Evolution of Artificial Intelligence (1950-2025)</p>
+      <pre class="mermaid" role="img" aria-label="Timeline showing the evolution of AI from the 1950s Turing Test through the 2020s AI boom, including key milestones and AI winters" set:html={`timeline
     title Evolution of Artificial Intelligence
     1950s : Birth of AI (Turing Test 1950, Dartmouth Conference 1956)
     1960s : Early Optimism (Expert Systems, ELIZA chatbot)
@@ -128,6 +133,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     2020-2022 : LLM Breakthrough (GPT-3, ChatGPT launch Nov 2022)
     2023-2025 : AI Boom (GPT-4, Nobel Prizes, $500B+ investments)
       `} />
+    </div>
 
     <h3>Key Milestones</h3>
 
@@ -296,16 +302,26 @@ def infer(rules, facts):
       rules, systems learned patterns from data.
     </p>
 
-    <pre class="mermaid" set:html={`graph LR
+    <div class="diagram-container">
+      <p class="diagram-title">Statistical Learning Pipeline</p>
+      <pre class="mermaid" role="img" aria-label="Flow diagram showing how training data flows through a learning algorithm to create a statistical model that generates predictions from new data" set:html={`graph LR
     A[Training Data] --> B[Learning Algorithm]
     B --> C[Statistical Model]
     C --> D[Predictions]
     E[New Data] --> C
     
-    style A fill:#3b82f6,stroke:#2563eb,color:#fff
-    style C fill:#8b5cf6,stroke:#7c3aed,color:#fff
-    style D fill:#10b981,stroke:#059669,color:#fff
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef model fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A,E input
+    class B process
+    class C model
+    class D output
       `} />
+    </div>
 
     <h3>Connectionist AI (Neural Networks)</h3>
     
@@ -496,21 +512,36 @@ sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
 
     <h3>Semantic Networks</h3>
 
-    <pre class="mermaid" set:html={`graph TD
+    <div class="diagram-container">
+      <p class="diagram-title">Semantic Network: Knowledge Representation Example</p>
+      <pre class="mermaid" role="img" aria-label="Semantic network diagram showing hierarchical relationships between animals, with Bird inheriting from Animal, Penguin from Bird, and instance Tweety, including properties and abilities" set:html={`graph TD
+    %% Hierarchy
     A[Bird] -->|is-a| B[Animal]
     C[Penguin] -->|is-a| A
     D[Tweety] -->|instance-of| C
+    
+    %% Properties and abilities
     A -->|can| E[Fly]
     A -->|has| F[Wings]
     C -->|cannot| E
     C -->|can| G[Swim]
     B -->|has| H[Metabolism]
     
-    style B fill:#3b82f6
-    style A fill:#8b5cf6
-    style C fill:#ec4899
-    style D fill:#10b981
+    %% Semantic styling
+    classDef abstract fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef general fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef specific fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef instance fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    classDef property fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    
+    class B abstract
+    class A general
+    class C specific
+    class D instance
+    class E,F,G,H property
       `} />
+      <p class="diagram-caption"><em>Legend: Abstract concept (blue), General class (purple), Specific class (pink), Instance (green), Properties/abilities (orange)</em></p>
+    </div>
 
     <h3>Frames and Ontologies</h3>
 

@@ -36,20 +36,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </ul>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph LR
+      <p class="diagram-title">Hierarchical Feature Learning in Deep Networks</p>
+      <pre class="mermaid" role="img" aria-label="Flow diagram showing progressive feature abstraction from raw pixels through layers detecting edges, shapes, object parts, to final object classification" set:html={`graph LR
     A[Raw Input<br/>Pixels] --> B[Layer 1<br/>Edges/Lines]
     B --> C[Layer 2<br/>Shapes/Textures]
     C --> D[Layer 3<br/>Object Parts]
     D --> E[Layer 4<br/>Objects]
     E --> F[Output<br/>Classification]
     
-    style A fill:#e1f5ff
-    style F fill:#d4edda
-    style B fill:#fff3cd
-    style C fill:#fff3cd
-    style D fill:#fff3cd
-    style E fill:#fff3cd
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef hidden fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A input
+    class B,C,D,E hidden
+    class F output
       `} />
+      <p class="diagram-caption"><em>Each layer learns increasingly abstract representations of the input data</em></p>
     </div>
 
     <h2>Neural Network Fundamentals</h2>
@@ -142,7 +146,8 @@ Where:
     <p>The simplest deep learning architecture where information flows in one direction:</p>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph LR
+      <p class="diagram-title">Feedforward Neural Network Architecture</p>
+      <pre class="mermaid" role="img" aria-label="Feedforward neural network showing input layer with 4 nodes connecting through 3 hidden layers to output layer, demonstrating unidirectional information flow" set:html={`graph LR
     I1[Input 1] --> H11[Hidden<br/>Layer 1]
     I2[Input 2] --> H11
     I3[Input 3] --> H11
@@ -196,7 +201,8 @@ Where:
     </div>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph LR
+      <p class="diagram-title">Convolutional Neural Network (CNN) Pipeline</p>
+      <pre class="mermaid" role="img" aria-label="CNN architecture showing image input through alternating convolutional and pooling layers, then flattening and fully connected layers to output classification" set:html={`graph LR
     A[Input Image<br/>224×224×3] --> B[Conv Layer<br/>+ ReLU]
     B --> C[Pooling<br/>Layer]
     C --> D[Conv Layer<br/>+ ReLU]
@@ -205,8 +211,18 @@ Where:
     F --> G[Fully<br/>Connected]
     G --> H[Output<br/>Classes]
     
-    style A fill:#e1f5ff
-    style H fill:#d4edda
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef conv fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef pool fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef dense fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A input
+    class B,D conv
+    class C,E pool
+    class F,G dense
+    class H output
       `} />
     </div>
 
@@ -296,7 +312,8 @@ x₁ ───> │RNN│───> │RNN│───> │RNN│───> │R
     <p>Unsupervised networks that learn compressed representations:</p>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph LR
+      <p class="diagram-title">Autoencoder Architecture</p>
+      <pre class="mermaid" role="img" aria-label="Autoencoder showing encoder compressing high-dimensional input through layers to latent bottleneck, then decoder reconstructing output" set:html={`graph LR
     A[Input<br/>High Dim] --> B[Encoder<br/>Layer 1]
     B --> C[Encoder<br/>Layer 2]
     C --> D[Latent Space<br/>Bottleneck]
@@ -304,10 +321,20 @@ x₁ ───> │RNN│───> │RNN│───> │RNN│───> │R
     E --> F[Decoder<br/>Layer 2]
     F --> G[Output<br/>Reconstructed]
     
-    style A fill:#e1f5ff
-    style D fill:#fff3cd
-    style G fill:#d4edda
+    %% Semantic color classes
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef encoder fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef latent fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef decoder fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A input
+    class B,C encoder
+    class D latent
+    class E,F decoder
+    class G output
       `} />
+      <p class="diagram-caption"><em>The bottleneck forces the network to learn compressed, meaningful representations</em></p>
     </div>
 
     <p><strong>Applications:</strong></p>
@@ -335,15 +362,23 @@ x₁ ───> │RNN│───> │RNN│───> │RNN│───> │R
     <p>The algorithm that enables training by computing gradients:</p>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph RL
+      <p class="diagram-title">Backpropagation: Gradient Flow</p>
+      <pre class="mermaid" role="img" aria-label="Backpropagation diagram showing gradient computation flowing backwards from loss function through output layer, hidden layers, to weight updates" set:html={`graph LR
     A[Loss Function<br/>L = f(y, ŷ)] --> B[∂L/∂W₃<br/>Output Gradient]
     B --> C[∂L/∂W₂<br/>Hidden Layer 2]
     C --> D[∂L/∂W₁<br/>Hidden Layer 1]
     D --> E[Update Weights<br/>W := W - η∇W]
     
-    style A fill:#ffebee
-    style E fill:#d4edda
+    %% Semantic color classes
+    classDef loss fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#1e293b
+    classDef gradient fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef update fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A loss
+    class B,C,D gradient
+    class E update
       `} />
+      <p class="diagram-caption"><em>Gradients propagate backward through the network using the chain rule to update weights</em></p>
     </div>
 
     <p><strong>Steps:</strong></p>
@@ -520,20 +555,27 @@ Training Time:                   Test Time:
     <p>Leverage pre-trained models for new tasks:</p>
 
     <div class="diagram-container">
-      <pre class="mermaid" set:html={`graph TB
+      <p class="diagram-title">Transfer Learning Strategies</p>
+      <pre class="mermaid" role="img" aria-label="Decision tree showing three transfer learning strategies: feature extraction for small datasets, fine-tuning for medium datasets, and domain adaptation for different domains" set:html={`graph TB
     A[Pre-trained Model<br/>ImageNet, 1M images] --> B{Transfer Strategy}
-    B --> C[Feature Extraction<br/>Freeze base, train head]
-    B --> D[Fine-tuning<br/>Unfreeze & train all]
-    B --> E[Domain Adaptation<br/>Adapt to new domain]
+    B -->|Freeze base| C[Feature Extraction<br/>Train classification head]
+    B -->|Unfreeze all| D[Fine-tuning<br/>Train entire network]
+    B -->|Adapt layers| E[Domain Adaptation<br/>Adjust to new domain]
     
     C --> F[Use Case:<br/>Small dataset]
     D --> G[Use Case:<br/>Medium dataset]
     E --> H[Use Case:<br/>Different domain]
     
-    style A fill:#e1f5ff
-    style F fill:#d4edda
-    style G fill:#d4edda
-    style H fill:#d4edda
+    %% Semantic color classes
+    classDef pretrained fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef strategy fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef usecase fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    
+    class A pretrained
+    class B decision
+    class C,D,E strategy
+    class F,G,H usecase
       `} />
     </div>
 
