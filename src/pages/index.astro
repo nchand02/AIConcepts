@@ -14,7 +14,13 @@ const base = import.meta.env.BASE_URL;
     </p>
     
     <div class="cta-buttons">
-      <a href={`${base.endsWith("/") ? base : base + "/"}chapters/01-foundations`} class="btn btn-primary">Start Learning →</a>
+      <a href={`${base.endsWith("/") ? base : base + "/"}chapters/01-foundations`} class="btn btn-primary">
+        <span>Start Learning</span>
+        <span>→</span>
+      </a>
+      <a href={`${base.endsWith("/") ? base : base + "/"}about`} class="btn btn-secondary">
+        <span>Learn More</span>
+      </a>
     </div>
   </div>
 
@@ -380,12 +386,18 @@ const base = import.meta.env.BASE_URL;
     border: none;
   }
   
+  .btn > * {
+    position: relative;
+    z-index: 2;
+  }
+  
   .btn::before {
     content: '';
     position: absolute;
     inset: 0;
     background: var(--gradient-primary);
     transition: transform var(--transition-base);
+    z-index: 0;
   }
   
   .btn::after {
@@ -395,6 +407,7 @@ const base = import.meta.env.BASE_URL;
     background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
     opacity: 0;
     transition: opacity var(--transition-base);
+    z-index: 1;
   }
   
   .btn-primary {
