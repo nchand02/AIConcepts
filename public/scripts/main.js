@@ -31,6 +31,26 @@
   });
 
   // ======================
+  // Reading Progress Bar
+  // ======================
+  const progressBar = document.getElementById('reading-progress');
+  
+  function updateReadingProgress() {
+    if (!progressBar) return;
+    
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight - windowHeight;
+    const scrolled = window.scrollY;
+    const progress = (scrolled / documentHeight) * 100;
+    
+    progressBar.style.width = `${Math.min(progress, 100)}%`;
+  }
+  
+  window.addEventListener('scroll', updateReadingProgress, { passive: true });
+  window.addEventListener('resize', updateReadingProgress, { passive: true });
+  updateReadingProgress();
+
+  // ======================
   // Mobile Menu Toggle
   // ======================
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
