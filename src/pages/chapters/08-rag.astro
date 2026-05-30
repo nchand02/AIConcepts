@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Building RAG systems that combine retrieval and generation for grounded AI responses"
   currentPage="/chapters/08-rag"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 8: Retrieval-Augmented Generation (RAG)</h1>
+
+    <!-- REVIEW: This chapter includes comparative/best-practice defaults (e.g., token ranges and “often outperforms”). Validate with citations or label as heuristic if needed; do not adjust values without sources. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">RAG</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 8 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/07-embeddings">Embeddings & Vector DBs</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/09-fine-tuning">Fine-Tuning</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>RAG systems enhance LLMs by retrieving relevant information from knowledge bases before generating responses. This chapter covers RAG architecture, implementation patterns, and best practices.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Explain why retrieval helps with grounding, freshness, and transparency</li>
+        <li>Identify the core RAG pipeline stages (ingest → embed → index → retrieve → generate)</li>
+        <li>Choose chunking strategies and explain trade-offs (precision vs. context)</li>
+        <li>Compare dense, sparse, and hybrid retrieval and when to use each</li>
+        <li>Evaluate RAG systems by separating retrieval quality from generation faithfulness</li>
+      </ul>
     </div>
 
     <h2>What is RAG?</h2>
@@ -421,14 +450,14 @@ Optimization:
     </ul>
 
     <h2>Summary</h2>
-    <div class="callout info">
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
       <ul>
-        <li>RAG combines retrieval and generation for grounded, up-to-date answers</li>
-        <li>Key components: document processing, vector store, retriever, generator</li>
-        <li>Chunking strategy critical: 400-600 tokens with overlap is common</li>
-        <li>Hybrid retrieval (dense + sparse) often outperforms either alone</li>
-        <li>Advanced techniques: query transformation, re-ranking, contextual compression</li>
-        <li>Evaluate both retrieval quality and generation faithfulness</li>
+        <li>RAG augments an LLM with retrieved context to improve grounding and freshness.</li>
+        <li>Core components are ingestion/chunking, embeddings + indexing, retrieval, and generation.</li>
+        <li>Chunking choices affect recall/precision and how much useful context fits into prompts.</li>
+        <li>Hybrid retrieval (dense + sparse) and re-ranking can improve relevance for many queries.</li>
+        <li>Good evaluation separates retrieval quality from generation faithfulness and usefulness.</li>
       </ul>
     </div>
 
@@ -467,5 +496,69 @@ Optimization:
       </li>
     </ol>
 
+    <div class="chapter-navigation">
+      <a href="/chapters/07-embeddings" class="btn btn-secondary">← Previous: Embeddings & Vector DBs</a>
+      <a href="/chapters/09-fine-tuning" class="btn btn-primary">Next: Fine-Tuning →</a>
+    </div>
+
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

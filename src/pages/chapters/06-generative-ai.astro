@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Comprehensive guide to Generative AI, including GANs, VAEs, Diffusion Models, and image generation"
   currentPage="/chapters/06-generative-ai"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 6: Generative AI</h1>
+
+    <!-- REVIEW: This chapter includes many specific timeline and “state-of-the-art” claims (years, model names, and dominance statements). Verify sources before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Generative AI</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 6 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/05-llms">Large Language Models</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/07-embeddings">Embeddings & Vector DBs</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>Generative AI encompasses models that create new content—images, text, audio, and more. This chapter covers GANs, VAEs, diffusion models, and the technologies behind DALL-E, Stable Diffusion, and Midjourney.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Differentiate generative vs. discriminative modeling at a high level</li>
+        <li>Explain the GAN setup (generator vs. discriminator) and common failure modes</li>
+        <li>Describe what VAEs optimize and why they yield structured latent spaces</li>
+        <li>Explain diffusion as a learnable denoising/reversal process and why it’s widely used</li>
+        <li>Identify practical and ethical considerations when deploying generative systems</li>
+      </ul>
     </div>
 
     <div class="callout info">
@@ -142,7 +171,7 @@ Discriminator: Maximize ability to distinguish real from fake`}
     <div class="diagram-container">
       <pre class="mermaid" set:html={`graph LR
     A[Input Image x] --> B[Encoder q]
-    B --> C[Latent z ~ N(μ,σ)]
+    B --> C[Latent z ~ N(mu,sigma)]
     C --> D[Decoder p]
     D --> E[Reconstructed x']
     C --> F[KL Divergence]
@@ -247,7 +276,7 @@ Generate new samples by sampling x_T and denoising`}
     C --> D[+ Noise]
     D --> E[x_T Pure Noise]
     E --> F[- Noise]
-    F --> G[x_{T-1}]
+    F --> G[x_T-1]
     G --> H[- Noise]
     H --> I[x_0 Generated]
     
@@ -579,15 +608,14 @@ Benefits:
 
     <h2>Summary</h2>
 
-    <div class="callout info">
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
       <ul>
-        <li>Generative AI creates new content by learning data distributions</li>
-        <li>GANs use adversarial training but can be unstable</li>
-        <li>VAEs provide structured latent spaces with stable training</li>
-        <li>Diffusion models are current state-of-the-art for image generation</li>
-        <li>Text-to-image models combine diffusion with language understanding</li>
-        <li>ControlNet and LoRA enable fine-grained control</li>
-        <li>Ethical considerations around copyright and misuse are critical</li>
+        <li>Generative models learn a data distribution to create new samples, not just classify inputs.</li>
+        <li>GANs can produce sharp results but are harder to train due to adversarial dynamics.</li>
+        <li>VAEs train more stably and yield structured latent spaces, often trading off sharpness.</li>
+        <li>Diffusion methods generate by iteratively denoising and are widely used in modern text-to-image systems.</li>
+        <li>Deployment requires attention to safety, misuse, and copyright/attribution concerns.</li>
       </ul>
     </div>
 
@@ -629,5 +657,69 @@ Benefits:
       </li>
     </ol>
 
+    <div class="chapter-navigation">
+      <a href="/chapters/05-llms" class="btn btn-secondary">← Previous: Large Language Models</a>
+      <a href="/chapters/07-embeddings" class="btn btn-primary">Next: Embeddings & Vector DBs →</a>
+    </div>
+
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

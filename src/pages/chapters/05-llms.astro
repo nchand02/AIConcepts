@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Comprehensive guide to Large Language Models, their architecture, training, and capabilities"
   currentPage="/chapters/05-llms"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 5: Large Language Models (LLMs)</h1>
+
+    <!-- REVIEW: This chapter contains many specific, time-bound, and quantitative claims (model sizes, costs, benchmark scores, timelines, and licensing details). Verify against reliable sources before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Large Language Models</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 5 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/04-transformers">Transformers</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/06-generative-ai">Generative AI</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>Large Language Models represent the culmination of Transformer technology at massive scale. This chapter explores how models like GPT-4, Claude, and Llama achieve remarkable capabilities through scale, training techniques, and emergent abilities.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Explain what an LLM is (next-token prediction on large corpora) and what that implies</li>
+        <li>Recognize common LLM architectures (decoder-only Transformers) and key components</li>
+        <li>Describe the typical training pipeline: pre-training, supervised fine-tuning, and preference-based alignment</li>
+        <li>Connect scaling laws to practical trade-offs (parameters vs. data vs. compute)</li>
+        <li>Use LLMs responsibly by anticipating limitations and validating outputs</li>
+      </ul>
     </div>
 
     <div class="callout info">
@@ -405,19 +434,79 @@ Answer: 11"</code>`} />
 
     <h2>Summary</h2>
 
-    <p>Large Language Models represent a paradigm shift in AI, achieving remarkable capabilities through scale and sophisticated training. Key points:</p>
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
+      <ul>
+        <li>LLMs are Transformer-based models trained to predict the next token at scale.</li>
+        <li>Practical systems typically combine pre-training, supervised fine-tuning, and preference-based alignment (e.g., RLHF).</li>
+        <li>Scale and data/compute choices affect what models can learn and how reliably they perform.</li>
+        <li>Prompting and context design strongly influence output quality.</li>
+        <li>Limitations (e.g., hallucinations, grounding, and reasoning gaps) require verification and safeguards.</li>
+      </ul>
+    </div>
 
-    <ul>
-      <li>Built on Transformer architecture, scaled to billions/trillions of parameters</li>
-      <li>Three-phase training: pre-training, SFT, RLHF</li>
-      <li>Emergent abilities appear only at sufficient scale</li>
-      <li>Effective prompting is critical for good results</li>
-      <li>Still have significant limitations (hallucinations, reasoning, grounding)</li>
-    </ul>
-
-    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--color-border); display: flex; justify-content: space-between;">
+    <div class="chapter-navigation">
       <a href="/chapters/04-transformers" class="btn btn-secondary">← Previous: Transformers</a>
       <a href="/chapters/06-generative-ai" class="btn btn-primary">Next: Generative AI →</a>
     </div>
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

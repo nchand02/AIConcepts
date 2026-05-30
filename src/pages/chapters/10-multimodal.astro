@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Vision-language models, GPT-4V, CLIP, and AI systems that understand multiple modalities"
   currentPage="/chapters/10-multimodal"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 10: Multimodal AI</h1>
+
+    <!-- REVIEW: This chapter includes time-bound, vendor-specific, and quantitative claims (e.g., dataset sizes, context lengths, model capabilities). Verify sources before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Multimodal</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 10 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/09-fine-tuning">Fine-Tuning &amp; PEFT</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/11-agents">Agents</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>Multimodal AI systems process and understand multiple types of data—text, images, audio, video. This chapter covers vision-language models, cross-modal understanding, and state-of-the-art multimodal systems.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Define multimodal AI and explain why combining modalities changes what models can do</li>
+        <li>Describe CLIP at a conceptual level (joint embeddings via contrastive learning) and what it enables</li>
+        <li>Explain the common VLM pattern: vision encoder → projection → LLM over visual + text tokens</li>
+        <li>Recognize core multimodal tasks (VQA, captioning, OCR, grounding, video understanding)</li>
+        <li>Apply practical best practices when building multimodal features (prompting, fallbacks, privacy)</li>
+      </ul>
     </div>
 
     <h2>What is Multimodal AI?</h2>
@@ -395,14 +424,14 @@ output = model.generate(**inputs)
     </ul>
 
     <h2>Summary</h2>
-    <div class="callout info">
+    <div class="callout best-practice">
+      <div class="callout-title">✅ Key Takeaways</div>
       <ul>
-        <li>Multimodal AI processes text, images, audio, and video together</li>
-        <li>CLIP learns joint embeddings through contrastive learning</li>
-        <li>VLMs combine vision encoders with LLMs for image understanding</li>
-        <li>Major VLMs: GPT-4V, Gemini Vision, Claude 3, LLaVA</li>
-        <li>Tasks include VQA, captioning, OCR, video understanding</li>
-        <li>Alignment techniques: projection layers, Q-Former, cross-attention</li>
+        <li>Multimodal systems combine text, images, audio, and video to enable richer reasoning and interaction.</li>
+        <li>CLIP trains a shared text–image embedding space via contrastive learning, enabling strong retrieval and zero-shot behaviors.</li>
+        <li>Many VLMs follow a common pattern: a vision encoder produces features that are mapped into an LLM as visual tokens.</li>
+        <li>Common multimodal tasks include VQA, captioning, OCR/document understanding, grounding, and video understanding.</li>
+        <li>Successful applications depend on practical choices: prompt clarity, data quality, fallbacks, and privacy handling.</li>
       </ul>
     </div>
 
@@ -441,5 +470,69 @@ output = model.generate(**inputs)
       </li>
     </ol>
 
+    <div class="chapter-navigation">
+      <a href="/chapters/09-fine-tuning" class="btn btn-secondary">← Previous: Fine-Tuning &amp; PEFT</a>
+      <a href="/chapters/11-agents" class="btn btn-primary">Next: Agents →</a>
+    </div>
+
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

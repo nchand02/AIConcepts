@@ -7,12 +7,39 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Comprehensive reference of AI, ML, and LLM terminology and concepts"
   currentPage="/chapters/15-glossary"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 15: AI/ML Glossary</h1>
+
+    <!-- REVIEW: This glossary includes examples that can change quickly (e.g., context window sizes). Verify any numeric examples against current model docs before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Glossary</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 15 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/14-system-design">System Design</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Start over: <a href="/chapters/01-foundations">Foundations</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>A comprehensive glossary of terms, acronyms, and concepts used throughout AI and machine learning. Use this as a quick reference guide.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Quickly look up unfamiliar terms and acronyms encountered in the chapters</li>
+        <li>Recognize related concepts and where to study them in depth</li>
+        <li>Use the chapter cross-references to navigate to fuller explanations</li>
+      </ul>
     </div>
 
     <h2>A</h2>
@@ -370,5 +397,85 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>This glossary provides quick definitions. For comprehensive coverage of any topic, refer to the chapter indicated in italics.</p>
     </div>
 
+    <div class="chapter-navigation">
+      <a href="/chapters/14-system-design" class="btn btn-secondary">← Previous: System Design</a>
+      <a href="/chapters/01-foundations" class="btn btn-primary">Start over: Foundations →</a>
+    </div>
+
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-progress {
+    font-weight: 600;
+  }
+
+  .chapter-sep {
+    opacity: 0.6;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    justify-content: space-between;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .chapter-navigation a {
+      text-align: center;
+    }
+  }
+</style>

@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Comprehensive guide to Deep Learning architectures, training techniques, and applications"
   currentPage="/chapters/03-deep-learning"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 3: Deep Learning</h1>
+
+    <!-- REVIEW: This chapter includes time-bound/quantitative and attribution claims (dates, benchmark results, and named systems). Verify sources before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Deep Learning</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 3 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/02-machine-learning">Machine Learning</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/04-transformers">Transformers</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>This chapter explores Deep Learning, the foundation of modern AI breakthroughs. We'll cover neural network architectures, training techniques, optimization strategies, and practical applications.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Explain why deep networks learn hierarchical representations</li>
+        <li>Identify common architectures and where they fit (FNN, CNN, RNN families)</li>
+        <li>Describe the role of activation functions and why non-linearity matters</li>
+        <li>Summarize core training ingredients: backpropagation, optimization, and regularization</li>
+        <li>Apply the idea of transfer learning and when to fine-tune vs. reuse features</li>
+      </ul>
     </div>
 
     <h2>Introduction to Deep Learning</h2>
@@ -866,15 +895,16 @@ def train_epoch(model, dataloader, criterion, optimizer, device):
 
     <h2>Summary</h2>
 
-    <p>Deep Learning has revolutionized AI by automatically learning hierarchical representations from raw data. Key takeaways:</p>
-
-    <ul>
-      <li>Neural networks with multiple layers learn increasingly abstract features</li>
-      <li>Different architectures excel at different tasks (CNNs for images, RNNs for sequences)</li>
-      <li>Proper training requires careful consideration of optimization, regularization, and hyperparameters</li>
-      <li>Transfer learning and pre-trained models accelerate development</li>
-      <li>Modern innovations (ResNet, attention mechanisms) enable training very deep networks</li>
-    </ul>
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
+      <ul>
+        <li>Depth enables hierarchical feature learning—from simple patterns to abstract concepts.</li>
+        <li>Architectures specialize: CNNs are strong for images; sequence models handle ordered data.</li>
+        <li>Training success depends on optimization choices, regularization, and tuned hyperparameters.</li>
+        <li>Transfer learning with pre-trained models speeds development and can improve performance.</li>
+        <li>Modern design patterns (e.g., skip connections and attention) support training deeper networks.</li>
+      </ul>
+    </div>
 
     <h2>Review Questions</h2>
 
@@ -909,9 +939,68 @@ def train_epoch(model, dataloader, criterion, optimizer, device):
       </ul>
     </div>
 
-    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--color-border); display: flex; justify-content: space-between;">
+    <div class="chapter-navigation">
       <a href="/chapters/02-machine-learning" class="btn btn-secondary">← Previous: Machine Learning</a>
       <a href="/chapters/04-transformers" class="btn btn-primary">Next: Transformers →</a>
     </div>
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

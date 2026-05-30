@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Understanding embeddings, semantic search, and vector databases like Pinecone and Weaviate"
   currentPage="/chapters/07-embeddings"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 7: Embeddings & Vector Databases</h1>
+
+    <!-- REVIEW: This chapter includes vendor/model references and “SOTA” language. Verify any time-bound or comparative claims before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Embeddings</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 7 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/05-llms">Large Language Models</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/08-rag">RAG Systems</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>Embeddings transform text, images, and other data into dense vector representations that capture semantic meaning. This chapter explores embedding models, similarity search, and vector database technologies.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Explain what an embedding is and why dense vectors capture similarity better than one-hot encodings</li>
+        <li>Differentiate static vs. contextualized embeddings and when each is useful</li>
+        <li>Choose and interpret common similarity metrics (cosine, dot product, distance)</li>
+        <li>Explain why vector databases and approximate nearest neighbor (ANN) indexes are needed at scale</li>
+        <li>Describe how multimodal embeddings (e.g., CLIP-style) enable cross-modal retrieval</li>
+      </ul>
     </div>
 
     <h2>What are Embeddings?</h2>
@@ -430,14 +459,14 @@ Where α ∈ [0, 1] controls the balance
     </ul>
 
     <h2>Summary</h2>
-    <div class="callout info">
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
       <ul>
-        <li>Embeddings map discrete items to continuous semantic vector spaces</li>
-        <li>Modern embeddings are contextualized (BERT) and sentence-level (Sentence-BERT)</li>
-        <li>Cosine similarity is standard for comparing text embeddings</li>
-        <li>Vector databases enable efficient similarity search at scale</li>
-        <li>HNSW provides excellent accuracy/speed tradeoff for ANN search</li>
-        <li>CLIP enables multimodal search across text and images</li>
+        <li>Embeddings represent items as dense vectors so that “similar meaning” maps to “nearby in space.”</li>
+        <li>Embedding types evolved from static word vectors to contextual and sentence-level representations.</li>
+        <li>Similarity metrics (cosine/dot/distance) determine how “nearest neighbors” are computed.</li>
+        <li>Vector databases use ANN indexing to search high-dimensional spaces efficiently at scale.</li>
+        <li>Multimodal embeddings support cross-modal retrieval (e.g., text ↔ image).</li>
       </ul>
     </div>
 
@@ -476,5 +505,69 @@ Where α ∈ [0, 1] controls the balance
       </li>
     </ol>
 
+    <div class="chapter-navigation">
+      <a href="/chapters/06-generative-ai" class="btn btn-secondary">← Previous: Generative AI</a>
+      <a href="/chapters/08-rag" class="btn btn-primary">Next: RAG Systems →</a>
+    </div>
+
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

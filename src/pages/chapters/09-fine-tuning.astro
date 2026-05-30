@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Fine-tuning LLMs efficiently with LoRA, QLoRA, and Parameter-Efficient Fine-Tuning methods"
   currentPage="/chapters/09-fine-tuning"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 9: Fine-Tuning & PEFT</h1>
+
+    <!-- REVIEW: This chapter contains quantitative and comparative claims (e.g., memory/parameter reductions, “single consumer GPU”, dataset sizes). Verify sources before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Fine-Tuning</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 9 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/08-rag">RAG Systems</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/10-multimodal">Multimodal AI</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>Fine-tuning adapts pre-trained models to specific tasks or domains. This chapter covers full fine-tuning, parameter-efficient methods like LoRA, and instruction tuning techniques.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Decide when to use prompting, RAG, or fine-tuning for a given product goal</li>
+        <li>Explain the trade-offs of full fine-tuning vs. parameter-efficient methods (PEFT)</li>
+        <li>Describe LoRA/QLoRA at a conceptual level and what “low-rank” updates mean</li>
+        <li>Recognize common instruction-tuning and alignment approaches (SFT, preference-based methods)</li>
+        <li>Identify evaluation and failure modes (overfitting, format mismatch, data leakage)</li>
+      </ul>
     </div>
 
     <h2>Why Fine-Tune?</h2>
@@ -404,14 +433,14 @@ Where:
     </ul>
 
     <h2>Summary</h2>
-    <div class="callout info">
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
       <ul>
-        <li>Fine-tuning adapts pre-trained models to specific tasks or domains</li>
-        <li>PEFT methods (LoRA, QLoRA) reduce compute/memory by 99%+</li>
-        <li>LoRA adds low-rank matrices to frozen weights—highly effective</li>
-        <li>Instruction tuning creates models that follow user instructions</li>
-        <li>RLHF and DPO align models with human preferences</li>
-        <li>Choose approach based on use case: prompting &lt; RAG &lt; fine-tuning</li>
+        <li>Fine-tuning adapts a base model to a task, domain, or desired style.</li>
+        <li>PEFT methods update a small subset of parameters to reduce training cost and storage.</li>
+        <li>LoRA/QLoRA use low-rank adapters (and optionally quantization) to make tuning practical.</li>
+        <li>Instruction tuning and preference-based alignment shape models to follow user intent.</li>
+        <li>Approach choice depends on the need for knowledge vs. behavior change (prompting/RAG/fine-tuning).</li>
       </ul>
     </div>
 
@@ -450,5 +479,69 @@ Where:
       </li>
     </ol>
 
+    <div class="chapter-navigation">
+      <a href="/chapters/08-rag" class="btn btn-secondary">← Previous: RAG Systems</a>
+      <a href="/chapters/10-multimodal" class="btn btn-primary">Next: Multimodal AI →</a>
+    </div>
+
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

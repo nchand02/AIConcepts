@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="LangChain, LlamaIndex, Hugging Face, and the AI development tech stack"
   currentPage="/chapters/12-tooling"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 12: AI Tooling & Ecosystems</h1>
+
+    <!-- REVIEW: This chapter includes time-bound and fast-changing ecosystem claims (tool availability, “popular” positioning, and API stability). Verify against official docs before publication; do not adjust specifics without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Tooling</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 12 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/11-agents">Agents</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/13-infrastructure">Infrastructure</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>The AI ecosystem provides powerful tools and frameworks for building LLM applications. This chapter covers popular libraries, platforms, and development tools for AI engineering.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Identify major layers of the LLM application stack (orchestration, data, models, eval, observability)</li>
+        <li>Compare orchestration frameworks (e.g., LangChain vs. LlamaIndex) and choose based on use case</li>
+        <li>Describe how model hubs and inference tooling fit into development workflows</li>
+        <li>Explain why prompt management, evaluation, and tracing matter in production</li>
+        <li>Apply practical criteria for tool selection (fit, cost, lock-in, community, maintainability)</li>
+      </ul>
     </div>
 
     <h2>The AI Development Stack</h2>
@@ -406,7 +435,8 @@ collection.query(query_texts=["AI agents"], n_results=5)
     </ul>
 
     <h2>Summary</h2>
-    <div class="callout info">
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
       <ul>
         <li>LangChain excels at complex orchestration and agent workflows</li>
         <li>LlamaIndex specializes in data indexing and retrieval</li>
@@ -452,5 +482,69 @@ collection.query(query_texts=["AI agents"], n_results=5)
       </li>
     </ol>
 
+    <div class="chapter-navigation">
+      <a href="/chapters/11-agents" class="btn btn-secondary">← Previous: Agents</a>
+      <a href="/chapters/13-infrastructure" class="btn btn-primary">Next: Infrastructure →</a>
+    </div>
+
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

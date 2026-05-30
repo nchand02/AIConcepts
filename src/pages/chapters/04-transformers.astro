@@ -7,12 +7,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Deep dive into Transformer architecture, attention mechanisms, and their revolutionary impact on AI"
   currentPage="/chapters/04-transformers"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 4: Transformers</h1>
+
+    <!-- REVIEW: This chapter includes time-bound, attribution, and “state of the art” claims (years, named papers/models, and performance/coverage statements). Verify sources before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Transformers</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 4 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/03-deep-learning">Deep Learning</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/05-llms">Large Language Models</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>Transformers revolutionized AI in 2017 with the "Attention Is All You Need" paper. This chapter explores the architecture that powers modern LLMs, from BERT to GPT to every major AI breakthrough since.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Explain why self-attention enables parallel sequence processing</li>
+        <li>Describe Q/K/V, scaled dot-product attention, and why scaling is used</li>
+        <li>Compare encoder-only, decoder-only, and encoder–decoder Transformer families</li>
+        <li>Explain multi-head attention and what it adds over a single attention head</li>
+        <li>Describe why positional information must be injected and common approaches</li>
+      </ul>
     </div>
 
     <h2>The Transformer Revolution</h2>
@@ -850,15 +879,16 @@ class TransformerBlock(nn.Module):
 
     <h2>Summary</h2>
 
-    <p>Transformers revolutionized AI through several key innovations:</p>
-
-    <ul>
-      <li><strong>Self-attention:</strong> Enables parallelization and unlimited context</li>
-      <li><strong>Multi-head attention:</strong> Captures diverse relationships</li>
-      <li><strong>Positional encoding:</strong> Injects sequence information</li>
-      <li><strong>Residual connections + LayerNorm:</strong> Enables very deep networks</li>
-      <li><strong>Architecture variants:</strong> Encoder-only (BERT), Decoder-only (GPT), Encoder-Decoder (T5)</li>
-    </ul>
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
+      <ul>
+        <li><strong>Self-attention:</strong> Enables parallelization and long-range context handling</li>
+        <li><strong>Multi-head attention:</strong> Captures diverse relationships simultaneously</li>
+        <li><strong>Positional encoding:</strong> Injects sequence order information</li>
+        <li><strong>Residual connections + LayerNorm:</strong> Supports training deeper networks</li>
+        <li><strong>Architecture variants:</strong> Encoder-only (BERT), decoder-only (GPT), encoder–decoder (T5)</li>
+      </ul>
+    </div>
 
     <p>The Transformer architecture underlies virtually all modern LLMs and has expanded beyond NLP into vision, audio, and multimodal applications.</p>
 
@@ -885,9 +915,68 @@ class TransformerBlock(nn.Module):
       <li>Fine-tune a pre-trained Transformer on a custom dataset</li>
     </ol>
 
-    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--color-border); display: flex; justify-content: space-between;">
+    <div class="chapter-navigation">
       <a href="/chapters/03-deep-learning" class="btn btn-secondary">← Previous: Deep Learning</a>
       <a href="/chapters/05-llms" class="btn btn-primary">Next: Large Language Models →</a>
     </div>
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

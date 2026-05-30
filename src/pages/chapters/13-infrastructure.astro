@@ -7,8 +7,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Model serving, inference optimization, quantization, and production deployment"
   currentPage="/chapters/13-infrastructure"
 >
-  <article>
+  <article class="chapter-content">
     <h1>Chapter 13: AI Infrastructure</h1>
+
+    <!-- REVIEW: This chapter contains many quantitative and cost/latency claims (e.g., $/hour ranges, throughput targets, “2-4x” improvements). Verify against current vendor pricing and official docs before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Infrastructure</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 13 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/12-tooling">Tooling &amp; Ecosystems</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/14-system-design">System Design</a></span>
+    </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
@@ -69,8 +87,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </table>
 
     <h3>vLLM Architecture</h3>
-    <div class=\"diagram-container\">
-      <pre class=\"mermaid\">
+    <div class="diagram-container">
+      <pre class="mermaid">
 graph TB
     A[Requests] --> B[Continuous Batching]
     B --> C[PagedAttention]
@@ -83,6 +101,17 @@ graph TB
     style E fill:#8b5cf6
     style G fill:#10b981
       </pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Explain the main production constraints for inference (latency, throughput, memory, cost)</li>
+        <li>Compare common serving stacks and where they fit (vLLM/TGI/Triton/TensorRT-LLM)</li>
+        <li>Describe how batching, KV caching, and scheduling impact performance</li>
+        <li>Summarize quantization approaches and practical trade-offs (INT8/INT4/NF4)</li>
+        <li>Identify cost levers (instance choice, spot, caching, model size) and when to use managed services</li>
+      </ul>
     </div>
 
     <h3>PagedAttention</h3>
@@ -277,8 +306,8 @@ Tools: Redis, Momento, GPTCache
       <li><strong>Hybrid:</strong> Combine multiple approaches</li>
     </ul>
 
-    <div class=\"diagram-container\">
-      <pre class=\"mermaid\">
+    <div class="diagram-container">
+      <pre class="mermaid">
 graph LR
     A[Input] --> B[\"GPU 1\
 (Layers 1-8)\"]
@@ -453,8 +482,8 @@ Optimizations:
 Total savings: 16x !
 </code></pre>
 
-    <div class=\"callout best-practice\">
-      <div class=\"callout-title\">✅ Infrastructure Best Practices</div>
+    <div class="callout best-practice">
+      <div class="callout-title">✅ Infrastructure Best Practices</div>
       <ul>
         <li><strong>Start Small:</strong> Use smallest model that meets requirements</li>
         <li><strong>Measure First:</strong> Profile before optimizing</li>
@@ -474,7 +503,8 @@ Total savings: 16x !
     </ul>
 
     <h2>Summary</h2>
-    <div class=\"callout info\">
+    <div class="callout success">
+      <div class="callout-title">✅ Key Takeaways</div>
       <ul>
         <li>vLLM's PagedAttention enables 2-4x higher throughput</li>
         <li>Quantization reduces model size 2-8x with minimal quality loss</li>
@@ -520,5 +550,69 @@ Total savings: 16x !
       </li>
     </ol>
 
+    <div class="chapter-navigation">
+      <a href="/chapters/12-tooling" class="btn btn-secondary">← Previous: Tooling &amp; Ecosystems</a>
+      <a href="/chapters/14-system-design" class="btn btn-primary">Next: System Design →</a>
+    </div>
+
   </article>
 </BaseLayout>
+
+<style>
+  .chapter-content {
+    line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .chapter-navigation {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+</style>

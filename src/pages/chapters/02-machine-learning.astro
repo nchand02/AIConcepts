@@ -9,15 +9,33 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 >
   <article class="chapter-content">
     <h1>Chapter 2: Machine Learning</h1>
+
+    <!-- REVIEW: This chapter includes time-bound and quantitative claims (benchmarks, accuracies, named models, and “2023–2025” landscape statements). Verify sources/citations before publication; do not adjust values without citations. -->
+
+    <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">→</span>
+      <span>Chapters</span>
+      <span aria-hidden="true">→</span>
+      <span aria-current="page">Machine Learning</span>
+    </nav>
+
+    <div class="chapter-meta">
+      <span class="chapter-progress">Chapter 2 of 15</span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-prereq">Prerequisite: <a href="/chapters/01-foundations">Foundations</a></span>
+      <span class="chapter-sep" aria-hidden="true">•</span>
+      <span class="chapter-next">Next: <a href="/chapters/03-deep-learning">Deep Learning</a></span>
+    </div>
     
     <div class="callout info">
-      <div class="callout-title">📚 What You'll Learn</div>
+      <div class="callout-title">📌 Learning objectives</div>
       <ul>
-        <li>Core machine learning paradigms and algorithms</li>
-        <li>Supervised learning: classification and regression</li>
-        <li>Unsupervised learning: clustering and dimensionality reduction</li>
-        <li>Reinforcement learning fundamentals</li>
-        <li>Model evaluation and validation techniques</li>
+        <li>Explain what ML is and how it differs from rule-based programming</li>
+        <li>Identify when to use supervised learning (classification vs. regression)</li>
+        <li>Describe how unsupervised learning finds structure (clustering, dimensionality reduction)</li>
+        <li>Summarize reinforcement learning as learning from action and reward feedback</li>
+        <li>Choose and interpret basic evaluation methods (splits, cross-validation, key metrics)</li>
       </ul>
     </div>
 
@@ -577,14 +595,11 @@ print(f"Mean: {{scores.mean():.3f}} (+/- {{scores.std() * 2:.3f}})")</code>`} />
     <div class="callout success">
       <div class="callout-title">✅ Key Takeaways</div>
       <ul>
-        <li>Machine learning enables systems to learn from data without explicit programming</li>
-        <li>Supervised learning requires labeled data; unsupervised finds patterns autonomously</li>
-        <li>Reinforcement learning optimizes sequential decision-making through trial and error</li>
-        <li><strong>Modern ML (2023-2025):</strong> Foundation models, self-supervised learning, and transfer learning dominate</li>
-        <li><strong>Transformers:</strong> Surpass traditional algorithms for NLP, vision (ViT >99% ImageNet), and multimodal tasks</li>
-        <li><strong>Deep RL:</strong> Powers AlphaZero game mastery, AlphaFold protein folding (2024 Nobel), RLHF for LLM alignment</li>
-        <li><strong>AutoML & Tools:</strong> PyTorch, TensorFlow, JAX, Hugging Face, XGBoost simplify modern ML workflows</li>
-        <li>Proper evaluation requires train-test splits, cross-validation, and task-appropriate metrics (accuracy, AUC-ROC, F1, RMSE)</li>
+        <li>ML systems learn patterns from data to improve performance on tasks.</li>
+        <li>Paradigms differ by feedback: supervised (labels), unsupervised (structure), and reinforcement learning (rewards).</li>
+        <li>Modern practice often builds on pretraining and reuse (e.g., transfer/self-supervised learning and foundation models).</li>
+        <li>Reliable evaluation depends on good splits (and/or cross-validation) and task-appropriate metrics.</li>
+        <li>Tooling ecosystems (classical ML + deep learning frameworks) make experimentation, training, and deployment practical.</li>
       </ul>
       <p><em>Source: Wikipedia Machine Learning & Deep Learning articles, November 2025</em></p>
     </div>
@@ -645,6 +660,44 @@ print(f"Mean: {{scores.mean():.3f}} (+/- {{scores.std() * 2:.3f}})")</code>`} />
 <style>
   .chapter-content {
     line-height: var(--line-height-relaxed);
+  }
+
+  .chapter-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin: var(--space-sm) 0 var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .chapter-meta a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .chapter-meta a:hover {
+    text-decoration: underline;
   }
   
   .chapter-navigation {
