@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 2 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/01-foundations">Foundations</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/01-foundations`}>Foundations</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/03-deep-learning">Deep Learning</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/03-deep-learning`}>Deep Learning</a></span>
     </div>
     
     <div class="callout info">
@@ -604,55 +605,35 @@ print(f"Mean: {{scores.mean():.3f}} (+/- {{scores.std() * 2:.3f}})")</code>`} />
       <p><em>Source: Wikipedia Machine Learning & Deep Learning articles, November 2025</em></p>
     </div>
 
-    <h2>Review Questions</h2>
+    <h2>Frequently Asked Questions</h2>
 
-    <div class="collapsible">
-      <div class="collapsible-header">
-        <span>❓ Test Your Understanding</span>
-        <span class="collapsible-icon">▼</span>
-      </div>
-      <div class="collapsible-content">
-        <ol>
-          <li>What's the difference between classification and regression?</li>
-          <li>When would you use unsupervised learning instead of supervised learning?</li>
-          <li>Explain the exploration-exploitation tradeoff in reinforcement learning.</li>
-          <li>Why is accuracy not always the best metric for classification?</li>
-          <li>What is the bias-variance tradeoff?</li>
-        </ol>
-      </div>
-    </div>
+    <h3>What is machine learning, in plain English?</h3>
+    <p>Machine learning is programming by example rather than by instruction. Instead of writing rules, you provide a system with labeled examples (e.g., spam emails and non-spam emails) and it learns patterns that generalize to new cases. The resulting model encodes those patterns as statistical weights rather than hand-written code.</p>
 
-    <h2>Practical Exercises</h2>
+    <h3>What is the difference between supervised, unsupervised, and reinforcement learning?</h3>
+    <p>Supervised learning trains on labeled examples (input → known output). Unsupervised learning finds patterns in unlabeled data — used for clustering, anomaly detection, and compression. Reinforcement learning trains an agent to maximize a reward signal through trial-and-error interaction with an environment — it powers game-playing AI and is a component of LLM alignment (RLHF).</p>
 
-    <div class="collapsible">
-      <div class="collapsible-header">
-        <span>💻 Hands-On Practice</span>
-        <span class="collapsible-icon">▼</span>
-      </div>
-      <div class="collapsible-content">
-        <ol>
-          <li>
-            <strong>Classification:</strong> Build a spam detector using logistic regression on email text features.
-          </li>
-          <li>
-            <strong>Regression:</strong> Predict house prices using multiple features (size, location, bedrooms).
-          </li>
-          <li>
-            <strong>Clustering:</strong> Segment customers based on purchasing behavior using k-means.
-          </li>
-          <li>
-            <strong>RL Agent:</strong> Implement a Q-learning agent to solve a simple grid-world navigation task.
-          </li>
-          <li>
-            <strong>Model Comparison:</strong> Compare decision trees, random forests, and SVM on a benchmark dataset.
-          </li>
-        </ol>
-      </div>
-    </div>
+    <h3>What does it mean for a model to "overfit"?</h3>
+    <p>An overfitted model memorizes training data rather than learning general patterns. It performs well in testing but poorly on new data. Common signs: a large gap between training accuracy and validation accuracy. Fixes include more training data, regularization, simpler models, or dropout. This is one of the most common failure modes when shipping ML to production.</p>
+
+    <h3>When does machine learning add value vs. when are simpler rules better?</h3>
+    <p>ML earns its complexity when patterns are too numerous or subtle to specify manually — spam detection, fraud scoring, image recognition. Rules are better when logic is well-defined, edge cases are known, and explainability is critical. Many production systems use a hybrid: rules for high-confidence cases, ML for ambiguous ones.</p>
+
+    <h3>What is cross-validation and why does it matter?</h3>
+    <p>Cross-validation estimates how well a model will generalize to unseen data. It splits data into multiple folds, trains on some and tests on others repeatedly. It matters because a single train/test split can be misleading — results depend on which examples land in each set. Cross-validation gives a more reliable quality signal before committing to a model in production.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
+
+    <ol>
+      <li>Your team is proposing ML to replace a deterministic rule-based process. What criteria would you use to decide whether ML's added complexity and ongoing maintenance cost is justified?</li>
+      <li>A model shows 97% accuracy in testing but performs poorly in production. What are the most likely root causes, and how would you structure an investigation?</li>
+      <li>Your data science team says they need more labeled data to improve model performance. What questions would you ask before approving additional data labeling budget?</li>
+      <li>How do you balance model interpretability against model performance when the application involves consequential decisions — such as credit, hiring, or medical triage?</li>
+    </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/01-foundations" class="btn btn-secondary">← Foundations</a>
-      <a href="/chapters/03-deep-learning" class="btn btn-primary">Next: Deep Learning →</a>
+      <a href={`${base}/chapters/01-foundations`} class="btn btn-secondary">← Foundations</a>
+      <a href={`${base}/chapters/03-deep-learning`} class="btn btn-primary">Next: Deep Learning →</a>
     </div>
   </article>
 </BaseLayout>

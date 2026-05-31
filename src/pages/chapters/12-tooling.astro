@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 12 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/11-agents">Agents</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/11-agents`}>Agents</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/13-infrastructure">Infrastructure</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/13-infrastructure`}>Infrastructure</a></span>
     </div>
     
     <div class="callout info">
@@ -447,44 +448,35 @@ collection.query(query_texts=["AI agents"], n_results=5)
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
-    <ol>
-      <li>When would you choose LangChain over LlamaIndex and vice versa?</li>
-      <li>What are the key components of a LangChain application?</li>
-      <li>How does the Hugging Face Transformers library simplify model usage?</li>
-      <li>Why is prompt management important for production applications?</li>
-      <li>Compare different LLM evaluation approaches and their trade-offs.</li>
-      <li>What considerations should guide your choice of vector database?</li>
-    </ol>
+    <h2>Frequently Asked Questions</h2>
 
-    <h2>Practical Exercises</h2>
+    <h3>Do I need LangChain or LlamaIndex to build AI applications?</h3>
+    <p>No. Both are convenience frameworks that reduce boilerplate, but you can call LLM APIs, vector databases, and retrieval pipelines directly. LangChain and LlamaIndex add value when you need abstractions that work across multiple LLMs or data sources, but they also add complexity and dependency risk. Simpler applications often benefit from thinner wrappers or direct API calls rather than adopting a full framework.</p>
+
+    <h3>How should I choose between open-source frameworks and managed cloud AI services?</h3>
+    <p>Managed services (Azure OpenAI, AWS Bedrock, Google Vertex AI) offer faster time-to-value, built-in security controls, and SLA guarantees, but create vendor dependency and limit customization. Open-source frameworks give flexibility and cost control at the expense of operational burden. Many organizations start managed, then selectively self-host as usage and expertise grow.</p>
+
+    <h3>What is prompt management and why does it matter at scale?</h3>
+    <p>Prompt management means treating prompt templates like code: versioning them, testing changes, and tracking which version produced which output in production. At scale — thousands of daily LLM calls — an untracked prompt change can silently degrade quality across the entire system. Tools like LangSmith, LangFuse, and PromptLayer provide the versioning and observability layer that production systems need.</p>
+
+    <h3>How do I measure the quality of my LLM application?</h3>
+    <p>The standard approach combines automated metrics (RAGAS for RAG pipelines, faithfulness scores, answer relevancy) with human evaluation on a golden test set. For production, track: task completion rate, hallucination rate (spot-checked), user feedback signals, and latency. No single metric captures quality fully — define success metrics before you build, not after deployment reveals problems.</p>
+
+    <h3>When do I need a dedicated LLM observability tool vs. standard application monitoring?</h3>
+    <p>Standard APM tools (Datadog, New Relic) handle latency and error rates but can't capture LLM-specific signals: prompt/response pairs, token usage per call, model version drift, or quality regressions. You need an LLM observability tool (LangSmith, LangFuse, Helicone) once you have more than a handful of LLM calls in production and need to debug quality issues systematically.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
+
     <ol>
-      <li><strong>Build with LangChain:</strong>
-        <ul>
-          <li>Create RAG chain with memory and chat history</li>
-          <li>Implement ReAct agent with custom tools</li>
-          <li>Add LangSmith tracing and analyze performance</li>
-        </ul>
-      </li>
-      <li><strong>Hugging Face Workflow:</strong>
-        <ul>
-          <li>Fine-tune model from Hub on custom dataset</li>
-          <li>Deploy model to Hugging Face Space</li>
-          <li>Create Gradio interface for inference</li>
-        </ul>
-      </li>
-      <li><strong>Evaluation Pipeline:</strong>
-        <ul>
-          <li>Set up RAGAS for RAG evaluation</li>
-          <li>Create test dataset with golden answers</li>
-          <li>Compare different retrieval strategies with metrics</li>
-        </ul>
-      </li>
+      <li>The AI tooling landscape is fragmented and changing rapidly. How do you decide which frameworks to standardize on, and what criteria would prevent you from adopting a tool that might require a costly rebuild 12–18 months from now?</li>
+      <li>Open-source frameworks like LangChain provide flexibility but require your team to maintain integration code as the framework evolves. How do you weigh this operational overhead against the control they provide?</li>
+      <li>Evaluation is often the least-invested part of LLM application development. What minimum quality gates — automated tests, human review thresholds, production monitoring — would you require before an LLM feature ships?</li>
+      <li>Your team has built an internal AI application using a specific framework that releases a major breaking version. How do you manage framework dependency risk in AI project planning and procurement decisions?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/11-agents" class="btn btn-secondary">← Previous: Agents</a>
-      <a href="/chapters/13-infrastructure" class="btn btn-primary">Next: Infrastructure →</a>
+      <a href={`${base}/chapters/11-agents`} class="btn btn-secondary">← Previous: Agents</a>
+      <a href={`${base}/chapters/13-infrastructure`} class="btn btn-primary">Next: Infrastructure →</a>
     </div>
 
   </article>

@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
   title="Chapter 7: Embeddings & Vector Databases" 
-  description="Understanding embeddings, semantic search, and vector databases like Pinecone and Weaviate"
+  description="How embeddings capture semantic meaning, how vector databases enable similarity search, and practical guidance for technical leaders on applying them in production."
   currentPage="/chapters/07-embeddings"
 >
   <article class="chapter-content">
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 7 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/05-llms">Large Language Models</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/05-llms`}>Large Language Models</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/08-rag">RAG Systems</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/08-rag`}>RAG Systems</a></span>
     </div>
     
     <div class="callout info">
@@ -470,44 +471,34 @@ Where α ∈ [0, 1] controls the balance
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
-    <ol>
-      <li>What advantages do embeddings have over one-hot encoding?</li>
-      <li>How do contextualized embeddings (BERT) differ from static embeddings (Word2Vec)?</li>
-      <li>When would you use cosine similarity vs Euclidean distance?</li>
-      <li>Why is approximate nearest neighbor search necessary for large-scale vector search?</li>
-      <li>Explain how CLIP enables cross-modal search between text and images.</li>
-      <li>What is hybrid search and why is it useful?</li>
-    </ol>
+    <h2>Frequently Asked Questions</h2>
 
-    <h2>Practical Exercises</h2>
+    <h3>What is an embedding, in plain English?</h3>
+    <p>An embedding is a list of numbers (a vector) that represents the meaning of a piece of text, image, or other data. Items with similar meaning end up with similar vectors — which means a computer can compare meaning numerically, not just by matching exact words.</p>
+
+    <h3>Why do I need a vector database? Can’t I use a regular database?</h3>
+    <p>Regular databases search by exact values or keywords. A vector database searches by similarity — finding the documents closest in meaning to your query. This powers semantic search, RAG pipelines, and recommendation engines. For small corpora, simpler in-memory tools work; a dedicated vector database earns its place when you need scale, persistence, or filtered similarity search.</p>
+
+    <h3>What is semantic search and how does it differ from keyword search?</h3>
+    <p>Keyword search matches exact words. Semantic search matches meaning. If a user searches “can’t log in,” keyword search misses documents about “authentication failure.” Semantic search, powered by embeddings, finds conceptually related content regardless of exact wording.</p>
+
+    <h3>Which embedding model should I use for a new project?</h3>
+    <p>For most English text use cases, a sentence transformer model is a solid starting point. For higher quality, API-based embedding models from OpenAI or Cohere are widely used. For multilingual or cross-modal retrieval, use models specifically trained for those tasks. Start small, measure retrieval quality, then upgrade if needed. <!-- REVIEW: model recommendations change frequently; verify current benchmarks --></p>
+
+    <h3>When does approximate nearest neighbor (ANN) search matter?</h3>
+    <p>Exact search checks every vector, which is too slow at scale. ANN indexes (like HNSW, used by most vector databases) find the closest vectors quickly by trading a small amount of precision for speed. ANN becomes necessary once your corpus exceeds tens of thousands of documents. Most vector databases handle this automatically.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
     <ol>
-      <li><strong>Generate Embeddings:</strong>
-        <ul>
-          <li>Use Sentence Transformers to embed a corpus of documents</li>
-          <li>Visualize embeddings in 2D using t-SNE or UMAP</li>
-          <li>Analyze clustering of similar documents</li>
-        </ul>
-      </li>
-      <li><strong>Build Semantic Search:</strong>
-        <ul>
-          <li>Index documents in Chroma or Qdrant</li>
-          <li>Implement query embedding and similarity search</li>
-          <li>Compare semantic vs keyword search results</li>
-        </ul>
-      </li>
-      <li><strong>CLIP Exploration:</strong>
-        <ul>
-          <li>Load CLIP model and embed images and text</li>
-          <li>Build image search with text queries</li>
-          <li>Implement zero-shot image classification</li>
-        </ul>
-      </li>
+      <li>A team proposes building a semantic search feature over your internal documentation. What questions would you ask before approving — about data quality, access controls, embedding model choice, and ongoing maintenance?</li>
+      <li>Your product uses keyword search today. A colleague argues that switching to semantic search will improve user satisfaction. How would you structure a decision framework and success metrics to evaluate this change?</li>
+      <li>You are selecting a vector database for a production RAG system. What factors beyond query speed would you consider — cost, data residency, licensing, operational complexity, and vendor support?</li>
+      <li>Embeddings from one model are not directly comparable to those from a different model. What does this mean for system migrations and long-term maintenance planning?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/06-generative-ai" class="btn btn-secondary">← Previous: Generative AI</a>
-      <a href="/chapters/08-rag" class="btn btn-primary">Next: RAG Systems →</a>
+      <a href={`${base}/chapters/06-generative-ai`} class="btn btn-secondary">← Previous: Generative AI</a>
+      <a href={`${base}/chapters/08-rag`} class="btn btn-primary">Next: RAG Systems →</a>
     </div>
 
   </article>

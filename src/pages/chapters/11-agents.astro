@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 11 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/10-multimodal">Multimodal AI</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/10-multimodal`}>Multimodal AI</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/12-tooling">Tooling &amp; Ecosystems</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/12-tooling`}>Tooling &amp; Ecosystems</a></span>
     </div>
     
     <div class="callout info">
@@ -521,44 +522,35 @@ async def call_tool(name: str, arguments: dict):
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
-    <ol>
-      <li>What are the key components of the agent loop?</li>
-      <li>How does ReAct improve upon standard prompting?</li>
-      <li>Explain the difference between short-term and long-term memory in agents.</li>
-      <li>What is the Model Context Protocol (MCP) and what problems does it solve?</li>
-      <li>Describe three communication patterns in multi-agent systems.</li>
-      <li>What are the main safety concerns with autonomous agents?</li>
-    </ol>
+    <h2>Frequently Asked Questions</h2>
 
-    <h2>Practical Exercises</h2>
+    <h3>What is an AI agent and how is it different from a chatbot?</h3>
+    <p>A chatbot responds to a single message within a conversation. An AI agent runs a loop: it receives a goal, decides on actions, uses tools (web search, code execution, APIs), observes results, and repeats until the goal is met — all autonomously. Agents can take dozens of steps and call multiple external systems to complete a task. This autonomy is both their power and their primary risk.</p>
+
+    <h3>What is the ReAct pattern and why does it matter?</h3>
+    <p>ReAct (Reasoning + Acting) is a prompting pattern where the model alternates between reasoning about what to do next and taking an action — "Thought: I need to check the price. Action: search('product price'). Observation: $49.99. Thought: Now I can compare…" This chain dramatically improves reliability over single-shot generation. Most production agent frameworks (LangGraph, CrewAI, AutoGen) implement variations of ReAct.</p>
+
+    <h3>What is the Model Context Protocol (MCP) and why is the industry converging on it?</h3>
+    <p>MCP is an open standard (introduced by Anthropic in late 2024) that defines how AI models connect to tools and data sources. Before MCP, every framework had its own tool-integration format, creating a fragmented ecosystem. MCP provides a common interface — like USB for AI tools — so any MCP-compatible model can use any MCP-compatible tool without custom integration code. Adoption has grown rapidly across major AI providers and IDE tooling.</p>
+
+    <h3>How autonomous should AI agents be in enterprise applications?</h3>
+    <p>Most production deployments use a "human-in-the-loop" model where the agent completes research and drafts actions, but a human approves anything irreversible (sending emails, executing financial transactions, deleting data). The right autonomy level depends on the cost of mistakes vs. the benefit of speed. Start conservative: automate reads before writes, low-stakes tasks before high-stakes ones, and increase autonomy only after reliability is demonstrated.</p>
+
+    <h3>What are the main failure modes of production AI agents?</h3>
+    <p>The most common are: tool call failures (the model calls an API incorrectly or misinterprets results), infinite loops (the agent keeps retrying a failing step), hallucinated tool outputs (the model assumes what an API returned rather than parsing it), and prompt injection (malicious content in retrieved data that hijacks agent behavior). Robust agents need retry logic, loop detection, output validation, and input sanitization.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
+
     <ol>
-      <li><strong>Build ReAct Agent:</strong>
-        <ul>
-          <li>Implement ReAct loop with search and calculator tools</li>
-          <li>Test on multi-step reasoning problems</li>
-          <li>Add error handling and retries</li>
-        </ul>
-      </li>
-      <li><strong>Function Calling:</strong>
-        <ul>
-          <li>Define tools for weather, calendar, email</li>
-          <li>Build agent that routes to appropriate tool</li>
-          <li>Implement parallel tool calling for efficiency</li>
-        </ul>
-      </li>
-      <li><strong>Multi-Agent System:</strong>
-        <ul>
-          <li>Create researcher, analyst, and writer agents</li>
-          <li>Implement communication protocol between agents</li>
-          <li>Build collaborative report generation pipeline</li>
-        </ul>
-      </li>
+      <li>AI agents can take real-world actions — calling APIs, writing code, sending emails — with limited human oversight. Where would you draw the line on autonomous action authority for agents in your organization, and how would you define and enforce those boundaries?</li>
+      <li>Multi-agent systems can accomplish complex tasks but are harder to debug and audit than single models. What observability and logging requirements would you establish before deploying a multi-agent workflow to production?</li>
+      <li>Agents rely on tool integrations that may access sensitive internal data and external systems. What security review process — including prompt injection testing — would you require before connecting an agent to production systems?</li>
+      <li>The agent ecosystem is evolving rapidly, with MCP and competing protocols emerging as standards. How do you build agent infrastructure today in a way that avoids expensive vendor lock-in?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/10-multimodal" class="btn btn-secondary">← Previous: Multimodal AI</a>
-      <a href="/chapters/12-tooling" class="btn btn-primary">Next: Tooling &amp; Ecosystems →</a>
+      <a href={`${base}/chapters/10-multimodal`} class="btn btn-secondary">← Previous: Multimodal AI</a>
+      <a href={`${base}/chapters/12-tooling`} class="btn btn-primary">Next: Tooling &amp; Ecosystems →</a>
     </div>
 
   </article>

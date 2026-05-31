@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -9,6 +10,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 >
   <article class="chapter-content">
     <h1>Chapter 14: System Design for AI</h1>
+
+    <!-- REVIEW: This chapter contains specific performance targets, latency thresholds, and scaling metrics. Verify against current platform capabilities before publication; do not adjust values without citations. -->
 
     <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a>
@@ -21,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 14 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/13-infrastructure">AI Infrastructure</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/13-infrastructure`}>AI Infrastructure</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/15-glossary">AI/ML Glossary</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/15-glossary`}>AI/ML Glossary</a></span>
     </div>
     
     <div class="callout info">
@@ -589,44 +592,35 @@ Challenges:
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
-    <ol>
-      <li>Compare microservices and monolithic architectures for AI applications.</li>
-      <li>Why is streaming important for LLM APIs and how is it implemented?</li>
-      <li>Describe a multi-layer caching strategy and its benefits.</li>
-      <li>What are the three pillars of observability and why is each important?</li>
-      <li>How can you protect AI systems from prompt injection attacks?</li>
-      <li>Explain the difference between horizontal and vertical scaling.</li>
-    </ol>
+    <h2>Frequently Asked Questions</h2>
 
-    <h2>Practical Exercises</h2>
+    <h3>What is the most important system design decision for an AI application?</h3>
+    <p>The most consequential early decision is where AI sits in the system boundary — is it a component that informs a deterministic workflow, or is it the primary decision-maker? The former is safer and easier to test; the latter is more capable but harder to make reliable. Define what happens when the model fails or produces unexpected output before designing the happy path.</p>
+
+    <h3>How do I protect my AI application from prompt injection attacks?</h3>
+    <p>Prompt injection occurs when malicious content in user input or retrieved documents hijacks the model's instructions. Mitigations include: separating system instructions from user content in the prompt structure, sanitizing and validating retrieved context before injection, using privilege-separated architectures (the model can read but not act without a separate authorization step), and validating outputs before any irreversible action. See <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" rel="noopener noreferrer">OWASP's LLM Top 10</a> for a comprehensive treatment.</p>
+
+    <h3>What are the essential observability metrics for an LLM API in production?</h3>
+    <p>Beyond standard metrics (p50/p95/p99 latency, error rate, availability), AI systems need: token usage per request (cost tracking), model version in use (to detect silent regressions after updates), input/output logging with a retention and access policy, cache hit rate (cost efficiency signal), and a quality sample — a random subset of requests reviewed by humans or evaluated by a judge model each day.</p>
+
+    <h3>Should I build AI features as a microservice or in my existing application?</h3>
+    <p>A separate AI service makes sense when: the AI component has different scaling characteristics than the rest of the app (LLM inference is expensive; you want to scale it independently), multiple services need to share the same AI capability, or you want to swap models without touching the main application. For simple, single-application use cases, starting embedded and extracting to a service later reduces initial complexity.</p>
+
+    <h3>What is semantic caching and when does it significantly reduce costs?</h3>
+    <p>Semantic caching stores past LLM responses indexed by embedding similarity rather than exact text match. When a new question is semantically close to a cached one, the cached response is returned without an LLM call. It's most effective for applications with repetitive, query-like workloads (internal knowledge bases, FAQ bots) where many users ask similar questions. It's less effective for creative or highly personalized tasks where responses should vary.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
+
     <ol>
-      <li><strong>Build API Gateway:</strong>
-        <ul>
-          <li>Implement rate limiting with Redis</li>
-          <li>Add API key authentication</li>
-          <li>Set up request logging and metrics</li>
-        </ul>
-      </li>
-      <li><strong>Caching Layer:</strong>
-        <ul>
-          <li>Implement semantic cache with embeddings</li>
-          <li>Add exact match cache with Redis</li>
-          <li>Measure cache hit rates and cost savings</li>
-        </ul>
-      </li>
-      <li><strong>Observability Stack:</strong>
-        <ul>
-          <li>Set up distributed tracing with OpenTelemetry</li>
-          <li>Create dashboards in Grafana</li>
-          <li>Configure alerts for key metrics</li>
-        </ul>
-      </li>
+      <li>A team is about to launch an AI feature to one million users. What architecture review criteria would you require before approving the release — covering availability, cost at scale, graceful degradation, and data handling?</li>
+      <li>Prompt injection is a significant attack vector for AI systems connected to sensitive data or capable of taking actions. How would you incorporate AI-specific threats into your existing security review and threat modeling process?</li>
+      <li>LLM latency and cost are often inversely related — faster responses require more expensive infrastructure. How would you set priorities among latency, quality, and cost-per-request for different tiers of your application?</li>
+      <li>AI systems require monitoring beyond traditional application metrics. What AI-specific observability requirements — quality sampling, model drift detection, cost anomaly alerting — would you add to your engineering standards?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/13-infrastructure" class="btn btn-secondary">← Previous: AI Infrastructure</a>
-      <a href="/chapters/15-glossary" class="btn btn-primary">Next: AI/ML Glossary →</a>
+      <a href={`${base}/chapters/13-infrastructure`} class="btn btn-secondary">← Previous: AI Infrastructure</a>
+      <a href={`${base}/chapters/15-glossary`} class="btn btn-primary">Next: AI/ML Glossary →</a>
     </div>
 
   </article>

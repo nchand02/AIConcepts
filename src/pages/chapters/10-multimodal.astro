@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
   title="Chapter 10: Multimodal AI" 
-  description="Vision-language models, GPT-4V, CLIP, and AI systems that understand multiple modalities"
+  description="How AI systems understand images, audio, and video alongside text — covering CLIP, vision-language models like GPT-4o and Gemini 2.5, and practical choices for technical leaders"
   currentPage="/chapters/10-multimodal"
 >
   <article class="chapter-content">
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 10 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/09-fine-tuning">Fine-Tuning &amp; PEFT</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/09-fine-tuning`}>Fine-Tuning &amp; PEFT</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/11-agents">Agents</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/11-agents`}>Agents</a></span>
     </div>
     
     <div class="callout info">
@@ -167,29 +168,29 @@ Result: Zero-shot classification, image search
       </thead>
       <tbody>
         <tr>
-          <td><strong>GPT-4V</strong></td>
+          <td><strong>GPT-4o</strong></td>
           <td>OpenAI</td>
-          <td>Strong reasoning, multiple images</td>
+          <td>Native multimodal (text, image, audio), 128K context; replaces GPT-4V</td>
         </tr>
         <tr>
-          <td><strong>Gemini Vision</strong></td>
+          <td><strong>Gemini 2.5 Pro</strong></td>
           <td>Google</td>
-          <td>Native multimodal, video understanding</td>
+          <td>Native multimodal, 1M+ token context, strong video understanding</td>
         </tr>
         <tr>
-          <td><strong>Claude 3</strong></td>
+          <td><strong>Claude 4</strong></td>
           <td>Anthropic</td>
-          <td>High accuracy, long context</td>
+          <td>Strong visual reasoning, long context, document analysis</td>
         </tr>
         <tr>
-          <td><strong>LLaVA</strong></td>
-          <td>Open-source</td>
-          <td>Instruction-following, efficient</td>
+          <td><strong>Llama 3.2 Vision</strong></td>
+          <td>Meta (open-weight)</td>
+          <td>11B and 90B vision models, commercially usable</td>
         </tr>
         <tr>
-          <td><strong>Qwen-VL</strong></td>
+          <td><strong>Qwen2.5-VL</strong></td>
           <td>Alibaba</td>
-          <td>Multilingual, grounding</td>
+          <td>Strong open-source VLM, multilingual, document OCR, grounding</td>
         </tr>
       </tbody>
     </table>
@@ -229,7 +230,7 @@ Evaluation Metrics:
     <h3>Optical Character Recognition (OCR)</h3>
     <ul>
       <li><strong>Traditional OCR:</strong> Tesseract, specialized models</li>
-      <li><strong>VLM OCR:</strong> GPT-4V, Gemini can read text in images</li>
+      <li><strong>VLM OCR:</strong> GPT-4o, Gemini 2.5 Pro can read text in images</li>
       <li><strong>Document Understanding:</strong> Parse receipts, forms, invoices</li>
     </ul>
 
@@ -248,9 +249,10 @@ Methods:
 
     <h3>Video LLMs</h3>
     <ul>
-      <li><strong>Gemini 1.5:</strong> Native video understanding, 1M token context</li>
-      <li><strong>Video-LLaMA:</strong> Open-source video Q&A</li>
-      <li><strong>Video-ChatGPT:</strong> Spatio-temporal reasoning</li>
+      <li><strong>Gemini 2.5 Pro / 2.0 Flash:</strong> Native video understanding, 1M+ token context, current Google frontier</li>
+      <li><strong>GPT-4o:</strong> Video frame analysis via the vision API</li>
+      <li><strong>Llama 3.2 Vision:</strong> Open-weight visual reasoning; can process video frames</li>
+      <li><strong>Video-LLaMA / LLaVA-NeXT-Video:</strong> Open-source video Q&amp;A models</li>
     </ul>
 
     <h3>Video Tasks</h3>
@@ -376,10 +378,10 @@ Examples: LLaVA-Instruct, ShareGPT4V
     <h2>Building Multimodal Applications</h2>
 
     <h3>Using Vision APIs</h3>
-    <pre><code>{`OpenAI GPT-4V Example:
+    <pre><code>{`OpenAI GPT-4o Example (note: gpt-4-vision-preview is deprecated):
 
 response = client.chat.completions.create(
-  model="gpt-4-vision-preview",
+  model="gpt-4o",
   messages=[{
     "role": "user",
     "content": [
@@ -435,44 +437,17 @@ output = model.generate(**inputs)
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
+    <h2>Reflection Questions for Technical Leaders</h2>
     <ol>
-      <li>How does CLIP achieve zero-shot image classification?</li>
-      <li>Explain the architecture of a typical VLM (vision-language model).</li>
-      <li>What are the main challenges in video understanding compared to single images?</li>
-      <li>Describe three different methods for aligning vision and language modalities.</li>
-      <li>What metrics are used to evaluate image captioning quality?</li>
-      <li>How do audio-visual models improve speech recognition?</li>
-    </ol>
-
-    <h2>Practical Exercises</h2>
-    <ol>
-      <li><strong>CLIP Exploration:</strong>
-        <ul>
-          <li>Use OpenCLIP to embed images and text</li>
-          <li>Build zero-shot image classifier with custom labels</li>
-          <li>Implement image search with text queries</li>
-        </ul>
-      </li>
-      <li><strong>VLM Application:</strong>
-        <ul>
-          <li>Use GPT-4V or LLaVA for visual question answering</li>
-          <li>Build document OCR and extraction system</li>
-          <li>Create image captioning pipeline with quality metrics</li>
-        </ul>
-      </li>
-      <li><strong>Video Analysis:</strong>
-        <ul>
-          <li>Extract key frames from video</li>
-          <li>Use VLM to caption each frame</li>
-          <li>Generate video summary from frame captions</li>
-        </ul>
-      </li>
+      <li>Your team is building a feature to understand user-submitted photos. What criteria would you use to choose between GPT-4o, Gemini 2.5 Pro, and an open-weight model like Llama 3.2 Vision?</li>
+      <li>A product proposal involves extracting structured data from scanned documents using a VLM. What accuracy, cost, latency, and privacy considerations would you raise before approving this approach?</li>
+      <li>You are evaluating whether to add audio transcription and image captioning to your product. How would you structure the make-vs-buy decision for each modality separately?</li>
+      <li>Multimodal AI raises privacy concerns that text-only AI does not. What guardrails and policies would you put in place before deploying a feature that processes user images or audio recordings?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/09-fine-tuning" class="btn btn-secondary">← Previous: Fine-Tuning &amp; PEFT</a>
-      <a href="/chapters/11-agents" class="btn btn-primary">Next: Agents →</a>
+      <a href={`${base}/chapters/09-fine-tuning`} class="btn btn-secondary">← Previous: Fine-Tuning &amp; PEFT</a>
+      <a href={`${base}/chapters/11-agents`} class="btn btn-primary">Next: Agents →</a>
     </div>
 
   </article>

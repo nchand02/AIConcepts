@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
   title="Chapter 5: Large Language Models" 
-  description="Comprehensive guide to Large Language Models, their architecture, training, and capabilities"
+  description="How Large Language Models work — architecture, training, scaling laws, and current capabilities — explained for technical leaders and engineering managers"
   currentPage="/chapters/05-llms"
 >
   <article class="chapter-content">
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 5 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/04-transformers">Transformers</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/04-transformers`}>Transformers</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/06-generative-ai">Generative AI</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/06-generative-ai`}>Generative AI</a></span>
     </div>
     
     <div class="callout info">
@@ -45,11 +46,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <div class="callout info">
-      <div class="callout-title">🌟 The LLM Revolution (2020-2025)</div>
+      <div class="callout-title">🌟 The LLM Revolution (2020–2026)</div>
       <p>The release of <strong>GPT-3 in May 2020</strong> (175B parameters, trained on 300B tokens, $4.6M estimated training cost) marked a watershed moment, demonstrating that massive scale enables <em>few-shot learning</em>—adapting to new tasks with just 3-5 examples in the prompt, no gradient updates required. This capability appeared suddenly around 13B parameters (GPT-2 1.5B couldn't, GPT-3 175B could), exemplifying <strong>emergent abilities</strong> that arise unpredictably at sufficient scale.</p>
       <p><strong>ChatGPT</strong> (November 2022) brought LLMs to mainstream consciousness with 100M users in 2 months, the fastest-growing consumer application in history. Built from GPT-3.5 fine-tuned with <em>Reinforcement Learning from Human Feedback (RLHF)</em>, it demonstrated how alignment techniques make models helpful, harmless, and honest. RLHF (introduced by Christiano et al. 2017, refined by OpenAI in InstructGPT 2022) uses human preference rankings to train a reward model, then optimizes the LLM via Proximal Policy Optimization (PPO) to maximize this reward while staying close to the supervised fine-tuned baseline.</p>
-      <p>By 2023-2025, the field exploded: <strong>GPT-4</strong> (March 2023, estimated ~1.7T parameters mixture of experts, multimodal text+images, 32K-128K context, 90th percentile bar exam, 86% MMLU benchmark), <strong>Claude 3</strong> (March 2024, 200K context window, constitutional AI self-critiques using ethical principles), <strong>Llama 3</strong> (April 2024, 70B/405B open-weight models trained on 15T tokens, democratizing access with Apache 2.0 license), <strong>Gemini 1.5 Pro</strong> (February 2024, 1 million token context processing entire codebases/books), and reasoning models like <strong>OpenAI o1</strong> (September 2024, generates internal chain-of-thought before answering, 83% on International Math Olympiad qualifying vs. 13% for GPT-4o). The <strong>Chinchilla scaling laws</strong> (Hoffmann et al., DeepMind, March 2022) revealed most models were undertrained—optimal training requires D_opt ≈ 20×N parameters worth of tokens (e.g., 70B params needs 1.4T tokens, not 300B)—reshaping research toward compute-efficient training over pure parameter scaling.</p>
-      <p><a href="https://en.wikipedia.org/wiki/Large_language_model" target="_blank">Wikipedia: Large language models</a> | <a href="https://en.wikipedia.org/wiki/GPT-3" target="_blank">Wikipedia: GPT-3</a> | <a href="https://en.wikipedia.org/wiki/ChatGPT" target="_blank">Wikipedia: ChatGPT</a> | <a href="https://en.wikipedia.org/wiki/Chinchilla_AI" target="_blank">Wikipedia: Chinchilla scaling</a></p>
+      <p>By 2023–2024, the field expanded rapidly: <strong>GPT-4</strong> (March 2023, <!-- REVIEW: ~1.7T parameter MoE estimate is widely cited but unconfirmed by OpenAI -->multimodal text+images, 32K-128K context), <strong>GPT-4o</strong> (May 2024, native text-image-audio integration, 128K context, faster and cheaper than GPT-4), <strong>Claude 3</strong> (March 2024, 200K context, constitutional AI), <strong>Llama 3</strong> (April 2024, 70B/405B open-weight models, Apache 2.0 license), <strong>Gemini 1.5 Pro</strong> (February 2024, 1 million token context), and reasoning models starting with <strong>OpenAI o1</strong> (September 2024, generates extended internal reasoning before answering, <!-- REVIEW: verify specific benchmark percentages for o1 -->strong improvement on math and coding benchmarks). The <strong>Chinchilla scaling laws</strong> (Hoffmann et al., DeepMind, March 2022) revealed most models were undertrained—optimal training requires roughly 20× the parameter count in tokens—reshaping research toward compute-efficient training over pure parameter scaling.</p>
+      <p>By 2025–2026, the frontier advanced on multiple fronts: <strong>DeepSeek-R1</strong> (January 2025) demonstrated open-weight reasoning competitive with closed-source models, reshaping the competitive landscape. <strong>Gemini 2.5 Pro</strong> (March 2025) extended context to over 1M tokens with a built-in thinking mode. <strong>OpenAI o3</strong> (April 2025) pushed the reasoning model family further. <strong>Llama 4</strong> (April 2025) continued Meta's open-weight strategy with native multimodal support. <strong>Claude 3.7 Sonnet</strong> (February 2025) introduced extended thinking; <strong>Claude Sonnet 4</strong> (May 2026) is Anthropic's current flagship. As of mid-2026, practitioners choose between capable open-weight models, context windows exceeding 1M tokens, and reasoning-specialized variants alongside general-purpose systems.</p>
+      <p><a href="https://en.wikipedia.org/wiki/Large_language_model" target="_blank" rel="noopener noreferrer">Wikipedia: Large language models</a> | <a href="https://en.wikipedia.org/wiki/GPT-3" target="_blank" rel="noopener noreferrer">Wikipedia: GPT-3</a> | <a href="https://en.wikipedia.org/wiki/ChatGPT" target="_blank" rel="noopener noreferrer">Wikipedia: ChatGPT</a> | <a href="https://en.wikipedia.org/wiki/Chinchilla_AI" target="_blank" rel="noopener noreferrer">Wikipedia: Chinchilla scaling</a></p>
     </div>
 
     <h2>What are Large Language Models?</h2>
@@ -136,6 +138,42 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <td>70B/405B</td>
           <td>Open weights, excellent performance</td>
         </tr>
+        <tr>
+          <td><strong>GPT-4o</strong></td>
+          <td>2024</td>
+          <td>Undisclosed</td>
+          <td>Native text-image-audio, 128K context, replaces GPT-4 as primary API model</td>
+        </tr>
+        <tr>
+          <td><strong>o1</strong></td>
+          <td>2024</td>
+          <td>Undisclosed</td>
+          <td>Chain-of-thought reasoning model; strong on math &amp; coding</td>
+        </tr>
+        <tr>
+          <td><strong>DeepSeek-R1</strong></td>
+          <td>2025</td>
+          <td>671B (MoE)</td>
+          <td>Open-weight reasoning model competitive with closed-source o1</td>
+        </tr>
+        <tr>
+          <td><strong>Gemini 2.5 Pro</strong></td>
+          <td>2025</td>
+          <td>Undisclosed</td>
+          <td>1M+ token context, built-in thinking mode, strong coding</td>
+        </tr>
+        <tr>
+          <td><strong>Llama 4</strong></td>
+          <td>2025</td>
+          <td>Scout/Maverick (MoE)</td>
+          <td>Open-weight, native multimodal, mixture-of-experts architecture</td>
+        </tr>
+        <tr>
+          <td><strong>Claude Sonnet 4</strong></td>
+          <td>2026</td>
+          <td>Undisclosed</td>
+          <td>Current Anthropic flagship; strong coding, reasoning, and safety</td>
+        </tr>
       </tbody>
     </table>
 
@@ -216,7 +254,7 @@ Cost: $2M - $100M+ per training run</code>`} />
       <p><strong>Training infrastructure:</strong> Hypothetical single GPU training would require ~355 years and cost $4.6M (Lambdalabs 2020 estimate). Actual training used thousands of GPUs in parallel, completing in weeks. Model uses 175B parameters with 16-bit precision (float16), requiring 350GB storage (2 bytes × 175B). Context window: 2,048 tokens (~1,500 words), limiting long-document understanding.</p>
       <p><strong>Key finding:</strong> GPT-3 achieved 52% accuracy on human vs. AI text detection (barely better than random 50%), indicating coherent human-like generation. Enabled few-shot learning across diverse tasks: translation, question answering, arithmetic, code generation (CSS, JSX, Python), article writing (The Guardian used it to write an essay about AI being harmless).</p>
       <p><strong>Microsoft exclusive license</strong> (September 2020): Microsoft gained exclusive access to GPT-3's source code for embedding/modification, while OpenAI continues offering public API for text input/output without model download.</p>
-      <p><a href="https://en.wikipedia.org/wiki/GPT-3#Training_and_capabilities" target="_blank">Wikipedia: GPT-3 training details</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/GPT-3#Training_and_capabilities" target="_blank" rel="noopener noreferrer">Wikipedia: GPT-3 training details</a></p>
     </div>
 
     <h3>Phase 2: Supervised Fine-Tuning (SFT)</h3>
@@ -269,7 +307,7 @@ Key challenge: Reward hacking (model exploits reward function)</code>`} />
       </ol>
       <p><strong>Constitutional AI</strong> (Anthropic, Dec 2022): Alternative approach where AI assistant critiques and revises its own responses against ethical principles ("constitution"), reducing reliance on human feedback. Used in Claude models with 200K context windows.</p>
       <p><strong>Modern variants:</strong> <em>Direct Preference Optimization (DPO)</em> (Rafailov et al., May 2023) bypasses explicit reward model, optimizing policy directly from preferences. <em>Reinforcement Learning from AI Feedback (RLAIF)</em> uses LLMs instead of humans to generate preference labels, scaling feedback collection.</p>
-      <p><a href="https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback" target="_blank">Wikipedia: RLHF</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback" target="_blank" rel="noopener noreferrer">Wikipedia: RLHF</a></p>
     </div>
 
     <h2>Scaling Laws</h2>
@@ -314,7 +352,7 @@ Implication: Training data is as important as model size</code>`} />
         <li><strong>Multilingual tasks</strong>: Ability to translate between languages never explicitly paired in training data, generating Kiswahili proverb equivalents in English, or detecting offensive content in code-mixed Hinglish.</li>
       </ul>
       <p><strong>Debate:</strong> Schaeffer et al. (2023) argue emergent abilities may be measurement artifacts—when metrics use step functions (e.g., exact match accuracy) rather than continuous measures (e.g., token probability), smooth improvements appear as sudden jumps. However, true qualitative shifts in capability (like compositional reasoning) remain compelling evidence for emergence.</p>
-      <p><a href="https://en.wikipedia.org/wiki/Large_language_model#Emergent_abilities" target="_blank">Wikipedia: Emergent abilities</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/Large_language_model#Emergent_abilities" target="_blank" rel="noopener noreferrer">Wikipedia: Emergent abilities</a></p>
     </div>
 
     <h2>Prompting Techniques</h2>
@@ -399,6 +437,21 @@ Answer: 11"</code>`} />
           <td>1,000,000 tokens</td>
           <td>~750,000 words</td>
         </tr>
+        <tr>
+          <td>GPT-4o</td>
+          <td>128,000 tokens</td>
+          <td>~96,000 words (current OpenAI primary model)</td>
+        </tr>
+        <tr>
+          <td>Claude Sonnet 4</td>
+          <td>200,000 tokens</td>
+          <td>~150,000 words (current Anthropic flagship)</td>
+        </tr>
+        <tr>
+          <td>Gemini 2.5 Pro</td>
+          <td>1,000,000+ tokens</td>
+          <td>~750,000+ words (current Google frontier)</td>
+        </tr>
       </tbody>
     </table>
 
@@ -445,9 +498,26 @@ Answer: 11"</code>`} />
       </ul>
     </div>
 
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>What is a large language model, in plain English?</h3>
+    <p>An LLM is a neural network trained to predict the next word in a sequence, across billions of text examples. Through training at scale, it learns grammar, facts, reasoning patterns, and how to follow instructions — without being explicitly programmed for any of these tasks.</p>
+
+    <h3>How do GPT-4o, Claude, and Gemini differ?</h3>
+    <p>All three are capable general-purpose LLMs from different organizations (OpenAI, Anthropic, Google). They differ in context window size, multimodal capabilities, pricing, licensing, and safety training approaches. As of mid-2026, the gap between leading models has narrowed significantly, making practical factors — cost, API reliability, and data privacy terms — as important as raw capability.</p>
+
+    <h3>What does “hallucination” mean and how serious is it?</h3>
+    <p>Hallucination means the model generates plausible-sounding but incorrect information — fabricated facts, wrong dates, or non-existent references. Seriousness depends on use case: high-stakes applications (medical, legal, financial) need systematic verification and grounding (see <a href={`${base}/chapters/08-rag`}>Chapter 8: RAG</a>). Creative or brainstorming uses are far less sensitive to this risk.</p>
+
+    <h3>When does an LLM need fine-tuning vs. a better prompt?</h3>
+    <p>Try prompting first — most use cases are solved by clear instructions, examples, and context. Fine-tuning helps when you need consistent output format, domain-specific vocabulary, or behavior that is hard to specify in a prompt. It requires labeled training data and is harder to maintain as the base model updates. See <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9: Fine-Tuning</a> for the full trade-off.</p>
+
+    <h3>What is RLHF and why does it matter?</h3>
+    <p>Reinforcement Learning from Human Feedback (RLHF) is the alignment technique that turns a raw text predictor into a helpful assistant. Human raters rank model outputs, a reward model learns their preferences, and the LLM is optimized to score higher on that reward. ChatGPT, Claude, and most commercial LLMs use RLHF or a close variant of it.</p>
+
     <div class="chapter-navigation">
-      <a href="/chapters/04-transformers" class="btn btn-secondary">← Previous: Transformers</a>
-      <a href="/chapters/06-generative-ai" class="btn btn-primary">Next: Generative AI →</a>
+      <a href={`${base}/chapters/04-transformers`} class="btn btn-secondary">← Previous: Transformers</a>
+      <a href={`${base}/chapters/06-generative-ai`} class="btn btn-primary">Next: Generative AI →</a>
     </div>
   </article>
 </BaseLayout>

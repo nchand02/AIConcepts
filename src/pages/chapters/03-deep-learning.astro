@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,14 +24,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 3 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/02-machine-learning">Machine Learning</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/02-machine-learning`}>Machine Learning</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/04-transformers">Transformers</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/04-transformers`}>Transformers</a></span>
     </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>This chapter explores Deep Learning, the foundation of modern AI breakthroughs. We'll cover neural network architectures, training techniques, optimization strategies, and practical applications.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💼 What technical leaders need from this chapter</div>
+      <p>You don't need to implement backpropagation — but knowing why neural networks have "layers," what "training" involves, and what "transfer learning" means will help you evaluate AI vendors, set realistic expectations with your team, and ask the right questions when reviewing ML project proposals.</p>
     </div>
 
     <div class="callout info">
@@ -49,8 +55,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <p>Deep Learning represents a paradigm shift in machine learning, using artificial neural networks with multiple layers to automatically learn hierarchical representations of data. Unlike traditional machine learning, deep learning can automatically discover the representations needed for feature detection or classification from raw data.</p>
     
     <div class="callout info">
-      <div class="callout-title">🚀 Modern Deep Learning (2023-2025)</div>
-      <p>While Convolutional Neural Networks (CNNs) and Recurrent Neural Networks (RNNs) dominated computer vision and natural language processing for years, <strong>transformer architectures</strong> (introduced 2017 with "Attention Is All You Need") have revolutionized the field. Vision Transformers (ViT, 2020) now challenge CNN dominance in computer vision, achieving state-of-the-art results on ImageNet and other benchmarks. However, CNNs remain highly efficient for many applications, and hybrid architectures combining both approaches are increasingly common (<a href="https://en.wikipedia.org/wiki/Vision_transformer" target="_blank">Wikipedia: Vision Transformer</a>, <a href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)" target="_blank">Wikipedia: Transformer</a>).</p>
+      <div class="callout-title">🚀 Current Landscape</div>
+      <p>While Convolutional Neural Networks (CNNs) and Recurrent Neural Networks (RNNs) dominated computer vision and natural language processing for years, <strong>transformer architectures</strong> (introduced 2017 with "Attention Is All You Need") have revolutionized the field. Vision Transformers (ViT, 2020) now challenge CNN dominance in computer vision, achieving state-of-the-art results on ImageNet and other benchmarks. However, CNNs remain highly efficient for many applications, and hybrid architectures combining both approaches are increasingly common (<a href="https://en.wikipedia.org/wiki/Vision_transformer" target="_blank" rel="noopener noreferrer">Wikipedia: Vision Transformer</a>, <a href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)" target="_blank" rel="noopener noreferrer">Wikipedia: Transformer</a>).</p>
     </div>
 
     <h3>Why "Deep" Learning?</h3>
@@ -118,7 +124,7 @@ Where:
 
     <h3>Activation Functions</h3>
     
-    <p>Activation functions introduce non-linearity, enabling networks to learn complex patterns. A breakthrough came in 2011 when Glorot & Bengio demonstrated that <strong>ReLU (Rectified Linear Unit) activation</strong> enables training of significantly deeper networks compared to sigmoid/tanh, leading to the modern deep learning era (<a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" target="_blank">Wikipedia: CNN</a>):</p>
+    <p>Activation functions introduce non-linearity, enabling networks to learn complex patterns. A breakthrough came in 2011 when Glorot & Bengio demonstrated that <strong>ReLU (Rectified Linear Unit) activation</strong> enables training of significantly deeper networks compared to sigmoid/tanh, leading to the modern deep learning era (<a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" target="_blank" rel="noopener noreferrer">Wikipedia: CNN</a>):</p>
 
     <table>
       <thead>
@@ -225,7 +231,7 @@ Where:
         <li><strong>2012:</strong> <strong>AlexNet ImageNet win - launched modern deep learning era</strong></li>
         <li><strong>2012:</strong> CNNs achieved 0.23% error on MNIST dataset</li>
         <li><strong>2020:</strong> Vision Transformers (ViT) began challenging CNN dominance</li>
-        <li><strong>2023:</strong> Google DeepMind's GNoME discovered 2.2M+ new materials using CNNs with 71% success rate (<a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" target="_blank">Wikipedia: CNN</a>)</li>
+        <li><strong>2023:</strong> Google DeepMind's GNoME discovered 2.2M+ new materials using CNNs with 71% success rate (<a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" target="_blank" rel="noopener noreferrer">Wikipedia: CNN</a>)</li>
       </ul>
     </div>
 
@@ -307,7 +313,7 @@ Computation for top-left output:
         <li><strong>2014:</strong> GRU (Gated Recurrent Unit) - simplified LSTM with fewer parameters but similar performance</li>
         <li><strong>2014:</strong> <strong>Seq2seq encoder-decoder</strong> with attention became state-of-the-art for machine translation</li>
         <li><strong>2017:</strong> Transformer architecture built on seq2seq concepts but eliminated recurrence, becoming instrumental in developing modern LLMs</li>
-        <li><strong>2023-2025:</strong> While transformers dominate NLP, RNNs remain relevant for efficient real-time processing and streaming data (<a href="https://en.wikipedia.org/wiki/Recurrent_neural_network" target="_blank">Wikipedia: RNN</a>)</li>
+        <li><strong>2023-2025:</strong> While transformers dominate NLP, RNNs remain relevant for efficient real-time processing and streaming data (<a href="https://en.wikipedia.org/wiki/Recurrent_neural_network" target="_blank" rel="noopener noreferrer">Wikipedia: RNN</a>)</li>
       </ul>
     </div>
 
@@ -379,12 +385,20 @@ x₁ ───> │RNN│───> │RNN│───> │RNN│───> │R
 
     <h3>Forward Propagation</h3>
     
-    <p>Data flows through the network to generate predictions:</p>
+    <p>Data flows through the network to generate predictions — each layer applies weights, biases, and an activation function to produce outputs for the next layer.</p>
 
-    <pre set:html={`<code>1. Input → Layer 1: z₁ = W₁x + b₁; a₁ = σ(z₁)
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span>🔍 Deep Dive: Forward Pass Math</span>
+        <span class="collapsible-icon">▼</span>
+      </div>
+      <div class="collapsible-content">
+        <pre set:html={`<code>1. Input → Layer 1: z₁ = W₁x + b₁; a₁ = σ(z₁)
 2. Layer 1 → Layer 2: z₂ = W₂a₁ + b₂; a₂ = σ(z₂)
 3. ...continue through all layers...
 4. Final layer → Output: ŷ = σ(zₗ)</code>`} />
+      </div>
+    </div>
 
     <h3>Backpropagation</h3>
     
@@ -491,13 +505,21 @@ Training Time:                   Test Time:
 
     <h3>2. Batch Normalization</h3>
     
-    <p>Normalizes layer inputs to stabilize training:</p>
+    <p>Normalizes layer inputs to stabilize training and allow higher learning rates:</p>
 
-    <pre set:html={`<code>For each mini-batch:
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span>🔍 Deep Dive: Batch Normalization Formula</span>
+        <span class="collapsible-icon">▼</span>
+      </div>
+      <div class="collapsible-content">
+        <pre set:html={`<code>For each mini-batch:
 1. μ = mean(batch)
 2. σ² = variance(batch)
 3. x̂ = (x - μ) / sqrt(σ² + ε)
 4. y = γx̂ + β  (learnable scale & shift)</code>`} />
+      </div>
+    </div>
 
     <p><strong>Benefits:</strong></p>
     <ul>
@@ -906,26 +928,30 @@ def train_epoch(model, dataloader, criterion, optimizer, device):
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>What is deep learning and how does it differ from traditional machine learning?</h3>
+    <p>Deep learning uses neural networks with many layers to automatically learn hierarchical representations from raw data. Traditional ML typically requires manual feature engineering — you decide what to measure. Deep learning learns what to measure directly from images, text, or audio. The tradeoff: deep learning needs far more data and compute, but achieves dramatically better results on complex perceptual tasks.</p>
+
+    <h3>Why does deep learning require so much data and compute?</h3>
+    <p>Deep networks have millions to billions of parameters that must be tuned through backpropagation across large training datasets. More parameters mean more capacity to learn complex patterns, but also more data required to avoid overfitting and more compute to run the optimization. GPUs accelerate this because matrix multiplications — the core operation — parallelize extremely well on GPU hardware.</p>
+
+    <h3>What is transfer learning and how does it reduce cost?</h3>
+    <p>Transfer learning reuses a model pre-trained on a large dataset (e.g., ImageNet, internet text) as a starting point for a new task. Instead of training from scratch, you fine-tune a fraction of the parameters on your smaller dataset. This reduces training time, compute cost, and data requirements dramatically — and often produces better results than training from scratch on limited data. See <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a> for LLM fine-tuning specifics.</p>
+
+    <h3>When should my team use a pre-trained model vs. train from scratch?</h3>
+    <p>Pre-trained models (from Hugging Face, PyTorch Hub, or major AI labs) are the right default for most teams. Build from scratch only when your data is fundamentally different from anything public (rare medical imagery, proprietary sensor data) and you have the resources to exceed state-of-the-art. For most enterprise use cases, fine-tuning or prompting a pre-trained model is faster, cheaper, and produces better results.</p>
+
+    <h3>What is a GPU and why is it essential for deep learning?</h3>
+    <p>A GPU (Graphics Processing Unit) was originally designed for rendering graphics by performing thousands of simple calculations in parallel. Deep learning training involves the same type of parallel matrix math. Modern GPUs (NVIDIA H100, A100) can perform this computation orders of magnitude faster than CPUs. Cloud GPU instances (AWS, Azure, GCP) have made this compute accessible without large capital investment.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
 
     <ol>
-      <li>What are the advantages of deep networks over shallow networks?</li>
-      <li>Why is backpropagation critical for training neural networks?</li>
-      <li>How do CNNs differ from standard feedforward networks?</li>
-      <li>What problems do skip connections solve in very deep networks?</li>
-      <li>When should you use dropout vs. batch normalization?</li>
-      <li>What is the difference between feature extraction and fine-tuning in transfer learning?</li>
-    </ol>
-
-    <h2>Practical Exercises</h2>
-
-    <ol>
-      <li>Implement a CNN for CIFAR-10 image classification using PyTorch or TensorFlow</li>
-      <li>Experiment with different activation functions and observe their effects</li>
-      <li>Apply data augmentation and measure its impact on generalization</li>
-      <li>Use transfer learning with a pre-trained ResNet for a custom image classification task</li>
-      <li>Visualize learned filters and feature maps in your CNN</li>
-      <li>Implement and compare different optimization algorithms (SGD, Adam, AdamW)</li>
+      <li>Deep learning projects often exceed initial compute budget estimates. What governance process would you put in place to control AI infrastructure costs during model development and experimentation?</li>
+      <li>Pre-trained models from major labs can outperform custom-trained models at a fraction of the cost. How does this change your team's build-vs-buy calculus for AI capabilities?</li>
+      <li>Deep learning models are often described as "black boxes." In your industry, what explainability or auditability requirements would constrain which model types you can deploy?</li>
+      <li>Transfer learning allows teams to build on models trained by OpenAI, Google, or Meta. What IP, data governance, and licensing questions should legal and engineering review before doing so?</li>
     </ol>
 
     <div class="callout info">
@@ -940,8 +966,8 @@ def train_epoch(model, dataloader, criterion, optimizer, device):
     </div>
 
     <div class="chapter-navigation">
-      <a href="/chapters/02-machine-learning" class="btn btn-secondary">← Previous: Machine Learning</a>
-      <a href="/chapters/04-transformers" class="btn btn-primary">Next: Transformers →</a>
+      <a href={`${base}/chapters/02-machine-learning`} class="btn btn-secondary">← Previous: Machine Learning</a>
+      <a href={`${base}/chapters/04-transformers`} class="btn btn-primary">Next: Transformers →</a>
     </div>
   </article>
 </BaseLayout>

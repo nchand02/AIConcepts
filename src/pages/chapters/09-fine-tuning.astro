@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 9 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/08-rag">RAG Systems</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/08-rag`}>RAG Systems</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/10-multimodal">Multimodal AI</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/10-multimodal`}>Multimodal AI</a></span>
     </div>
     
     <div class="callout info">
@@ -444,44 +445,35 @@ Where:
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
-    <ol>
-      <li>When should you fine-tune a model vs using RAG or prompting?</li>
-      <li>Explain how LoRA achieves 99%+ parameter reduction while maintaining performance.</li>
-      <li>What is the difference between QLoRA and standard LoRA?</li>
-      <li>Describe the RLHF process and its three main stages.</li>
-      <li>How does DPO simplify the alignment process compared to RLHF?</li>
-      <li>What are the risks of catastrophic forgetting and how can PEFT help?</li>
-    </ol>
+    <h2>Frequently Asked Questions</h2>
 
-    <h2>Practical Exercises</h2>
+    <h3>When should I fine-tune a model instead of just prompting or using RAG?</h3>
+    <p>Fine-tuning changes model behavior — tone, style, response format, domain vocabulary. RAG adds knowledge. Prompting guides a single interaction. Fine-tune when you need consistent output structure, a distinct persona, or specialized task performance that prompting alone can't reliably achieve. For knowledge gaps ("what happened in Q4 earnings?"), RAG is almost always better and cheaper. See <a href={`${base}/chapters/08-rag`}>Chapter 8</a> for the RAG vs. fine-tuning decision framework.</p>
+
+    <h3>What is LoRA/QLoRA and why does it make fine-tuning more accessible?</h3>
+    <p>LoRA (Low-Rank Adaptation) fine-tunes only small adapter matrices added to the existing model weights, leaving the original model frozen. This reduces trainable parameters by 90–99%, cutting memory requirements and training time dramatically. QLoRA adds 4-bit quantization to the base model, enabling fine-tuning of large models on a single GPU. Fine-tuning that previously required a cluster can now run on a single consumer-grade GPU.</p>
+
+    <h3>How much data does fine-tuning require?</h3>
+    <p>For instruction fine-tuning (teaching a model to follow a specific format or style), hundreds to a few thousand high-quality examples are often sufficient with LoRA. Full fine-tuning for domain adaptation typically needs tens of thousands of examples. Data quality matters far more than quantity — noisy training data produces unreliable models. Annotation cost, not compute, is usually the bottleneck.</p>
+
+    <h3>What are the main risks of fine-tuning?</h3>
+    <p>Catastrophic forgetting: fine-tuning can degrade general capabilities while improving task-specific ones. Safety regression: fine-tuning can accidentally reduce the safety guardrails built into the base model. Overfitting on a small or low-quality dataset can make the model worse overall. And ongoing maintenance: when the base model is updated, you may need to re-run fine-tuning to stay current.</p>
+
+    <h3>What is the difference between fine-tuning and RLHF/alignment?</h3>
+    <p>Supervised fine-tuning on labeled examples teaches a model to produce specific outputs. RLHF (Reinforcement Learning from Human Feedback) goes further — it trains the model to prefer outputs that humans rate more highly, using a reward model. This is how labs like OpenAI and Anthropic shape model helpfulness and safety. DPO (Direct Preference Optimization) achieves similar alignment without the reward model complexity.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
+
     <ol>
-      <li><strong>LoRA Fine-Tuning:</strong>
-        <ul>
-          <li>Use Hugging Face PEFT library to fine-tune Llama-2-7B</li>
-          <li>Experiment with different rank values (4, 8, 16)</li>
-          <li>Measure training time and memory usage</li>
-        </ul>
-      </li>
-      <li><strong>Instruction Dataset:</strong>
-        <ul>
-          <li>Create instruction-response dataset for a specific domain</li>
-          <li>Fine-tune with instruction format</li>
-          <li>Compare zero-shot vs fine-tuned performance</li>
-        </ul>
-      </li>
-      <li><strong>DPO Alignment:</strong>
-        <ul>
-          <li>Collect preference data (chosen vs rejected responses)</li>
-          <li>Implement DPO training loop</li>
-          <li>Evaluate alignment improvements</li>
-        </ul>
-      </li>
+      <li>Fine-tuning, RAG, and prompt engineering solve different problems. How would you structure a decision framework for your team to choose the right approach — accounting for cost, latency, maintenance overhead, and task requirements?</li>
+      <li>A vendor proposes fine-tuning a model on your organization's proprietary data. What data governance, IP ownership, and model licensing questions should you resolve before proceeding?</li>
+      <li>Fine-tuned models require re-training when the base model is updated. How does this ongoing maintenance cost factor into your total cost of ownership calculation when comparing fine-tuning to a managed API?</li>
+      <li>A fine-tuned model achieves better task performance on benchmarks but produces unexpected outputs on edge cases. What testing standards and human-review requirements would you require before deploying it to production?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/08-rag" class="btn btn-secondary">← Previous: RAG Systems</a>
-      <a href="/chapters/10-multimodal" class="btn btn-primary">Next: Multimodal AI →</a>
+      <a href={`${base}/chapters/08-rag`} class="btn btn-secondary">← Previous: RAG Systems</a>
+      <a href={`${base}/chapters/10-multimodal`} class="btn btn-primary">Next: Multimodal AI →</a>
     </div>
 
   </article>

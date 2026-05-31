@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
   title="Chapter 8: Retrieval-Augmented Generation (RAG)" 
-  description="Building RAG systems that combine retrieval and generation for grounded AI responses"
+  description="What is Retrieval-Augmented Generation (RAG) and why does it reduce hallucinations? Architecture, chunking, retrieval strategies, and evaluation for technical leaders."
   currentPage="/chapters/08-rag"
 >
   <article class="chapter-content">
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 8 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/07-embeddings">Embeddings & Vector DBs</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/07-embeddings`}>Embeddings & Vector DBs</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/09-fine-tuning">Fine-Tuning</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/09-fine-tuning`}>Fine-Tuning</a></span>
     </div>
     
     <div class="callout info">
@@ -461,44 +462,34 @@ Optimization:
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
-    <ol>
-      <li>What problems does RAG solve compared to using an LLM alone?</li>
-      <li>Why is chunk size important and what are typical ranges?</li>
-      <li>Explain the difference between dense and sparse retrieval. When would you use each?</li>
-      <li>How does re-ranking improve retrieval quality?</li>
-      <li>What metrics would you use to evaluate a RAG system's performance?</li>
-      <li>Describe a scenario where agent-based RAG would be beneficial.</li>
-    </ol>
+    <h2>Frequently Asked Questions</h2>
 
-    <h2>Practical Exercises</h2>
+    <h3>What is RAG, in plain English?</h3>
+    <p>RAG connects an LLM to a searchable knowledge base. When you submit a query, relevant documents are retrieved first and added to the prompt — so the model answers from your content, not just from its training data. This reduces hallucinations and keeps answers current without retraining the model.</p>
+
+    <h3>When should I use RAG instead of fine-tuning?</h3>
+    <p>Use RAG when your information changes frequently (policies, product docs, legal texts) or when you need to cite sources. Fine-tuning is better for changing how the model communicates — its tone, format, or specialized vocabulary — not for adding new factual knowledge. When in doubt, try RAG first: it is faster to set up and easier to update.</p>
+
+    <h3>What is the main failure mode of a RAG system?</h3>
+    <p>Two failure modes dominate. Retrieval gaps: the right document is not retrieved, so the model improvises and may hallucinate. Context overload: too many retrieved documents confuse or dilute the response. Both require separate evaluation — measure retrieval quality (did the right docs come back?) independently of generation quality (is the answer faithful to those docs?).</p>
+
+    <h3>Do I need a vector database to build a RAG system?</h3>
+    <p>Not always. For small corpora (under ~10,000 documents), in-memory tools like FAISS work well. A dedicated vector database (Pinecone, Weaviate, Qdrant, pgvector) becomes worthwhile when you need persistence, real-time updates, filtered search, or scale. Most managed RAG platforms include one by default.</p>
+
+    <h3>How do I know if my RAG system is working well?</h3>
+    <p>Evaluate retrieval and generation separately. For retrieval: measure whether the top results are relevant (precision) and whether important documents are not missed (recall). For generation: check faithfulness (does the answer stay within the retrieved context?) and answer relevance (does it address the question?). Tools like RAGAS automate much of this evaluation.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
     <ol>
-      <li><strong>Build Basic RAG:</strong>
-        <ul>
-          <li>Index a document corpus using LangChain or LlamaIndex</li>
-          <li>Implement query → retrieval → generation pipeline</li>
-          <li>Compare results with and without retrieval</li>
-        </ul>
-      </li>
-      <li><strong>Optimize Chunking:</strong>
-        <ul>
-          <li>Experiment with different chunk sizes (200, 400, 800 tokens)</li>
-          <li>Test with/without overlap</li>
-          <li>Measure retrieval precision for each configuration</li>
-        </ul>
-      </li>
-      <li><strong>Hybrid Retrieval:</strong>
-        <ul>
-          <li>Implement both dense (vector) and sparse (BM25) retrieval</li>
-          <li>Fuse results using RRF</li>
-          <li>Compare hybrid vs single-method retrieval quality</li>
-        </ul>
-      </li>
+      <li>Your team proposes replacing a support chatbot with a RAG system over internal documentation. What would you need to know about document quality, access control, update frequency, and accuracy requirements before approving?</li>
+      <li>A colleague suggests that RAG makes fine-tuning obsolete. What are the cases where this is true, and where is it not? How would you frame the trade-off for your engineering team?</li>
+      <li>A production RAG system surfaces an incorrect answer in a customer-facing product. What steps would you take to diagnose whether the failure was a retrieval gap, a generation problem, or a data quality issue?</li>
+      <li>You are evaluating two RAG platform vendors. Beyond accuracy and latency, what contractual, operational, and data-governance questions would you prioritize?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/07-embeddings" class="btn btn-secondary">← Previous: Embeddings & Vector DBs</a>
-      <a href="/chapters/09-fine-tuning" class="btn btn-primary">Next: Fine-Tuning →</a>
+      <a href={`${base}/chapters/07-embeddings`} class="btn btn-secondary">← Previous: Embeddings & Vector DBs</a>
+      <a href={`${base}/chapters/09-fine-tuning`} class="btn btn-primary">Next: Fine-Tuning →</a>
     </div>
 
   </article>

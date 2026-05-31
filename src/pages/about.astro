@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout title="About This Course - AI Concepts">
@@ -103,11 +104,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h2>Ready to Get Started?</h2>
       <p>Begin your journey from AI fundamentals to production-ready systems.</p>
       <div class="cta-buttons">
-        <a href="/AIConcepts/chapters/01-foundations/" class="btn btn-primary">
+        <a href={`${base}/chapters/01-foundations`} class="btn btn-primary">
           <span>Start Learning</span>
           <span>→</span>
         </a>
-        <a href="/AIConcepts/#chapters" class="btn btn-secondary">
+        <a href={`${base}/#chapters`} class="btn btn-secondary">
           <span>Browse Chapters</span>
         </a>
       </div>

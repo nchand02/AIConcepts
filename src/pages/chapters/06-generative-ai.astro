@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 6 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/05-llms">Large Language Models</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/05-llms`}>Large Language Models</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/07-embeddings">Embeddings & Vector DBs</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/07-embeddings`}>Embeddings & Vector DBs</a></span>
     </div>
     
     <div class="callout info">
@@ -44,8 +45,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </ul>
     </div>
 
-    <div class="callout info">
-      <div class="callout-title">🎨 Generative AI Evolution (2014-2025)</div>
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span>🎨 Historical Timeline: Generative AI Evolution (2014–2025)</span>
+        <span class="collapsible-icon">▼</span>
+      </div>
+      <div class="collapsible-content">
       <p><strong>Generative AI revolutionized content creation from adversarial training to diffusion-based approaches dominating by 2024.</strong></p>
       <ul>
         <li><strong>GAN Era (2014-2021):</strong> June 2014 Goodfellow et al. introduced Generative Adversarial Networks at NeurIPS with generator-discriminator adversarial training → 2015 DCGAN (Radford et al.) stabilized training with convolutional architecture → 2016 WGAN (Arjovsky et al.) solved mode collapse using Wasserstein distance → 2017 Progressive GAN (Karras et al.) gradually increased resolution 4×4→1024×1024 → 2019 StyleGAN introduced style latent space with AdaIN → 2020 StyleGAN-2 solved blob artifacts → 2021 StyleGAN-3 eliminated texture sticking via Nyquist-Shannon theorem. Training challenges: unstable convergence, mode collapse, vanishing gradients.</li>
@@ -54,11 +59,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <li><strong>Video Generation (2022-2024):</strong> September 2022 Make-A-Video (Meta) → March 2023 Runway Gen-2 → February 2024 Sora (OpenAI DiT) → October 2024 Movie Gen (Meta DiT series) → 2024 Veo (Google).</li>
         <li><strong>Control & Fine-tuning (2023-2024):</strong> 2023 ControlNet added spatial conditioning for precise control → LoRA enabled fast fine-tuning with minimal parameters → 2023 Consistency Models (Song et al.) enabled 1-step generation → Rectified Flow (Liu et al. September 2022) learned straight-line trajectories.</li>
       </ul>
-      <p><em>Sources: <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network" target="_blank">Wikipedia - Generative Adversarial Network</a>, <a href="https://en.wikipedia.org/wiki/Diffusion_model" target="_blank">Wikipedia - Diffusion Model</a></em></p>
+      <p><em>Sources: <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network" target="_blank" rel="noopener noreferrer">Wikipedia - Generative Adversarial Network</a>, <a href="https://en.wikipedia.org/wiki/Diffusion_model" target="_blank" rel="noopener noreferrer">Wikipedia - Diffusion Model</a></em></p>
+      </div>
     </div>
 
     <h2>What is Generative AI?</h2>
-    
+
+    <div class="callout tip">
+      <div class="callout-title">💼 What this means for technical leaders</div>
+      <p>Generative AI is now a production capability available through APIs. As of 2026, text-to-image, text-to-video, and generative audio are offered by every major cloud provider. Your team's decisions are about use case selection, cost and quality trade-offs, copyright risk, and output evaluation — not which research approach to implement. This chapter gives you the vocabulary to lead those decisions confidently.</p>
+    </div>
+
     <p>Generative AI creates new content (images, text, audio, video) by learning patterns from training data. Unlike discriminative models that classify, generative models learn the underlying distribution of data to sample new instances.</p>
 
     <h3>Key Characteristics</h3>
@@ -73,8 +84,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <p>GANs consist of two networks competing in a minimax game. <strong>Introduced by Ian Goodfellow et al. in June 2014</strong> at NeurIPS, GANs revolutionized generative modeling through adversarial training in a zero-sum game framework where the generator creates fake data while the discriminator tries to distinguish real from fake.</p>
 
-    <div class="callout info">
-      <div class="callout-title">🎯 GAN History & Challenges (2014-2021)</div>
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span>🔍 Deep Dive: GAN History &amp; Challenges (2014–2021)</span>
+        <span class="collapsible-icon">▼</span>
+      </div>
+      <div class="collapsible-content">
       <p><strong>GANs pioneered adversarial training but faced significant stability challenges before architectural innovations.</strong></p>
       <ul>
         <li><strong>Original Formulation (June 2014):</strong> Goodfellow et al. introduced min-max objective where generator G tries to fool discriminator D while D tries to distinguish real from fake: min_G max_D E[log D(x)] + E[log(1-D(G(z)))]. Zero-sum competition drives both networks to improve iteratively.</li>
@@ -86,7 +101,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <li><strong>Notable Applications:</strong> October 2018 "Edmond de Belamy" portrait (trained on 15K WikiArt paintings 14th-19th century) sold for $432,500 at auction → Video game texture upscaling to 4K → May 2020 Nvidia GameGAN recreated Pac-Man by watching gameplay → 2020 Artbreeder creative tool → Face aging, 3D reconstruction, artistic style transfer.</li>
         <li><strong>Other Variants:</strong> CycleGAN (2017, Zhu et al.) unpaired image-to-image translation with cycle consistency → SAGAN (2019, Zhang et al.) self-attention mechanism → Conditional GANs controlling generation with class labels.</li>
       </ul>
-      <p><em>Source: <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network" target="_blank">Wikipedia - Generative Adversarial Network</a></em></p>
+      <p><em>Source: <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network" target="_blank" rel="noopener noreferrer">Wikipedia - Generative Adversarial Network</a></em></p>
+      </div>
     </div>
 
     <div class="diagram-container">
@@ -250,7 +266,7 @@ KL Divergence: Regularizes latent space to N(0,1)`}
         <li><strong>Architectural Evolution (2023-2024):</strong> Diffusion Transformers (DiT) replacing U-Net backbones with transformer architecture → Rectified Flow (Liu et al. September 2022) learning straight-line trajectories in probability space for faster sampling → Consistency Models (Song et al. July 2023) enabling 1-step generation → Progressive distillation iteratively reducing sampling steps → Noise schedulers evolved from linear to cosine and custom designs.</li>
         <li><strong>Applications Beyond Images:</strong> Computer vision (inpainting, super-resolution, image-to-image translation, video generation) → NLP (discrete diffusion for text generation, summarization) → Audio synthesis (speech, music, sound effects) → Reinforcement learning (planning, policy learning) → 3D generation (novel view synthesis, 3D objects, motion).</li>
       </ul>
-      <p><em>Source: <a href="https://en.wikipedia.org/wiki/Diffusion_model" target="_blank">Wikipedia - Diffusion Model</a></em></p>
+      <p><em>Source: <a href="https://en.wikipedia.org/wiki/Diffusion_model" target="_blank" rel="noopener noreferrer">Wikipedia - Diffusion Model</a></em></p>
     </div>
 
     <h3>Forward Process (Noising)</h3>
@@ -619,47 +635,17 @@ Benefits:
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
+    <h2>Reflection Questions for Technical Leaders</h2>
     <ol>
-      <li>Explain the difference between the generator and discriminator in a GAN. How do they interact during training?</li>
-      <li>What is mode collapse in GANs and how can it be addressed?</li>
-      <li>How does the loss function of a VAE balance reconstruction and regularization?</li>
-      <li>Describe the forward and reverse processes in diffusion models.</li>
-      <li>What are the key advantages of latent diffusion (Stable Diffusion) over pixel-space diffusion?</li>
-      <li>How does ControlNet provide additional control over image generation?</li>
-    </ol>
-
-    <h2>Practical Exercises</h2>
-    <ol>
-      <li>
-        <strong>Generate Images with Stable Diffusion</strong>
-        <ul>
-          <li>Install Stable Diffusion (Automatic1111 or ComfyUI)</li>
-          <li>Experiment with different prompts and parameters</li>
-          <li>Compare results with different CFG scales and steps</li>
-        </ul>
-      </li>
-      <li>
-        <strong>Fine-tune a LoRA</strong>
-        <ul>
-          <li>Collect 15-30 images of a specific subject or style</li>
-          <li>Train a LoRA using Kohya or similar tool</li>
-          <li>Test the LoRA with various prompts</li>
-        </ul>
-      </li>
-      <li>
-        <strong>Implement Image Evaluation</strong>
-        <ul>
-          <li>Generate 100 images with different prompts</li>
-          <li>Calculate FID and CLIP scores</li>
-          <li>Analyze correlation with human preferences</li>
-        </ul>
-      </li>
+      <li>Your team proposes adding AI-generated imagery to a product. What questions would you ask about copyright, training data provenance, and output quality before approving the work?</li>
+      <li>A vendor pitches a "custom diffusion model fine-tuned on your brand assets." What would you need to understand about LoRA vs. full fine-tuning trade-offs to evaluate this proposal responsibly?</li>
+      <li>You're reviewing a roadmap that includes AI video generation. What risks and operational constraints would you surface in a technical review?</li>
+      <li>How would you explain the practical difference between GAN-based, diffusion-based, and autoregressive generative approaches to a non-technical executive deciding which technology to invest in?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/05-llms" class="btn btn-secondary">← Previous: Large Language Models</a>
-      <a href="/chapters/07-embeddings" class="btn btn-primary">Next: Embeddings & Vector DBs →</a>
+      <a href={`${base}/chapters/05-llms`} class="btn btn-secondary">← Previous: Large Language Models</a>
+      <a href={`${base}/chapters/07-embeddings`} class="btn btn-primary">Next: Embeddings & Vector DBs →</a>
     </div>
 
   </article>

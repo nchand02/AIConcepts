@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,14 +24,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 4 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/03-deep-learning">Deep Learning</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/03-deep-learning`}>Deep Learning</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/05-llms">Large Language Models</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/05-llms`}>Large Language Models</a></span>
     </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>Transformers revolutionized AI in 2017 with the "Attention Is All You Need" paper. This chapter explores the architecture that powers modern LLMs, from BERT to GPT to every major AI breakthrough since.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💼 What technical leaders need to know</div>
+      <p>Every modern LLM — GPT, Claude, Gemini, Llama — is built on the Transformer. Understanding context windows, attention heads, and the encoder vs. decoder distinction will help you interpret capability claims, evaluate vendor products, and have informed discussions with your engineering team. The math sections below are available as deep-dives but are not required for strategic decisions.</p>
     </div>
 
     <div class="callout info">
@@ -122,13 +128,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <h2>Self-Attention Mechanism</h2>
 
-    <div class="callout info">
-      <div class="callout-title">📚 Historical Evolution of Attention (1992-2025)</div>
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span>📚 Historical Evolution of Attention (1992–2025)</span>
+        <span class="collapsible-icon">▼</span>
+      </div>
+      <div class="collapsible-content">
       <p><strong>Early foundations (1992-2005):</strong> Fast weight controllers (Schmidhuber 1992) anticipated key-value mechanisms. Bilateral filtering (1998) introduced pairwise affinity matrices for image processing.</p>
       <p><strong>RNN era (2014-2016):</strong> Bahdanau et al. (2014) introduced attention for seq2seq translation, solving the bottleneck of encoding entire sequences into fixed vectors. Attention extended to vision for image captioning (2015), then self-attention integrated into RNN models (2016).</p>
       <p><strong>Transformer breakthrough (2017):</strong> "Attention Is All You Need" formalized scaled dot-product self-attention, eliminating recurrence entirely. This enabled parallel processing and became the foundation for BERT, GPT, T5, and all modern LLMs.</p>
       <p><strong>Modern era (2019-2025):</strong> Efficient transformers (Reformer 2019, Linformer 2020, Performer 2020) addressed O(n²) complexity. Flash Attention (2022) revolutionized efficiency through memory-aware algorithms. Vision Transformers (ViT 2020) and AlphaFold (2021) demonstrated attention's power beyond NLP. By 2023-2025, attention mechanisms power virtually all state-of-the-art AI systems across modalities.</p>
-      <p><strong>Wikipedia reference:</strong> <a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)" target="_blank">Attention (machine learning)</a> - comprehensive timeline from 1950s cognitive science through 2025</p>
+      <p><strong>Wikipedia reference:</strong> <a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)" target="_blank" rel="noopener noreferrer">Attention (machine learning)</a> - comprehensive timeline from 1950s cognitive science through 2025</p>
+      </div>
     </div>
 
     <h3>The Core Innovation</h3>
@@ -281,13 +292,21 @@ Typical configuration:
 
     <h3>Sinusoidal Positional Encoding (Original)</h3>
 
-    <pre set:html={`<code>PE(pos, 2i)   = sin(pos / 10000^(2i/d_model))
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span>🔍 Deep Dive: Sinusoidal Encoding Formula</span>
+        <span class="collapsible-icon">▼</span>
+      </div>
+      <div class="collapsible-content">
+        <pre set:html={`<code>PE(pos, 2i)   = sin(pos / 10000^(2i/d_model))
 PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
 
 where:
 - pos = token position (0, 1, 2, ...)
 - i = dimension index
 - d_model = embedding dimension</code>`} />
+      </div>
+    </div>
 
     <div class="diagram-container">
       <pre class="ascii-diagram">
@@ -519,7 +538,7 @@ smoothed_label = (1 - smoothing) × true_label + smoothing / num_classes
       </thead>
       <tbody>
         <tr>
-          <td><strong><a href="https://en.wikipedia.org/wiki/BERT_(language_model)" target="_blank">BERT</a></strong> (2018)</td>
+          <td><strong><a href="https://en.wikipedia.org/wiki/BERT_(language_model)" target="_blank" rel="noopener noreferrer">BERT</a></strong> (2018)</td>
           <td>Bidirectional context, 110M-340M params</td>
           <td>Masked language modeling (15% tokens) + Next Sentence Prediction. Google adopted for 70+ languages by Dec 2019, processing almost every English query by Oct 2020</td>
         </tr>
@@ -638,7 +657,7 @@ smoothed_label = (1 - smoothing) × true_label + smoothing / num_classes
       <li><strong>Sparse Attention:</strong> Only attend to subset of positions</li>
       <li><strong>Linformer:</strong> Projects keys/values to lower dimension → O(n)</li>
       <li><strong>Performer:</strong> Approximates attention with kernels → O(n)</li>
-      <li><strong><a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)#Flash_attention" target="_blank">Flash Attention</a> (2022):</strong> IO-aware algorithm that partitions attention computation into smaller blocks fitting GPU on-chip memory, reducing memory usage while increasing efficiency 2-4× without sacrificing accuracy. Addresses the memory bottleneck of storing large intermediate attention matrices</li>
+      <li><strong><a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)#Flash_attention" target="_blank" rel="noopener noreferrer">Flash Attention</a> (2022):</strong> IO-aware algorithm that partitions attention computation into smaller blocks fitting GPU on-chip memory, reducing memory usage while increasing efficiency 2-4× without sacrificing accuracy. Addresses the memory bottleneck of storing large intermediate attention matrices</li>
       <li><strong>Multi-Query Attention:</strong> Share keys/values across heads</li>
       <li><strong>Sliding Window:</strong> Local attention within fixed window</li>
     </ul>
@@ -816,7 +835,7 @@ class TransformerBlock(nn.Module):
       <div class="callout-title">🚀 Modern Transformers (2023-2025)</div>
       <p>By 2023-2025, transformers have become the universal architecture for AI. <strong>Multimodal models</strong> like GPT-4, Gemini, and Claude 3 process text, images, audio, and video using unified transformer architectures. <strong>Constitutional AI and RLHF</strong> (Reinforcement Learning from Human Feedback) align models with human values and preferences. <strong>Scaling laws</strong> demonstrate predictable improvements with model size, leading to trillion-parameter models. <strong>Long-context transformers</strong> now handle 100K-1M+ token contexts, enabling entire codebases and books as input.</p>
       <p>Transformers power Google Search (BERT since 2020), GitHub Copilot, ChatGPT, medical diagnosis systems, protein folding (AlphaFold Nobel Prize 2024), and creative applications (DALL-E, Midjourney, Stable Diffusion). The architecture has expanded beyond its NLP origins to dominate computer vision, speech, robotics, and scientific discovery.</p>
-      <p><strong>Wikipedia references:</strong> <a href="https://en.wikipedia.org/wiki/BERT_(language_model)" target="_blank">BERT</a>, <a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)" target="_blank">Attention mechanism</a></p>
+      <p><strong>Wikipedia references:</strong> <a href="https://en.wikipedia.org/wiki/BERT_(language_model)" target="_blank" rel="noopener noreferrer">BERT</a>, <a href="https://en.wikipedia.org/wiki/Attention_(machine_learning)" target="_blank" rel="noopener noreferrer">Attention mechanism</a></p>
     </div>
 
     <div class="card-grid">
@@ -892,32 +911,35 @@ class TransformerBlock(nn.Module):
 
     <p>The Transformer architecture underlies virtually all modern LLMs and has expanded beyond NLP into vision, audio, and multimodal applications.</p>
 
-    <h2>Review Questions</h2>
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>What is the transformer architecture and why did it change AI?</h3>
+    <p>The transformer (introduced in "Attention Is All You Need," 2017) replaced recurrent networks with a mechanism called self-attention that processes all tokens in a sequence simultaneously rather than one at a time. This enabled massive parallelization during training, which unlocked scaling to the model sizes needed for GPT-3, Claude, Gemini, and every major LLM that followed.</p>
+
+    <h3>What is "attention" in plain English?</h3>
+    <p>Attention is a mechanism that allows each word in a sentence to consider every other word when deciding what it means. For "The bank by the river flooded," the word "bank" attends strongly to "river" to resolve the ambiguity. The model learns which relationships matter most — this is what makes transformers far better at understanding context than earlier approaches.</p>
+
+    <h3>Why does context window size matter for practical applications?</h3>
+    <p>The context window limits how much text the model can "see" at once — documents, conversation history, retrieved chunks. A 4K-token window (early GPT-3.5) can handle a few pages; a 1M-token window (Gemini 2.5 Pro) can handle an entire codebase. Applications like document Q&amp;A, long-form code generation, and multi-turn enterprise workflows require larger windows. See <a href={`${base}/chapters/08-rag`}>Chapter 8 on RAG</a> for strategies when content exceeds window limits.</p>
+
+    <h3>How do GPT, Claude, and Gemini relate to the transformer architecture?</h3>
+    <p>All modern LLMs are transformer variants — specifically decoder-only transformers pre-trained to predict the next token. GPT, Claude, Gemini, Llama, and Mistral all share this foundation but differ in training data, scale, alignment techniques, and architectural refinements. Understanding the base architecture helps you evaluate vendor claims and anticipate capability limits.</p>
+
+    <h3>What is the difference between encoder-only, decoder-only, and encoder-decoder transformers?</h3>
+    <p>Encoder-only models (BERT, RoBERTa) read text in both directions and are best for classification and retrieval. Decoder-only models (GPT, Claude, Llama) generate text left-to-right and power LLM chat. Encoder-decoder models (T5, BART) encode input then decode output — suited for translation and summarization. Most current chat LLMs are decoder-only.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
 
     <ol>
-      <li>Why is self-attention more powerful than RNNs for long sequences?</li>
-      <li>What is the purpose of the scaling factor (sqrtd_k) in attention?</li>
-      <li>How does multi-head attention differ from single-head attention?</li>
-      <li>Why do we need positional encodings in Transformers?</li>
-      <li>What is the difference between encoder-only and decoder-only Transformers?</li>
-      <li>How does masked attention enable autoregressive generation?</li>
-      <li>What causes the quadratic complexity in self-attention?</li>
-    </ol>
-
-    <h2>Practical Exercises</h2>
-
-    <ol>
-      <li>Implement a basic Transformer from scratch in PyTorch</li>
-      <li>Visualize attention weights for a pre-trained model</li>
-      <li>Compare sinusoidal vs. learned positional encodings</li>
-      <li>Experiment with different numbers of attention heads</li>
-      <li>Implement Flash Attention or another efficient variant</li>
-      <li>Fine-tune a pre-trained Transformer on a custom dataset</li>
+      <li>The transformer architecture underlies virtually all modern LLMs. How does understanding it help you ask better questions when evaluating AI vendor claims about model capabilities or comparing GPT-4o vs. Claude vs. Gemini?</li>
+      <li>Context window size directly affects what tasks a model can perform. How would you factor context window limitations into product requirements and architecture decisions for an AI feature?</li>
+      <li>Pre-trained transformers have dramatically lowered the barrier to NLP capabilities. What does this mean for your team's AI talent strategy — what skills become more vs. less valuable?</li>
+      <li>The attention mechanism creates quadratic scaling costs with sequence length, which drives GPU memory requirements. How would you translate this technical constraint into infrastructure budget estimates for long-context applications?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/03-deep-learning" class="btn btn-secondary">← Previous: Deep Learning</a>
-      <a href="/chapters/05-llms" class="btn btn-primary">Next: Large Language Models →</a>
+      <a href={`${base}/chapters/03-deep-learning`} class="btn btn-secondary">← Previous: Deep Learning</a>
+      <a href={`${base}/chapters/05-llms`} class="btn btn-primary">Next: Large Language Models →</a>
     </div>
   </article>
 </BaseLayout>

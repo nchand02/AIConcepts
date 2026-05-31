@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,7 +24,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 1 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/02-machine-learning">Machine Learning</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/02-machine-learning`}>Machine Learning</a></span>
     </div>
     
     <div class="callout info">
@@ -366,7 +367,7 @@ def infer(rules, facts):
       <li><strong>Neural-Symbolic Integration:</strong> Combining neural learning with logical reasoning (e.g., AlphaGeometry proving mathematical theorems)</li>
       <li><strong>Differentiable Programming:</strong> Making symbolic operations compatible with gradient descent (e.g., neural module networks)</li>
       <li><strong>Foundation Models + Tools:</strong> LLMs calling external knowledge bases, APIs, and specialized tools (e.g., ChatGPT with web browsing, code interpreter, DALL-E integration)</li>
-      <li><strong>Retrieval-Augmented Generation (RAG):</strong> Neural models accessing structured knowledge bases (covered in Chapter 8)</li>
+      <li><strong>Retrieval-Augmented Generation (RAG):</strong> Neural models accessing structured knowledge bases (covered in <a href={`${base}/chapters/08-rag`}>Chapter 8</a>)</li>
       <li><strong>Tree Search + Neural Networks:</strong> Combining classical search with learned heuristics (e.g., AlphaGo, AlphaZero, MuZero)</li>
       <li><strong>Neurosymbolic Reasoning:</strong> LLMs enhanced with formal verification, constraint solvers, and knowledge graphs</li>
     </ul>
@@ -609,56 +610,35 @@ Student:
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
+    <h2>Frequently Asked Questions</h2>
 
-    <div class="collapsible">
-      <div class="collapsible-header">
-        <span>❓ Test Your Understanding</span>
-        <span class="collapsible-icon">▼</span>
-      </div>
-      <div class="collapsible-content">
-        <ol>
-          <li>What are the main differences between symbolic AI and connectionist AI?</li>
-          <li>Why is the A* algorithm considered optimal if the heuristic is admissible?</li>
-          <li>What caused the AI winters, and what lessons were learned?</li>
-          <li>How do semantic networks differ from logical representations?</li>
-          <li>What are the advantages and disadvantages of rule-based expert systems?</li>
-        </ol>
-      </div>
-    </div>
+    <h3>What is the difference between AI, machine learning, and deep learning?</h3>
+    <p>AI is the broad goal of making computers behave intelligently. Machine learning is a subset of AI where systems learn patterns from data rather than following explicit rules. Deep learning is a subset of machine learning that uses multi-layer neural networks — the approach behind most modern AI breakthroughs. See <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a> and <a href={`${base}/chapters/03-deep-learning`}>Chapter 3</a> for details on each.</p>
 
-    <h2>Practical Exercises</h2>
+    <h3>Why did rule-based AI systems fail at scale?</h3>
+    <p>Expert systems encoded human knowledge as if-then rules, which worked well in narrow domains but required enormous manual effort to maintain and couldn't handle ambiguity or novelty. The world has too many exceptions for rules to cover comprehensively. Modern ML systems learn rules from data instead of having them hand-coded — which is why they generalize better.</p>
 
-    <div class="collapsible">
-      <div class="collapsible-header">
-        <span>💻 Hands-On Practice</span>
-        <span class="collapsible-icon">▼</span>
-      </div>
-      <div class="collapsible-content">
-        <ol>
-          <li>
-            <strong>Implement BFS and DFS:</strong> Write breadth-first and depth-first search algorithms 
-            to solve a maze navigation problem.
-          </li>
-          <li>
-            <strong>A* Pathfinding:</strong> Implement A* search with Manhattan distance heuristic for 
-            grid-based navigation.
-          </li>
-          <li>
-            <strong>Rule-Based System:</strong> Create a simple expert system for diagnosing computer 
-            problems using if-then rules.
-          </li>
-          <li>
-            <strong>Knowledge Base:</strong> Design an ontology for a domain of your choice (e.g., 
-            movies, recipes, sports) using frames or semantic networks.
-          </li>
-        </ol>
-      </div>
-    </div>
+    <h3>What caused the AI winters and what changed?</h3>
+    <p>AI winters were periods of reduced funding after early systems failed to match overpromised capabilities. The first (1970s) followed failures in machine translation; the second (late 1980s–90s) followed the collapse of the expert systems market. What broke the cycle: vastly more data (the internet), cheaper compute (GPUs), and algorithmic advances (deep learning, transformers).</p>
+
+    <h3>Is the Turing Test still a meaningful measure of AI intelligence?</h3>
+    <p>Most researchers no longer treat the Turing Test as the target. Modern LLMs can pass conversational versions of it without understanding or reasoning reliably. The field has shifted toward capability-specific benchmarks — coding, math, reasoning — that are harder to game and more predictive of practical usefulness.</p>
+
+    <h3>What should I know about AI history before making investment decisions?</h3>
+    <p>The pattern of AI hype followed by disappointment has repeated several times. The current wave is different in that capabilities are demonstrably useful (code generation, summarization, image analysis), but overpromising on timelines is still common. Understanding the hype cycles helps set realistic expectations with the board and executive team.</p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
+
+    <ol>
+      <li>Your organization is evaluating AI investments. What patterns from AI's history — including past hype cycles — would you use to calibrate expectations with the board or executive team?</li>
+      <li>Rule-based systems still power many enterprise workflows. When might a deterministic, rule-based approach be preferable to ML — and what criteria would you use to decide?</li>
+      <li>AI capabilities have improved in short bursts followed by plateaus. How does this non-linear progress pattern affect your technology roadmap and multi-year budget planning?</li>
+      <li>Early AI initiatives at large organizations have stalled due to data quality, talent gaps, or unrealistic expectations. What structural conditions would you verify are in place before committing to a major AI program?</li>
+    </ol>
 
     <div class="chapter-navigation">
       <a href="/" class="btn btn-secondary">← Home</a>
-      <a href="/chapters/02-machine-learning" class="btn btn-primary">Next: Machine Learning →</a>
+      <a href={`${base}/chapters/02-machine-learning`} class="btn btn-primary">Next: Machine Learning →</a>
     </div>
   </article>
 </BaseLayout>

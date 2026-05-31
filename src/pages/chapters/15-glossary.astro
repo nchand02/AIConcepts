@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,9 +24,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 15 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/14-system-design">System Design</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/14-system-design`}>System Design</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Start over: <a href="/chapters/01-foundations">Foundations</a></span>
+      <span class="chapter-next">Start over: <a href={`${base}/chapters/01-foundations`}>Foundations</a></span>
     </div>
     
     <div class="callout info">
@@ -48,70 +49,70 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <dd>Non-linear function applied to neuron outputs (ReLU, sigmoid, tanh). Enables networks to learn complex patterns.</dd>
       
       <dt><strong>Adapter Layers</strong></dt>
-      <dd>Small trainable modules inserted into frozen models for parameter-efficient fine-tuning. → <em>Chapter 9</em></dd>
+      <dd>Small trainable modules inserted into frozen models for parameter-efficient fine-tuning. → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
       
       <dt><strong>Agent</strong></dt>
-      <dd>Autonomous AI system that perceives environment, reasons, and takes actions to achieve goals. → <em>Chapter 11</em></dd>
+      <dd>Autonomous AI system that perceives environment, reasons, and takes actions to achieve goals. → <a href={`${base}/chapters/11-agents`}>Chapter 11</a></dd>
       
       <dt><strong>Alignment</strong></dt>
-      <dd>Process of making AI systems behave according to human values and intentions (RLHF, DPO). → <em>Chapter 9</em></dd>
+      <dd>Process of making AI systems behave according to human values and intentions (RLHF, DPO). → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
       
       <dt><strong>ANN (Approximate Nearest Neighbor)</strong></dt>
-      <dd>Algorithms for fast similarity search (HNSW, FAISS) that trade accuracy for speed. → <em>Chapter 7</em></dd>
+      <dd>Algorithms for fast similarity search (HNSW, FAISS) that trade accuracy for speed. → <a href={`${base}/chapters/07-embeddings`}>Chapter 7</a></dd>
       
       <dt><strong>Attention Mechanism</strong></dt>
-      <dd>Allows models to focus on relevant parts of input. Core component of Transformers. → <em>Chapter 4</em></dd>
+      <dd>Allows models to focus on relevant parts of input. Core component of Transformers. → <a href={`${base}/chapters/04-transformers`}>Chapter 4</a></dd>
       
       <dt><strong>AutoGPT</strong></dt>
-      <dd>Autonomous agent framework that breaks down goals and executes tasks with minimal human intervention. → <em>Chapter 11</em></dd>
+      <dd>Autonomous agent framework that breaks down goals and executes tasks with minimal human intervention. → <a href={`${base}/chapters/11-agents`}>Chapter 11</a></dd>
       
       <dt><strong>AWQ (Activation-aware Weight Quantization)</strong></dt>
-      <dd>Quantization method that preserves important weights based on activation patterns. → <em>Chapter 13</em></dd>
+      <dd>Quantization method that preserves important weights based on activation patterns. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
     </dl>
 
     <h2>B</h2>
     <dl>
       <dt><strong>Backpropagation</strong></dt>
-      <dd>Algorithm for computing gradients in neural networks by propagating errors backward through layers. → <em>Chapter 2</em></dd>
+      <dd>Algorithm for computing gradients in neural networks by propagating errors backward through layers. → <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a></dd>
       
       <dt><strong>Batch Size</strong></dt>
       <dd>Number of samples processed together during training. Larger batches = more stable gradients but more memory.</dd>
       
       <dt><strong>BERT (Bidirectional Encoder Representations from Transformers)</strong></dt>
-      <dd>Transformer model trained with masked language modeling for contextualized embeddings. → <em>Chapter 4</em></dd>
+      <dd>Transformer model trained with masked language modeling for contextualized embeddings. → <a href={`${base}/chapters/04-transformers`}>Chapter 4</a></dd>
       
       <dt><strong>BLEU (Bilingual Evaluation Understudy)</strong></dt>
       <dd>Metric for evaluating machine translation quality based on n-gram overlap with references.</dd>
       
       <dt><strong>BM25</strong></dt>
-      <dd>Ranking function for sparse retrieval based on term frequency and document length. → <em>Chapter 8</em></dd>
+      <dd>Ranking function for sparse retrieval based on term frequency and document length. → <a href={`${base}/chapters/08-rag`}>Chapter 8</a></dd>
     </dl>
 
     <h2>C</h2>
     <dl>
       <dt><strong>Chain-of-Thought (CoT)</strong></dt>
-      <dd>Prompting technique where model explains reasoning step-by-step before answering. → <em>Chapter 5</em></dd>
+      <dd>Prompting technique where model explains reasoning step-by-step before answering. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
       
       <dt><strong>CLIP (Contrastive Language-Image Pre-training)</strong></dt>
-      <dd>Vision-language model that learns joint embeddings for text and images. → <em>Chapter 10</em></dd>
+      <dd>Vision-language model that learns joint embeddings for text and images. → <a href={`${base}/chapters/10-multimodal`}>Chapter 10</a></dd>
       
       <dt><strong>CNN (Convolutional Neural Network)</strong></dt>
-      <dd>Neural network with convolutional layers, effective for image processing. → <em>Chapter 3</em></dd>
+      <dd>Neural network with convolutional layers, effective for image processing. → <a href={`${base}/chapters/03-deep-learning`}>Chapter 3</a></dd>
       
       <dt><strong>Context Window</strong></dt>
-      <dd>Maximum number of tokens an LLM can process at once (e.g., 4K, 32K, 128K). → <em>Chapter 5</em></dd>
+      <dd>Maximum number of tokens an LLM can process at once (e.g., 4K, 32K, 128K). → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
       
       <dt><strong>Cosine Similarity</strong></dt>
-      <dd>Measure of similarity between vectors based on angle, range [-1, 1]. Standard for text embeddings. → <em>Chapter 7</em></dd>
+      <dd>Measure of similarity between vectors based on angle, range [-1, 1]. Standard for text embeddings. → <a href={`${base}/chapters/07-embeddings`}>Chapter 7</a></dd>
     </dl>
 
     <h2>D</h2>
     <dl>
       <dt><strong>DDPM (Denoising Diffusion Probabilistic Model)</strong></dt>
-      <dd>Generative model that learns to reverse noise-adding process. Foundation for Stable Diffusion. → <em>Chapter 6</em></dd>
+      <dd>Generative model that learns to reverse noise-adding process. Foundation for Stable Diffusion. → <a href={`${base}/chapters/06-generative-ai`}>Chapter 6</a></dd>
       
       <dt><strong>DPO (Direct Preference Optimization)</strong></dt>
-      <dd>Simpler alternative to RLHF for aligning models with human preferences. → <em>Chapter 9</em></dd>
+      <dd>Simpler alternative to RLHF for aligning models with human preferences. → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
       
       <dt><strong>Dropout</strong></dt>
       <dd>Regularization technique that randomly drops neurons during training to prevent overfitting.</dd>
@@ -120,7 +121,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2>E</h2>
     <dl>
       <dt><strong>Embedding</strong></dt>
-      <dd>Dense vector representation capturing semantic meaning of text, images, or other data. → <em>Chapter 7</em></dd>
+      <dd>Dense vector representation capturing semantic meaning of text, images, or other data. → <a href={`${base}/chapters/07-embeddings`}>Chapter 7</a></dd>
       
       <dt><strong>Encoder-Decoder</strong></dt>
       <dd>Architecture where encoder processes input and decoder generates output. Used in translation, summarization.</dd>
@@ -132,34 +133,34 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2>F</h2>
     <dl>
       <dt><strong>FAISS</strong></dt>
-      <dd>Facebook AI Similarity Search library for efficient vector search at scale. → <em>Chapter 7</em></dd>
+      <dd>Facebook AI Similarity Search library for efficient vector search at scale. → <a href={`${base}/chapters/07-embeddings`}>Chapter 7</a></dd>
       
       <dt><strong>Few-Shot Learning</strong></dt>
-      <dd>Learning from small number of examples, often via in-context learning in LLMs. → <em>Chapter 5</em></dd>
+      <dd>Learning from small number of examples, often via in-context learning in LLMs. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
       
       <dt><strong>Fine-Tuning</strong></dt>
-      <dd>Adapting pre-trained model to specific task or domain by continued training. → <em>Chapter 9</em></dd>
+      <dd>Adapting pre-trained model to specific task or domain by continued training. → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
       
       <dt><strong>Function Calling</strong></dt>
-      <dd>LLM capability to invoke external tools/APIs based on user requests. → <em>Chapter 11</em></dd>
+      <dd>LLM capability to invoke external tools/APIs based on user requests. → <a href={`${base}/chapters/11-agents`}>Chapter 11</a></dd>
     </dl>
 
     <h2>G</h2>
     <dl>
       <dt><strong>GAN (Generative Adversarial Network)</strong></dt>
-      <dd>Generative model with generator and discriminator networks competing against each other. → <em>Chapter 6</em></dd>
+      <dd>Generative model with generator and discriminator networks competing against each other. → <a href={`${base}/chapters/06-generative-ai`}>Chapter 6</a></dd>
       
       <dt><strong>GPU (Graphics Processing Unit)</strong></dt>
-      <dd>Specialized hardware for parallel computation, essential for training and running neural networks. → <em>Chapter 13</em></dd>
+      <dd>Specialized hardware for parallel computation, essential for training and running neural networks. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
       
       <dt><strong>Gradient Descent</strong></dt>
-      <dd>Optimization algorithm that iteratively adjusts model parameters to minimize loss. → <em>Chapter 2</em></dd>
+      <dd>Optimization algorithm that iteratively adjusts model parameters to minimize loss. → <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a></dd>
       
       <dt><strong>GPTQ</strong></dt>
-      <dd>Post-training quantization method for compressing LLMs to 4-bit precision. → <em>Chapter 13</em></dd>
+      <dd>Post-training quantization method for compressing LLMs to 4-bit precision. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
       
       <dt><strong>Grounding</strong></dt>
-      <dd>Basing AI outputs on retrieved facts or provided context to reduce hallucinations. → <em>Chapter 8</em></dd>
+      <dd>Basing AI outputs on retrieved facts or provided context to reduce hallucinations. → <a href={`${base}/chapters/08-rag`}>Chapter 8</a></dd>
     </dl>
 
     <h2>H</h2>
@@ -168,7 +169,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <dd>When AI model generates plausible but false or nonsensical information.</dd>
       
       <dt><strong>HNSW (Hierarchical Navigable Small World)</strong></dt>
-      <dd>Graph-based algorithm for approximate nearest neighbor search. State-of-the-art for vector DBs. → <em>Chapter 7</em></dd>
+      <dd>Graph-based algorithm for approximate nearest neighbor search. State-of-the-art for vector DBs. → <a href={`${base}/chapters/07-embeddings`}>Chapter 7</a></dd>
       
       <dt><strong>Hyperparameter</strong></dt>
       <dd>Configuration setting for training (learning rate, batch size) not learned from data.</dd>
@@ -177,103 +178,103 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2>I</h2>
     <dl>
       <dt><strong>Inference</strong></dt>
-      <dd>Running trained model to generate predictions on new data. → <em>Chapter 13</em></dd>
+      <dd>Running trained model to generate predictions on new data. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
       
       <dt><strong>Instruction Tuning</strong></dt>
-      <dd>Fine-tuning models on instruction-response pairs to improve instruction-following. → <em>Chapter 9</em></dd>
+      <dd>Fine-tuning models on instruction-response pairs to improve instruction-following. → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
     </dl>
 
     <h2>K</h2>
     <dl>
       <dt><strong>KV Cache</strong></dt>
-      <dd>Cached key-value pairs from attention mechanism to speed up generation. → <em>Chapter 13</em></dd>
+      <dd>Cached key-value pairs from attention mechanism to speed up generation. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
     </dl>
 
     <h2>L</h2>
     <dl>
       <dt><strong>Latency</strong></dt>
-      <dd>Time from request to response. Critical metric for production AI systems. → <em>Chapter 14</em></dd>
+      <dd>Time from request to response. Critical metric for production AI systems. → <a href={`${base}/chapters/14-system-design`}>Chapter 14</a></dd>
       
       <dt><strong>Learning Rate</strong></dt>
       <dd>Hyperparameter controlling step size during gradient descent optimization.</dd>
       
       <dt><strong>LLM (Large Language Model)</strong></dt>
-      <dd>Neural network with billions of parameters trained on massive text corpora. → <em>Chapter 5</em></dd>
+      <dd>Neural network with billions of parameters trained on massive text corpora. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
       
       <dt><strong>LoRA (Low-Rank Adaptation)</strong></dt>
-      <dd>PEFT method adding trainable low-rank matrices to frozen model weights. → <em>Chapter 9</em></dd>
+      <dd>PEFT method adding trainable low-rank matrices to frozen model weights. → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
       
       <dt><strong>Loss Function</strong></dt>
-      <dd>Measure of model error that optimization aims to minimize. → <em>Chapter 2</em></dd>
+      <dd>Measure of model error that optimization aims to minimize. → <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a></dd>
     </dl>
 
     <h2>M</h2>
     <dl>
       <dt><strong>MCP (Model Context Protocol)</strong></dt>
-      <dd>Open standard for connecting AI applications with data sources and tools. → <em>Chapter 11</em></dd>
+      <dd>Open standard for connecting AI applications with data sources and tools. → <a href={`${base}/chapters/11-agents`}>Chapter 11</a></dd>
       
       <dt><strong>MLP (Multi-Layer Perceptron)</strong></dt>
       <dd>Feedforward neural network with multiple layers. Also refers to FFN in Transformers.</dd>
       
       <dt><strong>Multi-Head Attention</strong></dt>
-      <dd>Parallel attention mechanisms that capture different aspects of relationships. → <em>Chapter 4</em></dd>
+      <dd>Parallel attention mechanisms that capture different aspects of relationships. → <a href={`${base}/chapters/04-transformers`}>Chapter 4</a></dd>
     </dl>
 
     <h2>N</h2>
     <dl>
       <dt><strong>Neural Network</strong></dt>
-      <dd>Computing system inspired by biological neurons, composed of interconnected layers. → <em>Chapter 1</em></dd>
+      <dd>Computing system inspired by biological neurons, composed of interconnected layers. → <a href={`${base}/chapters/01-foundations`}>Chapter 1</a></dd>
       
       <dt><strong>NF4</strong></dt>
-      <dd>4-bit normalized float format optimized for neural network weights. Used in QLoRA. → <em>Chapter 13</em></dd>
+      <dd>4-bit normalized float format optimized for neural network weights. Used in QLoRA. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
     </dl>
 
     <h2>O</h2>
     <dl>
       <dt><strong>Overfitting</strong></dt>
-      <dd>When model learns training data too well and fails to generalize to new data. → <em>Chapter 2</em></dd>
+      <dd>When model learns training data too well and fails to generalize to new data. → <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a></dd>
     </dl>
 
     <h2>P</h2>
     <dl>
       <dt><strong>PagedAttention</strong></dt>
-      <dd>Memory management technique for KV cache that enables higher throughput. → <em>Chapter 13</em></dd>
+      <dd>Memory management technique for KV cache that enables higher throughput. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
       
       <dt><strong>PEFT (Parameter-Efficient Fine-Tuning)</strong></dt>
-      <dd>Methods that update only small subset of parameters (LoRA, adapters, prefix tuning). → <em>Chapter 9</em></dd>
+      <dd>Methods that update only small subset of parameters (LoRA, adapters, prefix tuning). → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
       
       <dt><strong>Perplexity</strong></dt>
       <dd>Metric measuring how well model predicts text. Lower = better. Common for LLM evaluation.</dd>
       
       <dt><strong>Prompt Engineering</strong></dt>
-      <dd>Crafting inputs to guide LLM behavior and improve output quality. → <em>Chapter 5</em></dd>
+      <dd>Crafting inputs to guide LLM behavior and improve output quality. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
     </dl>
 
     <h2>Q</h2>
     <dl>
       <dt><strong>QLoRA</strong></dt>
-      <dd>Quantized LoRA - combines 4-bit quantization with LoRA for memory-efficient fine-tuning. → <em>Chapter 9</em></dd>
+      <dd>Quantized LoRA - combines 4-bit quantization with LoRA for memory-efficient fine-tuning. → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
       
       <dt><strong>Quantization</strong></dt>
-      <dd>Reducing model precision (FP32→INT8) to decrease size and increase speed. → <em>Chapter 13</em></dd>
+      <dd>Reducing model precision (FP32→INT8) to decrease size and increase speed. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
     </dl>
 
     <h2>R</h2>
     <dl>
       <dt><strong>RAG (Retrieval-Augmented Generation)</strong></dt>
-      <dd>Technique combining retrieval with generation for grounded, factual responses. → <em>Chapter 8</em></dd>
+      <dd>Technique combining retrieval with generation for grounded, factual responses. → <a href={`${base}/chapters/08-rag`}>Chapter 8</a></dd>
       
       <dt><strong>ReAct</strong></dt>
-      <dd>Pattern interleaving reasoning and acting for agent decision-making. → <em>Chapter 11</em></dd>
+      <dd>Pattern interleaving reasoning and acting for agent decision-making. → <a href={`${base}/chapters/11-agents`}>Chapter 11</a></dd>
       
       <dt><strong>ReLU (Rectified Linear Unit)</strong></dt>
       <dd>Activation function f(x) = max(0, x). Simple and effective for deep networks.</dd>
       
       <dt><strong>RLHF (Reinforcement Learning from Human Feedback)</strong></dt>
-      <dd>Technique for aligning models with human preferences using reward models. → <em>Chapter 9</em></dd>
+      <dd>Technique for aligning models with human preferences using reward models. → <a href={`${base}/chapters/09-fine-tuning`}>Chapter 9</a></dd>
       
       <dt><strong>RNN (Recurrent Neural Network)</strong></dt>
-      <dd>Neural network with loops for processing sequences. Largely replaced by Transformers. → <em>Chapter 3</em></dd>
+      <dd>Neural network with loops for processing sequences. Largely replaced by Transformers. → <a href={`${base}/chapters/03-deep-learning`}>Chapter 3</a></dd>
       
       <dt><strong>ROUGE</strong></dt>
       <dd>Metric for evaluating summarization quality based on n-gram overlap.</dd>
@@ -282,73 +283,73 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <h2>S</h2>
     <dl>
       <dt><strong>Self-Attention</strong></dt>
-      <dd>Attention mechanism where sequence attends to itself. Core of Transformer architecture. → <em>Chapter 4</em></dd>
+      <dd>Attention mechanism where sequence attends to itself. Core of Transformer architecture. → <a href={`${base}/chapters/04-transformers`}>Chapter 4</a></dd>
       
       <dt><strong>Semantic Search</strong></dt>
-      <dd>Search based on meaning rather than keywords, using embeddings. → <em>Chapter 7</em></dd>
+      <dd>Search based on meaning rather than keywords, using embeddings. → <a href={`${base}/chapters/07-embeddings`}>Chapter 7</a></dd>
       
       <dt><strong>SGD (Stochastic Gradient Descent)</strong></dt>
-      <dd>Optimization algorithm using random batches to approximate gradient. → <em>Chapter 2</em></dd>
+      <dd>Optimization algorithm using random batches to approximate gradient. → <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a></dd>
       
       <dt><strong>Softmax</strong></dt>
       <dd>Function converting logits to probability distribution. Used in output layers.</dd>
       
       <dt><strong>Supervised Learning</strong></dt>
-      <dd>Learning from labeled examples (input-output pairs). → <em>Chapter 2</em></dd>
+      <dd>Learning from labeled examples (input-output pairs). → <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a></dd>
     </dl>
 
     <h2>T</h2>
     <dl>
       <dt><strong>Temperature</strong></dt>
-      <dd>Parameter controlling randomness in generation. Higher = more creative, lower = more focused. → <em>Chapter 5</em></dd>
+      <dd>Parameter controlling randomness in generation. Higher = more creative, lower = more focused. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
       
       <dt><strong>Token</strong></dt>
-      <dd>Basic unit of text processed by LLMs. Can be word, subword, or character. → <em>Chapter 5</em></dd>
+      <dd>Basic unit of text processed by LLMs. Can be word, subword, or character. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
       
       <dt><strong>Tokenization</strong></dt>
       <dd>Process of splitting text into tokens. BPE and WordPiece are common algorithms.</dd>
       
       <dt><strong>Top-K Sampling</strong></dt>
-      <dd>Sampling from K most likely tokens during generation. → <em>Chapter 5</em></dd>
+      <dd>Sampling from K most likely tokens during generation. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
       
       <dt><strong>Top-P (Nucleus) Sampling</strong></dt>
-      <dd>Sampling from smallest set of tokens with cumulative probability ≥ P. → <em>Chapter 5</em></dd>
+      <dd>Sampling from smallest set of tokens with cumulative probability ≥ P. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
       
       <dt><strong>Transfer Learning</strong></dt>
-      <dd>Using pre-trained model as starting point for new task. Foundation of modern AI. → <em>Chapter 2</em></dd>
+      <dd>Using pre-trained model as starting point for new task. Foundation of modern AI. → <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a></dd>
       
       <dt><strong>Transformer</strong></dt>
-      <dd>Architecture based on self-attention, foundation for modern LLMs. → <em>Chapter 4</em></dd>
+      <dd>Architecture based on self-attention, foundation for modern LLMs. → <a href={`${base}/chapters/04-transformers`}>Chapter 4</a></dd>
     </dl>
 
     <h2>U</h2>
     <dl>
       <dt><strong>Underfitting</strong></dt>
-      <dd>When model is too simple to capture patterns in data. → <em>Chapter 2</em></dd>
+      <dd>When model is too simple to capture patterns in data. → <a href={`${base}/chapters/02-machine-learning`}>Chapter 2</a></dd>
     </dl>
 
     <h2>V</h2>
     <dl>
       <dt><strong>VAE (Variational Autoencoder)</strong></dt>
-      <dd>Generative model learning latent representations with probabilistic encoder/decoder. → <em>Chapter 6</em></dd>
+      <dd>Generative model learning latent representations with probabilistic encoder/decoder. → <a href={`${base}/chapters/06-generative-ai`}>Chapter 6</a></dd>
       
       <dt><strong>Vector Database</strong></dt>
-      <dd>Database optimized for storing and searching high-dimensional vectors. → <em>Chapter 7</em></dd>
+      <dd>Database optimized for storing and searching high-dimensional vectors. → <a href={`${base}/chapters/07-embeddings`}>Chapter 7</a></dd>
       
       <dt><strong>vLLM</strong></dt>
-      <dd>High-throughput LLM inference server with PagedAttention and continuous batching. → <em>Chapter 13</em></dd>
+      <dd>High-throughput LLM inference server with PagedAttention and continuous batching. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
       
       <dt><strong>VQA (Visual Question Answering)</strong></dt>
-      <dd>Task of answering questions about images using multimodal models. → <em>Chapter 10</em></dd>
+      <dd>Task of answering questions about images using multimodal models. → <a href={`${base}/chapters/10-multimodal`}>Chapter 10</a></dd>
     </dl>
 
     <h2>Z</h2>
     <dl>
       <dt><strong>ZeRO (Zero Redundancy Optimizer)</strong></dt>
-      <dd>Memory optimization technique for distributed training by sharding optimizer states, gradients, and parameters. → <em>Chapter 13</em></dd>
+      <dd>Memory optimization technique for distributed training by sharding optimizer states, gradients, and parameters. → <a href={`${base}/chapters/13-infrastructure`}>Chapter 13</a></dd>
       
       <dt><strong>Zero-Shot Learning</strong></dt>
-      <dd>Model performing task without specific training examples, using only task description. → <em>Chapter 5</em></dd>
+      <dd>Model performing task without specific training examples, using only task description. → <a href={`${base}/chapters/05-llms`}>Chapter 5</a></dd>
     </dl>
 
     <h2>Common Acronyms</h2>
@@ -398,8 +399,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <div class="chapter-navigation">
-      <a href="/chapters/14-system-design" class="btn btn-secondary">← Previous: System Design</a>
-      <a href="/chapters/01-foundations" class="btn btn-primary">Start over: Foundations →</a>
+      <a href={`${base}/chapters/14-system-design`} class="btn btn-secondary">← Previous: System Design</a>
+      <a href={`${base}/chapters/01-foundations`} class="btn btn-primary">Start over: Foundations →</a>
     </div>
 
   </article>
@@ -477,5 +478,34 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     .chapter-navigation a {
       text-align: center;
     }
+  }
+
+  /* Compact A–Z grid for the glossary ToC */
+  .toc .toc-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(2.75rem, 1fr));
+    gap: var(--space-xs);
+  }
+
+  .toc .toc-item-h2 {
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  .toc .toc-item-h2 a {
+    display: block;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+
+  .toc .toc-item-h2 a:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
   }
 </style>

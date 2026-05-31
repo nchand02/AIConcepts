@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout 
@@ -23,14 +24,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="chapter-meta">
       <span class="chapter-progress">Chapter 13 of 15</span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-prereq">Prerequisite: <a href="/chapters/12-tooling">Tooling &amp; Ecosystems</a></span>
+      <span class="chapter-prereq">Prerequisite: <a href={`${base}/chapters/12-tooling`}>Tooling &amp; Ecosystems</a></span>
       <span class="chapter-sep" aria-hidden="true">•</span>
-      <span class="chapter-next">Next: <a href="/chapters/14-system-design">System Design</a></span>
+      <span class="chapter-next">Next: <a href={`${base}/chapters/14-system-design`}>System Design</a></span>
     </div>
     
     <div class="callout info">
       <div class="callout-title">📚 Chapter Overview</div>
       <p>Running AI models in production requires specialized infrastructure. This chapter covers model serving, optimization techniques, distributed training, and deployment strategies.</p>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">📌 Learning objectives</div>
+      <ul>
+        <li>Explain why AI models need specialized infrastructure and how they differ from traditional web workloads</li>
+        <li>Identify the key levers for reducing inference cost and latency (quantization, batching, caching, model selection)</li>
+        <li>Compare managed vs. self-hosted model serving and the trade-offs for each</li>
+        <li>Describe common deployment patterns and when each makes sense for your team's scale</li>
+        <li>Apply a cost estimation framework when planning or reviewing AI infrastructure spend</li>
+      </ul>
     </div>
 
     <h2>AI Infrastructure Challenges</h2>
@@ -515,44 +527,35 @@ Total savings: 16x !
       </ul>
     </div>
 
-    <h2>Review Questions</h2>
-    <ol>
-      <li>How does PagedAttention improve memory efficiency?</li>
-      <li>Compare the trade-offs of different quantization methods (INT8, INT4, NF4).</li>
-      <li>Explain continuous batching and why it's better than static batching.</li>
-      <li>What are the three stages of ZeRO and what does each shard?</li>
-      <li>How can caching reduce inference costs?</li>
-      <li>When should you use serverless vs dedicated GPU infrastructure?</li>
-    </ol>
+    <h2>Frequently Asked Questions</h2>
 
-    <h2>Practical Exercises</h2>
+    <h3>When should I use a managed AI API vs. self-hosting models?</h3>
+    <p>Start with managed APIs (OpenAI, Anthropic, Google) for most applications — they're faster to deploy, include security controls, and require no ML infrastructure expertise. Self-hosting becomes worth evaluating when: data residency regulations prohibit third-party API calls, costs at scale exceed self-hosting economics, or you need model customization not available via API. Most organizations never need to self-host; those that do typically have 50M+ tokens/day of usage.</p>
+
+    <h3>What is quantization and how does it reduce AI infrastructure costs?</h3>
+    <p>Quantization reduces the numerical precision used to store model weights — from 16-bit or 32-bit floats to 8-bit or 4-bit integers. A model that requires 14GB of GPU memory in full precision might fit in 4GB at 4-bit precision. Quality degrades slightly, but for many tasks the tradeoff is acceptable. Quantized models can run on smaller (cheaper) GPUs or even CPUs, significantly reducing inference costs.</p>
+
+    <h3>What is the difference between batch and real-time inference?</h3>
+    <p>Real-time (online) inference processes one request at a time with low latency — required for interactive chatbots and APIs. Batch inference groups many requests together and processes them in bulk — better for high-throughput, latency-tolerant workloads like document classification or nightly report generation. Batch is significantly cheaper per token because it maximizes GPU utilization. Many applications can use batch for non-interactive workflows without users noticing.</p>
+
+    <h3>What is vLLM and why has it become standard for open-source LLM serving?</h3>
+    <p>vLLM is an open-source LLM inference engine that introduced PagedAttention — a memory management technique that significantly improves GPU memory utilization during serving. It also implements continuous batching, which keeps GPUs busy by dynamically grouping requests as they arrive rather than waiting for fixed batch windows. Together these innovations dramatically improve throughput compared to standard inference, making self-hosted LLMs economically viable at scale.</p>
+
+    <h3>How do I estimate GPU costs for a production AI deployment?</h3>
+    <p>Key variables: model size (determines GPU memory required), request volume (determines throughput needed), average sequence length (affects memory and compute per request), and latency SLA (affects batch size). As a rough starting point: a 7B-parameter model in 4-bit quantization fits on a single 16GB GPU and can handle tens of concurrent requests. Cloud GPU instance costs vary widely — benchmark your specific workload before committing to reserved capacity. <!-- REVIEW: verify GPU memory / model size estimates remain accurate for current hardware --></p>
+
+    <h2>Reflection Questions for Technical Leaders</h2>
+
     <ol>
-      <li><strong>Deploy with vLLM:</strong>
-        <ul>
-          <li>Set up vLLM server with Llama-2-7B</li>
-          <li>Benchmark throughput and latency</li>
-          <li>Compare with standard transformers inference</li>
-        </ul>
-      </li>
-      <li><strong>Quantization Experiment:</strong>
-        <ul>
-          <li>Quantize model to INT8 and INT4 with GPTQ/AWQ</li>
-          <li>Measure quality degradation on benchmark</li>
-          <li>Calculate memory savings and speed improvements</li>
-        </ul>
-      </li>
-      <li><strong>Cost Optimization:</strong>
-        <ul>
-          <li>Implement semantic caching layer</li>
-          <li>Measure cache hit rate over time</li>
-          <li>Calculate cost savings compared to no caching</li>
-        </ul>
-      </li>
+      <li>Managed AI APIs offer simplicity but create dependency on a third party's pricing, availability, and data policies. How would you structure your infrastructure strategy to manage this dependency — including what conditions would trigger a move to self-hosted models?</li>
+      <li>GPU costs for fine-tuning and serving large models can be significant and difficult to predict. What financial governance process would you apply to AI compute budgets — including how you would handle cost overruns during development?</li>
+      <li>Self-hosting models gives you control over data residency and long-term cost, but requires ML infrastructure expertise your team may not have. What capabilities would you need to build or hire before self-hosting is viable?</li>
+      <li>Inference costs scale with usage, while model quality often degrades with aggressive quantization. How would you set a minimum quality floor — defined by evaluation metrics, not intuition — while still optimizing for cost efficiency?</li>
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/chapters/12-tooling" class="btn btn-secondary">← Previous: Tooling &amp; Ecosystems</a>
-      <a href="/chapters/14-system-design" class="btn btn-primary">Next: System Design →</a>
+      <a href={`${base}/chapters/12-tooling`} class="btn btn-secondary">← Previous: Tooling &amp; Ecosystems</a>
+      <a href={`${base}/chapters/14-system-design`} class="btn btn-primary">Next: System Design →</a>
     </div>
 
   </article>
