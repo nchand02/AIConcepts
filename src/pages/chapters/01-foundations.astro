@@ -14,7 +14,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- REVIEW: This chapter includes several quantitative/attribution claims (benchmarks, scores, accuracies, investments, awards). Verify against reliable sources before publication; do not adjust values without citations. -->
 
     <nav class="chapter-breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a>
+      <a href={`${base}/`}>Home</a>
       <span aria-hidden="true">→</span>
       <span>Chapters</span>
       <span aria-hidden="true">→</span>
@@ -637,7 +637,7 @@ Student:
     </ol>
 
     <div class="chapter-navigation">
-      <a href="/" class="btn btn-secondary">← Home</a>
+      <a href={`${base}/`} class="btn btn-secondary">← Home</a>
       <a href={`${base}/chapters/02-machine-learning`} class="btn btn-primary">Next: Machine Learning →</a>
     </div>
   </article>

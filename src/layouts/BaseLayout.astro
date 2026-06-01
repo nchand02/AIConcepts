@@ -197,6 +197,9 @@ const chapters = [
   <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`}>
 </head>
 <body>
+  <!-- Skip to main content (keyboard accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <div class="app-container">
     <!-- Reading Progress Bar -->
     <div id="reading-progress" class="reading-progress"></div>
@@ -223,7 +226,7 @@ const chapters = [
         
         <nav class="main-nav">
           <a href={`${base}/`} class={currentPage === "" ? "active" : ""}>Home</a>
-          <a href={`${base}/about`} class={currentPage === "/about" ? "active" : ""}>About</a>
+          <a href={`${base}/about`} class={currentPage === "/about" ? "active" : ""}>Course Overview</a>
           <a href={`${base}/chapters/01-foundations`} class={currentPage.startsWith("/chapters") ? "active" : ""}>Chapters</a>
           <a href="https://nchand02.github.io/bio/" target="_blank" rel="noopener noreferrer">About Author</a>
         </nav>
@@ -251,7 +254,7 @@ const chapters = [
               <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
             </svg>
           </button>
-          <button id="mobile-menu-toggle" class="icon-btn mobile-only" aria-label="Menu">
+          <button id="mobile-menu-toggle" class="icon-btn mobile-only" aria-label="Menu" aria-expanded="false" aria-controls="sidebar">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <line x1="3" y1="6" x2="21" y2="6" stroke-width="2" stroke-linecap="round"/>
               <line x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round"/>
@@ -290,7 +293,7 @@ const chapters = [
       </aside>
 
       <!-- Main Content -->
-      <main class="main-content">
+      <main class="main-content" id="main-content">
         <div class="content-inner">
           <slot />
         </div>

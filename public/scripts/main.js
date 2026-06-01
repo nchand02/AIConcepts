@@ -57,8 +57,9 @@
   const sidebar = document.getElementById('sidebar');
   
   mobileMenuToggle?.addEventListener('click', () => {
-    sidebar?.classList.toggle('active');
+    const isOpen = sidebar?.classList.toggle('active');
     document.body.classList.toggle('sidebar-open');
+    mobileMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
   
   // Close sidebar when clicking outside on mobile
@@ -67,6 +68,7 @@
       if (!sidebar?.contains(e.target) && !mobileMenuToggle?.contains(e.target)) {
         sidebar?.classList.remove('active');
         document.body.classList.remove('sidebar-open');
+        mobileMenuToggle?.setAttribute('aria-expanded', 'false');
       }
     }
   });
@@ -84,24 +86,37 @@
   
   // Build search index from page content
   function buildSearchIndex() {
-    const chapters = document.querySelectorAll('article h1, article h2, article h3, article p');
-    let currentChapter = '';
+    const article = document.querySelector('article');
+    if (!article) return;
+    const headings = article.querySelectorAll('h2, h3');
+    let currentChapter = (document.querySelector('article h1') || {}).textContent || '';
     let currentSection = '';
-    
-    chapters.forEach(element => {
-      if (element.tagName === 'H1') {
-        currentChapter = element.textContent;
-      } else if (element.tagName === 'H2') {
-        currentSection = element.textContent;
-      }
-      
-      if (element.textContent.length > 20) {
+    let currentAnchor = '';
+
+    // Index headings (with their anchors) and nearby paragraphs
+    headings.forEach(heading => {
+      if (heading.tagName === 'H2') currentSection = heading.textContent;
+      currentAnchor = heading.id || '';
+      searchIndex.push({
+        title: heading.textContent,
+        chapter: currentChapter,
+        content: heading.textContent,
+        type: heading.tagName,
+        url: window.location.pathname,
+        anchor: heading.id || ''
+      });
+    });
+
+    // Also index paragraphs near headings for richer snippets
+    article.querySelectorAll('p').forEach(p => {
+      if (p.textContent.length > 30) {
         searchIndex.push({
           title: currentSection || currentChapter,
           chapter: currentChapter,
-          content: element.textContent,
-          type: element.tagName,
-          url: window.location.pathname
+          content: p.textContent,
+          type: 'P',
+          url: window.location.pathname,
+          anchor: currentAnchor
         });
       }
     });
@@ -127,11 +142,12 @@
     
     searchResults.innerHTML = results.map(result => {
       const snippet = highlightText(result.content.substring(0, 150), query);
+      const href = result.anchor ? `${result.url}#${result.anchor}` : result.url;
       return `
-        <div class="search-result">
+        <a class="search-result" href="${href}">
           <div class="search-result-title">${result.title}</div>
           <div class="search-result-snippet">${snippet}...</div>
-        </div>
+        </a>
       `;
     }).join('');
   }
@@ -270,45 +286,33 @@
   }
 
   // ======================
-  // Scroll Progress Indicator
+  // Collapsible Sections
   // ======================
-  function updateScrollProgress() {
-    const article = document.querySelector('article');
-    if (!article) return;
-    
-    const windowHeight = window.innerHeight;
-    const documentHeight = article.offsetHeight;
-    const scrollTop = window.scrollY;
-    const articleTop = article.offsetTop;
-    
-    const progress = Math.min(100, Math.max(0, 
-      ((scrollTop - articleTop) / (documentHeight - windowHeight)) * 100
-    ));
-    
-    let progressBar = document.getElementById('scroll-progress');
-    if (!progressBar) {
-      progressBar = document.createElement('div');
-      progressBar.id = 'scroll-progress';
-      document.body.appendChild(progressBar);
-    }
-    
-    progressBar.style.width = `${progress}%`;
-  }
-  
-  window.addEventListener('scroll', updateScrollProgress);
-  updateScrollProgress();
+  function initCollapsibles() {
+    document.querySelectorAll('.collapsible').forEach(section => {
+      const header = section.querySelector('.collapsible-header');
+      const content = section.querySelector('.collapsible-content');
+      if (!header || !content) return;
 
-  // ======================
-  // Collapsible Sections (for long pages)
-  // ======================
-  document.querySelectorAll('.collapsible-section').forEach(section => {
-    const header = section.querySelector('.collapsible-header');
-    if (header) {
+      // Start collapsed unless pre-opened
+      if (!section.classList.contains('open')) {
+        content.style.maxHeight = '0';
+      }
+
       header.addEventListener('click', () => {
-        section.classList.toggle('collapsed');
+        const isOpen = section.classList.toggle('open');
+        content.style.maxHeight = isOpen ? content.scrollHeight + 'px' : '0';
+        // After expand animation, allow content to grow freely (for nested content)
+        if (isOpen) {
+          content.addEventListener('transitionend', () => {
+            if (section.classList.contains('open')) content.style.maxHeight = 'none';
+          }, { once: true });
+        }
       });
-    }
-  });
+    });
+  }
+
+  initCollapsibles();
 
   // ======================
   // External Link Icons
