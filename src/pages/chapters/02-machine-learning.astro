@@ -71,7 +71,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <div class="diagram-container">
       <p class="diagram-title">Taxonomy of Machine Learning Approaches</p>
-      <pre class="mermaid" role="img" aria-label="Hierarchical diagram showing machine learning divided into supervised, unsupervised, reinforcement, and semi-supervised learning, with their respective subcategories" set:html={`graph TD
+      <pre class="mermaid" role="img" aria-label="Hierarchical diagram showing machine learning divided into supervised, unsupervised, reinforcement, and semi-supervised learning, with their respective subcategories" set:html={`graph LR
     A[Machine Learning] --> B[Supervised Learning]
     A --> C[Unsupervised Learning]
     A --> D[Reinforcement Learning]
@@ -87,19 +87,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     D --> D1[Model-Free]
     D --> D2[Model-Based]
     
-    %% Semantic color classes
-    classDef root fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef supervised fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
-    classDef unsupervised fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
-    classDef reinforcement fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
-    classDef semi fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
-    classDef subtask fill:#f3f4f6,stroke:#6b7280,stroke-width:1.5px,color:#1e293b
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
     
-    class A root
-    class B,B1,B2 supervised
-    class C,C1,C2,C3 unsupervised
-    class D,D1,D2 reinforcement
-    class E semi
+    class A input
+    class B,B1,B2 highlight
+    class C,C1,C2,C3 accent
+    class D,D1,D2 output
+    class E process
       `} />
     </div>
 
@@ -321,12 +319,12 @@ print(f"Inertia (within-cluster sum of squares): {{kmeans.inertia_:.2f}}")</code
     %% Semantic color classes
     classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
     classDef process fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
-    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef neutral fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
     classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
     
     class A input
     class B process
-    class C decision
+    class C neutral
     class D,E,F output
       `} />
     </div>
@@ -393,13 +391,13 @@ print(f"Explained variance ratio: {{pca.explained_variance_ratio_}}")</code>`} /
     C -.->|Guide Decisions| B
     
     %% Semantic color classes
-    classDef environment fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef agent fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
-    classDef policy fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
     
-    class A environment
-    class B agent
-    class C policy
+    class A input
+    class B highlight
+    class C accent
       `} />
       <p class="diagram-caption"><em>The agent observes states and rewards, takes actions, and continuously updates its policy to maximize cumulative reward</em></p>
     </div>

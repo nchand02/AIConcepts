@@ -76,13 +76,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     
     %% Semantic color classes
     classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef encoder fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
-    classDef decoder fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
     classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
     
     class A,B,C input
-    class D encoder
-    class E decoder
+    class D process
+    class E accent
     class F,G output
       `} />
     </div>
@@ -254,13 +254,13 @@ output_I = 0.42×V_I + 0.38×V_love + 0.20×V_AI</code>`} />
     
     %% Semantic color classes
     classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef head fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
-    classDef combine fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
     classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
     
     class A input
-    class B1,B2,B3,B4 head
-    class C,D combine
+    class B1,B2,B3,B4 highlight
+    class C,D process
     class E output
       `} />
       <p class="diagram-caption"><em>Each attention head learns different aspects of relationships between tokens</em></p>
@@ -356,17 +356,17 @@ combined = token_embeddings + position_embeddings(positions)</code>`} />
     
     %% Semantic color classes
     classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef attention fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
-    classDef norm fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
-    classDef ff fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
-    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef neutral fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
     classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
     
     class A input
-    class B attention
-    class C,E norm
-    class D ff
-    class F decision
+    class B highlight
+    class C,E process
+    class D accent
+    class F neutral
     class G output
       `} />
     </div>
@@ -420,18 +420,18 @@ class FeedForward:
     
     %% Semantic color classes
     classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef attention fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
-    classDef cross fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
-    classDef norm fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
-    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef neutral fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
     classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
     
     class A,J input
-    class B attention
-    class D cross
-    class C,E,G norm
-    class F cross
-    class H decision
+    class B highlight
+    class D accent
+    class C,E,G process
+    class F accent
+    class H neutral
     class I output
       `} />
       <p class="diagram-caption"><em>Cross-attention allows the decoder to attend to encoder outputs at every layer</em></p>
@@ -706,17 +706,17 @@ Grouped:      8 heads × Q, 2 groups × (K, V) = 12 projections
     
     %% Semantic color classes
     classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef router fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
-    classDef decision fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
-    classDef expert fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
-    classDef combine fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef neutral fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b,stroke-dasharray: 5 5
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
     classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
     
     class A input
-    class B router
-    class C decision
-    class D1,D2,D3 expert
-    class E combine
+    class B highlight
+    class C neutral
+    class D1,D2,D3 process
+    class E accent
     class F output
       `} />
       <p class="diagram-caption"><em>Only a subset of experts are activated per input, enabling efficient parameter scaling</em></p>
