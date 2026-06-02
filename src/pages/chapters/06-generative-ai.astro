@@ -116,8 +116,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     G --> B
     G --> E
     
-    style B fill:#3b82f6
-    style E fill:#ec4899
+    class B input
+    class E accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -195,9 +197,12 @@ Discriminator: Maximize ability to distinguish real from fake`}
     F --> H[Total Loss]
     G --> H
     
-    style B fill:#3b82f6
-    style C fill:#8b5cf6
-    style D fill:#ec4899
+    class B input
+    class C highlight
+    class D accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -296,9 +301,12 @@ Generate new samples by sampling x_T and denoising`}
     G --> H[- Noise]
     H --> I[x_0 Generated]
     
-    style A fill:#10b981
-    style E fill:#ef4444
-    style I fill:#3b82f6
+    class A output
+    class E danger
+    class I input
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    classDef danger fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -359,9 +367,12 @@ Generate new samples by sampling x_T and denoising`}
     F --> G[VAE Decoder]
     G --> H[Generated Image]
     
-    style B fill:#3b82f6
-    style E fill:#8b5cf6
-    style G fill:#ec4899
+    class B input
+    class E highlight
+    class G accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 

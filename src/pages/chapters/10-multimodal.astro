@@ -77,9 +77,12 @@ Multimodal:        Image + Text → Model → Text
     E --> G[Contrastive Loss<br/>Match pairs]
     F --> G
     
-    style B fill:#3b82f6
-    style D fill:#8b5cf6
-    style G fill:#ec4899
+    class B input
+    class D highlight
+    class G accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -151,9 +154,12 @@ Result: Zero-shot classification, image search
     D --> F
     F --> G[Text Output]
     
-    style B fill:#3b82f6
-    style C fill:#8b5cf6
-    style F fill:#ec4899
+    class B input
+    class C highlight
+    class F accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 

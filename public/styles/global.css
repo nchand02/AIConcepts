@@ -868,6 +868,38 @@ article.chapter-content {
   align-items: center;
 }
 
+/* ===== MERMAID DARK MODE — standard classDef palette ===== */
+/* These override hardcoded light fills so nodes look right on dark backgrounds */
+[data-theme="dark"] .mermaid .node.input rect,
+[data-theme="dark"] .mermaid .node.input polygon,
+[data-theme="dark"] .mermaid .node.input circle,
+[data-theme="dark"] .mermaid .node.input ellipse { fill: #1e3a5f !important; stroke: #3b82f6 !important; }
+[data-theme="dark"] .mermaid .node.input .nodeLabel { color: #bfdbfe !important; }
+
+[data-theme="dark"] .mermaid .node.process rect,
+[data-theme="dark"] .mermaid .node.process polygon { fill: #422006 !important; stroke: #d97706 !important; }
+[data-theme="dark"] .mermaid .node.process .nodeLabel { color: #fde68a !important; }
+
+[data-theme="dark"] .mermaid .node.output rect,
+[data-theme="dark"] .mermaid .node.output polygon { fill: #052e16 !important; stroke: #10b981 !important; }
+[data-theme="dark"] .mermaid .node.output .nodeLabel { color: #6ee7b7 !important; }
+
+[data-theme="dark"] .mermaid .node.highlight rect,
+[data-theme="dark"] .mermaid .node.highlight polygon { fill: #2e1065 !important; stroke: #8b5cf6 !important; }
+[data-theme="dark"] .mermaid .node.highlight .nodeLabel { color: #c4b5fd !important; }
+
+[data-theme="dark"] .mermaid .node.accent rect,
+[data-theme="dark"] .mermaid .node.accent polygon { fill: #500724 !important; stroke: #ec4899 !important; }
+[data-theme="dark"] .mermaid .node.accent .nodeLabel { color: #f9a8d4 !important; }
+
+[data-theme="dark"] .mermaid .node.neutral rect,
+[data-theme="dark"] .mermaid .node.neutral polygon { fill: #1e293b !important; stroke: #64748b !important; }
+[data-theme="dark"] .mermaid .node.neutral .nodeLabel { color: #94a3b8 !important; }
+
+[data-theme="dark"] .mermaid .node.danger rect,
+[data-theme="dark"] .mermaid .node.danger polygon { fill: #450a0a !important; stroke: #ef4444 !important; }
+[data-theme="dark"] .mermaid .node.danger .nodeLabel { color: #fca5a5 !important; }
+
 /* Table of Contents */
 .toc {
   background-color: var(--color-bg-secondary);

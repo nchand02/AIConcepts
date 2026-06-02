@@ -56,9 +56,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     B --> D[Data Layer<br/>Vector DBs, Caches]
     B --> E[Observability<br/>LangSmith, Weights & Biases]
     
-    style B fill:#3b82f6
-    style C fill:#8b5cf6
-    style D fill:#ec4899
+    class B input
+    class C highlight
+    class D accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 

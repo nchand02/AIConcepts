@@ -72,9 +72,12 @@ Key Characteristics:
     G -->|No| B
     G -->|Yes| H[Done]
     
-    style C fill:#3b82f6
-    style D fill:#8b5cf6
-    style F fill:#ec4899
+    class C input
+    class D highlight
+    class F accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -134,8 +137,10 @@ Action: Finish[1175]
     F --> B
     C -->|No| G[Final Answer]
     
-    style B fill:#3b82f6
-    style E fill:#8b5cf6
+    class B input
+    class E highlight
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -262,10 +267,12 @@ Then execute each step with tools
     B --> F[Task 1.2]
     C --> G[Task 2.1]
     
-    style A fill:#3b82f6
-    style B fill:#8b5cf6
-    style C fill:#8b5cf6
-    style D fill:#8b5cf6
+    class A input
+    class B highlight
+    class C highlight
+    class D highlight
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -351,11 +358,14 @@ Simpler than AutoGPT but effective
     D --> G[File System]
     E --> H[External API]
     
-    style A fill:#3b82f6
-    style B fill:#8b5cf6
-    style C fill:#ec4899
-    style D fill:#ec4899
-    style E fill:#ec4899
+    class A input
+    class B highlight
+    class C accent
+    class D accent
+    class E accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 

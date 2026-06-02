@@ -137,8 +137,10 @@ Embedding (dense, semantic):
     D[Center Word] --> E[Hidden Layer]
     E --> F[Context Words]
     
-    style B fill:#3b82f6
-    style E fill:#8b5cf6
+    class B input
+    class E highlight
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -196,8 +198,9 @@ Contextualized:
     G --> I[Similarity Score]
     H --> I
     
-    style B fill:#3b82f6
-    style D fill:#3b82f6
+    class B input
+    class D input
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -351,9 +354,12 @@ Used in some embedding models (e.g., SentenceTransformers)
     A --> D[Query Vector]
     D --> E[Nearest Neighbors]
     
-    style A fill:#3b82f6
-    style B fill:#8b5cf6
-    style C fill:#ec4899
+    class A input
+    class B highlight
+    class C accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -379,8 +385,10 @@ Used in some embedding models (e.g., SentenceTransformers)
     G --> D
     D --> H[Top K Similar Docs]
     
-    style B fill:#3b82f6
-    style D fill:#8b5cf6
+    class B input
+    class D highlight
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -418,9 +426,12 @@ Where α ∈ [0, 1] controls the balance
     E --> G[Shared Space]
     F --> G
     
-    style B fill:#3b82f6
-    style D fill:#8b5cf6
-    style G fill:#ec4899
+    class B input
+    class D highlight
+    class G accent
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
       `} />
     </div>
 

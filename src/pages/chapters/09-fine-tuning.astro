@@ -123,9 +123,11 @@ Training Time: Hours to days on GPUs
     B --> D[New Model<br/>~28 GB]
     C --> E[Base + Adapter<br/>~0.04 GB]
     
-    style A fill:#3b82f6
-    style C fill:#10b981
-    style E fill:#10b981
+    class A input
+    class C output
+    class E output
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -164,9 +166,11 @@ Parameters: Full = d × k = 4096 × 4096 = 16.7M
     B --> E[Output h]
     D --> E
     
-    style B fill:#6b7280
-    style C fill:#10b981
-    style D fill:#10b981
+    class B neutral
+    class C output
+    class D output
+    classDef neutral fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
@@ -332,9 +336,12 @@ OR with context:
     D --> E[4. RL Optimization<br/>PPO algorithm]
     E --> F[Aligned Model]
     
-    style A fill:#3b82f6
-    style D fill:#8b5cf6
-    style F fill:#10b981
+    class A input
+    class D highlight
+    class F output
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
       `} />
     </div>
 
