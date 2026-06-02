@@ -384,13 +384,12 @@ print(f"Explained variance ratio: {{pca.explained_variance_ratio_}}")</code>`} /
 
     <div class="diagram-container">
       <p class="diagram-title">Reinforcement Learning Loop</p>
-      <pre class="mermaid" role="img" aria-label="Reinforcement learning feedback loop showing environment sending state and reward to agent, agent taking actions, and updating its policy" set:html={`graph LR
-    A[Environment] -->|State s, Reward r| B[Agent]
-    B -->|Action a| A
-    B -.->|Learn| C[Policy π]
-    C -.->|Guide Decisions| B
+      <pre class="mermaid" role="img" aria-label="Reinforcement learning feedback loop showing environment sending state and reward to agent, agent taking actions, and updating its policy" set:html={`graph TD
+    A[Environment] -->|State + Reward| B[Agent]
+    B -->|Action| A
+    B -.->|Updates| C[Policy π]
+    C -.->|Guides| B
     
-    %% Semantic color classes
     classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
     classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
     classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
