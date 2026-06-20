@@ -148,17 +148,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     H --> I["💡 2020-2022<br/><b>LLM Breakthrough</b><br/>• GPT-3 launch<br/>• ChatGPT Nov 2022"]
     I --> J["🌟 2023-2025<br/><b>AI Boom</b><br/>• GPT-4, Nobel Prizes<br/>• $500B+ investments"]
     
-    classDef early fill:#ede9fe,stroke:#8b5cf6,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
-    classDef winter fill:#fecaca,stroke:#ef4444,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
-    classDef renaissance fill:#d1fae5,stroke:#10b981,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
-    classDef modern fill:#dbeafe,stroke:#3b82f6,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
-    classDef boom fill:#fef3c7,stroke:#f59e0b,stroke-width:3px,color:#1e293b,font-size:16px,padding:20px
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef danger fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
     
-    class A,B early
-    class C,E winter
-    class D,F renaissance
-    class G,H modern
-    class I,J boom
+    class A,B highlight
+    class C,E danger
+    class D,F output
+    class G,H input
+    class I,J process
       `} />
     </div>
 
@@ -340,12 +340,12 @@ def infer(rules, facts):
     %% Semantic color classes
     classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
     classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
-    classDef model fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
     classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
     
     class A,E input
     class B process
-    class C model
+    class C highlight
     class D output
       `} />
     </div>
@@ -555,17 +555,17 @@ sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
     B -->|has| H[Metabolism]
     
     %% Semantic styling
-    classDef abstract fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef general fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
-    classDef specific fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
-    classDef instance fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
-    classDef property fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef input fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef highlight fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef accent fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#1e293b
+    classDef output fill:#d1fae5,stroke:#10b981,stroke-width:2px,color:#1e293b
+    classDef process fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
     
-    class B abstract
-    class A general
-    class C specific
-    class D instance
-    class E,F,G,H property
+    class B input
+    class A highlight
+    class C accent
+    class D output
+    class E,F,G,H process
       `} />
       <p class="diagram-caption"><em>Legend: Abstract concept (blue), General class (purple), Specific class (pink), Instance (green), Properties/abilities (orange)</em></p>
     </div>
